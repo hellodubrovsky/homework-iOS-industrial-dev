@@ -9,4 +9,4 @@
 - **[ПС] Managing Your App's Life Cycle:** https://clck.ru/eDEab
 - **[ПС] Understanding Scene Delegate & App Delegate:** https://clck.ru/eDJaq
 - **[ПС] Understanding the Structure of an iOS Application:** https://clck.ru/eDJ5R
-- **Процесс выполнения:**
+- **Процесс выполнения:** https://github.com/hellodubrovsky/homework-iOS-industrial-dev/pull/2
