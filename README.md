@@ -1,6 +1,6 @@
 # homework-iOS-industrial-dev
 
-## 📚 Lesson #1.
+## 📚 Lesson 1.
 - **Тема:** "Структура проекта и жизненный цикл приложения"
 - **Лекция:** https://netology.ru/profile/program/iosint-17/lessons/152281/lesson_items/789094
 - **Домашнее задание:** https://github.com/netology-code/iosint-homeworks/tree/iosint-4/1
