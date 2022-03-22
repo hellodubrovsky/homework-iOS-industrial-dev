@@ -37,7 +37,13 @@ class ProfileViewController: UIViewController {
     
     private var profileView: ProfileHeaderView = {
         let view = ProfileHeaderView()
+        
+        #if DEBUG
+        view.backgroundColor = .systemBrown
+        #else
         view.backgroundColor = .systemGray2
+        #endif
+        
         return view
     }()
 
