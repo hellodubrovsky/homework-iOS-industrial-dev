@@ -68,17 +68,10 @@ class ProfileViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         ])
         
-        // Avatar (сохраняем констрейнты для большого аватара)
-        ProfileHeaderView.ConstraintsForAvatarAndItsBackground.centerXBigImage = profileView.userImage.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ProfileHeaderView.ConstraintsForAvatarAndItsBackground.centerYBigImage = profileView.userImage.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ProfileHeaderView.ConstraintsForAvatarAndItsBackground.widthBigImage = profileView.userImage.widthAnchor.constraint(equalToConstant: view.frame.width)
-        ProfileHeaderView.ConstraintsForAvatarAndItsBackground.heightBigImage = profileView.userImage.heightAnchor.constraint(equalToConstant: view.frame.width)
-
-        // Background avatar (сохраняем констрейнты для бполноэкранного фона)
-        ProfileHeaderView.ConstraintsForAvatarAndItsBackground.centerXBigBackgroundView = profileView.viewBackground.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ProfileHeaderView.ConstraintsForAvatarAndItsBackground.centerYBigBackgroundView = profileView.viewBackground.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ProfileHeaderView.ConstraintsForAvatarAndItsBackground.widthBigBackgroundView = profileView.viewBackground.widthAnchor.constraint(equalToConstant: view.frame.width)
-        ProfileHeaderView.ConstraintsForAvatarAndItsBackground.heightBigBackgroundView = profileView.viewBackground.heightAnchor.constraint(equalToConstant: view.frame.height)
+        // Avatar (передаём размеры, чтобы можно было растянуть аватар на весь экран)
+        ProfileHeaderView.ConstraintsForAvatarAndItsBackground.center = view.center
+        ProfileHeaderView.ConstraintsForAvatarAndItsBackground.width = view.frame.size.width
+        ProfileHeaderView.ConstraintsForAvatarAndItsBackground.heightBackground = view.frame.size.height
     }
 }
 
