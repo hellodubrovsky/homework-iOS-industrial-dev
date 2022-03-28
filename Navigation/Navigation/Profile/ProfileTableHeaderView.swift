@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class ProfileHeaderView: UIView {
     
@@ -227,6 +228,34 @@ class ProfileHeaderView: UIView {
     }
     
     private func addingLayoutConstraints() {
+        
+        
+        self.userName.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide).inset(27)
+            make.centerX.equalToSuperview()
+        }
+        
+        self.userDescription.snp.makeConstraints { make in
+            make.top.equalTo(userName).inset(50)
+            make.left.equalTo(safeAreaLayoutGuide).inset(132)
+            make.right.equalTo(safeAreaLayoutGuide).inset(16)
+        }
+        
+        self.statusTextField.snp.makeConstraints { make in
+            make.top.equalTo(userDescription.snp.bottom).offset(8)
+            make.left.equalTo(safeAreaLayoutGuide).inset(130)
+            make.right.equalTo(safeAreaLayoutGuide).inset(16)
+            make.height.equalTo(40)
+        }
+        
+        self.buttonShowStatus.snp.makeConstraints { make in
+            make.top.equalTo(statusTextField.snp.bottom).offset(16)
+            make.left.equalTo(safeAreaLayoutGuide).inset(16)
+            make.right.equalTo(safeAreaLayoutGuide).inset(16)
+            make.height.equalTo(50)
+        }
+        
+        /*
         NSLayoutConstraint.activate([
             userName.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 27),
             userName.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
@@ -245,6 +274,7 @@ class ProfileHeaderView: UIView {
             statusTextField.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -16),
             statusTextField.heightAnchor.constraint(equalToConstant: 40)
         ])
+        */
         
         // Avatar close button (устанавливаем констрейнты для кнопки закрытия увеличенного аватара)
         cancelButton.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16.0).isActive = true
