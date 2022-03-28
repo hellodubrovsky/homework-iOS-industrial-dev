@@ -10,12 +10,12 @@ import UIKit
 
 // MARK: - Модель публикации постов.
 
-struct PostUsers {
-    var author: String
-    var description: String
-    var image: UIImage
-    var likes: Int
-    var views: Int
+public struct PostUsers {
+    public var author: String
+    public var description: String
+    public var image: UIImage
+    public var likes: Int
+    public var views: Int
     
     init(author: String, description: String, image: UIImage, likes: Int, views: Int) {
         self.author = author
@@ -26,7 +26,7 @@ struct PostUsers {
     }
 }
 
-let posts: [PostUsers] = [
+public let posts: [PostUsers] = [
     PostUsers(author: "Hiscory cinema",
               description: "The adventures of Shurik, this is a great movie that can be constantly reviewed. And that's great.",
               image: UIImage(named: "iconPost-1")!,
