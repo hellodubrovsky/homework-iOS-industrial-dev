@@ -30,6 +30,19 @@ class ProfileViewController: UIViewController {
     
     // MARK: Private object's
     
+    private var userService: UserService!
+    private var userName: String!
+    
+    init(userService: UserService, userName: String) {
+        super.init(nibName: nil, bundle: nil)
+        self.userService = userService
+        self.userName = userName
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // Фильтр для постов
     private let imageProcessor = ImageProcessor()
     
@@ -39,8 +52,9 @@ class ProfileViewController: UIViewController {
         static var posts: String = "uniqueCellForUserPosts"
     }
     
-    private var profileView: ProfileHeaderView = {
-        let view = ProfileHeaderView()
+    private lazy var profileView: ProfileHeaderView = {
+        guard let user = self.userService.searchUserBy(name: self.userName) else { fatalError() }
+        let view = ProfileHeaderView(name: user.name, status: user.status, image: user.image)
         
         #if DEBUG
         view.backgroundColor = .systemBrown
