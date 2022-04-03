@@ -17,7 +17,7 @@ protocol UserService {
 
 // MARK: CurrentUserService.
 
-class CurrentUserService: UserService {
+final class CurrentUserService: UserService {
     var user: User
     
     init(user: User) {
@@ -33,7 +33,7 @@ class CurrentUserService: UserService {
 
 // MARK: TestUserService. Mock-Data for debug build.
 
-class TestUserService: UserService {
+final class TestUserService: UserService {
     var user = User(name: "@ALIEN", status: "It's time to start the invasion...", image: UIImage(named: "alienHipster")!)
     
     func searchUserBy(name: String) -> User? {

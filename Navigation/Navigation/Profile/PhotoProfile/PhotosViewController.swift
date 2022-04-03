@@ -7,17 +7,16 @@
 
 import UIKit
 
-class PhotosViewController: UIViewController {
+final class PhotosViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupView()
-        setupLayout()
+        settingView()
     }
     
     
     
-    // MARK: Private objects.
+    // MARK: - Private properties.
     
     private let collectionView: UICollectionView = {
         var viewLayout = UICollectionViewFlowLayout()
@@ -28,9 +27,9 @@ class PhotosViewController: UIViewController {
     
     
     
-    // MARK: Private methods.
+    // MARK: - View configuration.
     
-    private func setupView() {
+    private func settingView() {
         let appearance = UINavigationBarAppearance()
         appearance.backgroundColor = UIColor.white
         appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
@@ -44,9 +43,10 @@ class PhotosViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(PhotosCollectionViewCell.self, forCellWithReuseIdentifier: PhotosCollectionViewCell.identifier)
+        installinConstraints()
     }
     
-    private func setupLayout() {
+    private func installinConstraints() {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -61,7 +61,7 @@ class PhotosViewController: UIViewController {
 
 
 
-// MARK: - DataSource
+// MARK: - Setting tableView (DataSource)
 
 extension PhotosViewController: UICollectionViewDataSource {
     
@@ -83,7 +83,7 @@ extension PhotosViewController: UICollectionViewDataSource {
 
 
 
-// MARK: - Delegate
+// MARK: - Setting tableView (Delegate)
 
 extension PhotosViewController: UICollectionViewDelegateFlowLayout {
     

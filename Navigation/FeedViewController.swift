@@ -8,19 +8,16 @@
 import UIKit
 
 
-class FeedViewController: UIViewController {
+final class FeedViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Feed"
-        view.backgroundColor = UIColor(red: 0.53, green: 0.47, blue: 0.68, alpha: 0.1)
-        view.addSubview(stackView)
-        stackView.addArrangedSubview(buttonPostFirst)
-        stackView.addArrangedSubview(buttonPostSecond)
-        addingLayoutConstraints()
+        settingView()
     }
     
-    // MARK: - Private object's
+    
+    
+    // MARK: - Private properties
     
     // Создание StackView с двумя кнопками.
     private let stackView: UIStackView = {
@@ -29,6 +26,7 @@ class FeedViewController: UIViewController {
         stack.distribution = .equalSpacing
         stack.alignment = .center
         stack.spacing = 10.0
+        stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
     
@@ -60,7 +58,9 @@ class FeedViewController: UIViewController {
         return button
     }()
     
-    // MARK: - Private method's
+    
+    
+    // MARK: - Private methods
     
     // Реализация открытия окна "Post" по нажатию кнопки.
     @objc private func buttonAction(sender: UIButton!) {
@@ -70,8 +70,22 @@ class FeedViewController: UIViewController {
         self.navigationController?.pushViewController(postViewController, animated: true)
     }
     
-    private func addingLayoutConstraints() {
-        stackView.translatesAutoresizingMaskIntoConstraints = false
+    
+    
+    // MARK: - View configuration
+    
+    // Настройка View
+    private func settingView() {
+        title = "Feed"
+        view.backgroundColor = UIColor(red: 0.53, green: 0.47, blue: 0.68, alpha: 0.1)
+        view.addSubview(stackView)
+        stackView.addArrangedSubview(buttonPostFirst)
+        stackView.addArrangedSubview(buttonPostSecond)
+        installingConstants()
+    }
+    
+    // Настройка констрейнтов
+    private func installingConstants() {
         NSLayoutConstraint.activate([
             stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 0),
             stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0),

@@ -182,9 +182,7 @@
 			isa = PBXGroup;
 			children = (
 				F49DC37A27515432004F9DCE /* AppDelegate.swift */,
-				F48F37202752290E008C6565 /* FeedViewController.swift */,
-				F4F074532753E0360034579A /* PostViewController.swift */,
-				F4F0745527541A310034579A /* InfoViewController.swift */,
+				F4EC692F27F9A0A7007273D4 /* Feed */,
 				F4219562276868A400487AE7 /* Profile */,
 				F48F938F27F59B290035F9F9 /* User */,
 				F49DC38527515434004F9DCE /* LaunchScreen.storyboard */,
@@ -211,6 +209,17 @@
 				F4CC377F279FD26000294ADB /* PhotosModel.swift */,
 			);
 			path = PhotoProfile;
+			sourceTree = "<group>";
+		};
+		F4EC692F27F9A0A7007273D4 /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				F48F37202752290E008C6565 /* FeedViewController.swift */,
+				F4F074532753E0360034579A /* PostViewController.swift */,
+				F4F0745527541A310034579A /* InfoViewController.swift */,
+			);
+			name = Feed;
+			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
