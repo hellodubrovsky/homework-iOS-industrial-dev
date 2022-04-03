@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class ProfileHeaderView: UIView {
     
@@ -18,7 +19,7 @@ class ProfileHeaderView: UIView {
         self.addSubview(viewBackground)
         self.addSubview(cancelButton)
         self.addSubview(userImage)
-        addingLayoutConstraints()
+        setView()
     }
     
     required init?(coder: NSCoder) {
@@ -30,29 +31,9 @@ class ProfileHeaderView: UIView {
     // MARK: Constants for avatar and it's background
     
     enum ConstraintsForAvatarAndItsBackground {
-        
-        // Avatar
-        static var topSmallImage: NSLayoutConstraint?
-        static var leadingSmallImage: NSLayoutConstraint?
-        static var widthSmallImage: NSLayoutConstraint?
-        static var heightSmallImage: NSLayoutConstraint?
-        
-        static var centerXBigImage: NSLayoutConstraint?
-        static var centerYBigImage: NSLayoutConstraint?
-        static var widthBigImage: NSLayoutConstraint?
-        static var heightBigImage: NSLayoutConstraint?
-        
-        
-        // Background avatar
-        static var centerXSmallBackgroundView: NSLayoutConstraint?
-        static var centerYSmallBackgroundView: NSLayoutConstraint?
-        static var widthSmallBackgroundView: NSLayoutConstraint?
-        static var heightSmallBackgroundView: NSLayoutConstraint?
-        
-        static var centerXBigBackgroundView: NSLayoutConstraint?
-        static var centerYBigBackgroundView: NSLayoutConstraint?
-        static var widthBigBackgroundView: NSLayoutConstraint?
-        static var heightBigBackgroundView: NSLayoutConstraint?
+        static var center: CGPoint?
+        static var width: CGFloat?
+        static var heightBackground: CGFloat?
     }
     
 
@@ -148,7 +129,19 @@ class ProfileHeaderView: UIView {
     
     // Действие, по нажатию на маленький аватар
     @objc func actionByClickingOnAvatar() {
-        settingUpConstraintsForSmallImage()
+        self.userImage.snp.removeConstraints()
+        self.userImage.snp.updateConstraints { make in
+            make.center.equalTo(ConstraintsForAvatarAndItsBackground.center!)
+            make.width.height.equalTo(ConstraintsForAvatarAndItsBackground.width!)
+        }
+        
+        self.viewBackground.snp.removeConstraints()
+        self.viewBackground.snp.updateConstraints { make in
+            make.center.equalTo(ConstraintsForAvatarAndItsBackground.center!)
+            make.width.equalTo(ConstraintsForAvatarAndItsBackground.width!)
+            make.height.equalTo(ConstraintsForAvatarAndItsBackground.heightBackground!)
+        }
+    
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations: {
             self.layoutIfNeeded()
             self.userImage.layer.borderWidth = 0
@@ -158,13 +151,16 @@ class ProfileHeaderView: UIView {
     
     // Действие, по нажатию на расширенный аватар
     @objc func backButtonAction() {
-        settingUpConstraintsForLargeImage()
+        userImage.snp.removeConstraints()
+        viewBackground.snp.removeConstraints()
+        setView()
+        
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations: {
             self.layoutIfNeeded()
             self.userImage.layer.borderWidth = 3
             self.userImage.layer.cornerRadius = 50
             self.cancelButton.isHidden = true
-        }, completion: nil)
+        }, completion: { _ in self.cancelButton.isHidden = true })
     }
     
     @objc private func buttonShowStatusPressed() {
@@ -176,102 +172,48 @@ class ProfileHeaderView: UIView {
         statusText = textField.text ?? ""
     }
     
-    private func settingUpConstraintsForSmallImage() {
-        
-        // Avatar (выключаем констрейнты маленького аватара, и включаем констренты большого)
-        ConstraintsForAvatarAndItsBackground.topSmallImage?.isActive = false
-        ConstraintsForAvatarAndItsBackground.leadingSmallImage?.isActive = false
-        ConstraintsForAvatarAndItsBackground.widthSmallImage?.isActive = false
-        ConstraintsForAvatarAndItsBackground.heightSmallImage?.isActive = false
-        
-        ConstraintsForAvatarAndItsBackground.centerXBigImage?.isActive = true
-        ConstraintsForAvatarAndItsBackground.centerYBigImage?.isActive = true
-        ConstraintsForAvatarAndItsBackground.widthBigImage?.isActive = true
-        ConstraintsForAvatarAndItsBackground.heightBigImage?.isActive = true
-        
-        // Background avatar (выключаем констрейнты маленькой view, и включаем констренты для полноэкранной)
-        ConstraintsForAvatarAndItsBackground.centerXSmallBackgroundView?.isActive = false
-        ConstraintsForAvatarAndItsBackground.centerYSmallBackgroundView?.isActive = false
-        ConstraintsForAvatarAndItsBackground.widthSmallBackgroundView?.isActive = false
-        ConstraintsForAvatarAndItsBackground.heightSmallBackgroundView?.isActive = false
-        
-        ConstraintsForAvatarAndItsBackground.centerXBigBackgroundView?.isActive = true
-        ConstraintsForAvatarAndItsBackground.centerYBigBackgroundView?.isActive = true
-        ConstraintsForAvatarAndItsBackground.widthBigBackgroundView?.isActive = true
-        ConstraintsForAvatarAndItsBackground.heightBigBackgroundView?.isActive = true
-    }
     
-    private func settingUpConstraintsForLargeImage() {
-        
-        // Avatar
-        ConstraintsForAvatarAndItsBackground.centerXBigImage?.isActive = false
-        ConstraintsForAvatarAndItsBackground.centerYBigImage?.isActive = false
-        ConstraintsForAvatarAndItsBackground.widthBigImage?.isActive = false
-        ConstraintsForAvatarAndItsBackground.heightBigImage?.isActive = false
-        
-        ConstraintsForAvatarAndItsBackground.topSmallImage?.isActive = true
-        ConstraintsForAvatarAndItsBackground.leadingSmallImage?.isActive = true
-        ConstraintsForAvatarAndItsBackground.widthSmallImage?.isActive = true
-        ConstraintsForAvatarAndItsBackground.heightSmallImage?.isActive = true
-        
-        // Background avatar
-        ConstraintsForAvatarAndItsBackground.centerXBigBackgroundView?.isActive = false
-        ConstraintsForAvatarAndItsBackground.centerYBigBackgroundView?.isActive = false
-        ConstraintsForAvatarAndItsBackground.widthBigBackgroundView?.isActive = false
-        ConstraintsForAvatarAndItsBackground.heightBigBackgroundView?.isActive = false
-        
-        ConstraintsForAvatarAndItsBackground.centerXSmallBackgroundView?.isActive = true
-        ConstraintsForAvatarAndItsBackground.centerYSmallBackgroundView?.isActive = true
-        ConstraintsForAvatarAndItsBackground.widthSmallBackgroundView?.isActive = true
-        ConstraintsForAvatarAndItsBackground.heightSmallBackgroundView?.isActive = true
-    }
     
-    private func addingLayoutConstraints() {
-        NSLayoutConstraint.activate([
-            userName.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 27),
-            userName.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
-            
-            userDescription.topAnchor.constraint(equalTo: userName.topAnchor, constant: 50),
-            userDescription.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 132),
-            userDescription.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            
-            buttonShowStatus.topAnchor.constraint(equalTo: statusTextField.bottomAnchor, constant: 16),
-            buttonShowStatus.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            buttonShowStatus.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor,constant: -16),
-            buttonShowStatus.heightAnchor.constraint(equalToConstant: 50),
-            
-            statusTextField.topAnchor.constraint(equalTo: userDescription.bottomAnchor, constant: 8),
-            statusTextField.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 130),
-            statusTextField.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -16),
-            statusTextField.heightAnchor.constraint(equalToConstant: 40)
-        ])
+    // MARK: SET VIEW
+    
+    private func setView() {
         
-        // Avatar close button (устанавливаем констрейнты для кнопки закрытия увеличенного аватара)
-        cancelButton.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16.0).isActive = true
-        cancelButton.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 16.0).isActive = true
+        self.userName.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide).inset(27)
+            make.centerX.equalToSuperview()
+        }
         
+        self.userDescription.snp.makeConstraints { make in
+            make.top.equalTo(userName).inset(50)
+            make.left.equalTo(safeAreaLayoutGuide).inset(132)
+            make.right.equalTo(safeAreaLayoutGuide).inset(16)
+        }
         
-        // Avatar (устанавливаем констрейнты для маленького аватара)
-        ConstraintsForAvatarAndItsBackground.topSmallImage = userImage.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 16.0)
-        ConstraintsForAvatarAndItsBackground.leadingSmallImage = userImage.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 16)
-        ConstraintsForAvatarAndItsBackground.widthSmallImage = userImage.widthAnchor.constraint(equalToConstant: 100)
-        ConstraintsForAvatarAndItsBackground.heightSmallImage = userImage.heightAnchor.constraint(equalToConstant: 100)
+        self.statusTextField.snp.makeConstraints { make in
+            make.top.equalTo(userDescription.snp.bottom).offset(8)
+            make.left.equalTo(safeAreaLayoutGuide).inset(130)
+            make.right.equalTo(safeAreaLayoutGuide).inset(16)
+            make.height.equalTo(40)
+        }
         
-        ConstraintsForAvatarAndItsBackground.topSmallImage?.isActive = true
-        ConstraintsForAvatarAndItsBackground.leadingSmallImage?.isActive = true
-        ConstraintsForAvatarAndItsBackground.widthSmallImage?.isActive = true
-        ConstraintsForAvatarAndItsBackground.heightSmallImage?.isActive = true
+        self.buttonShowStatus.snp.makeConstraints { make in
+            make.top.equalTo(statusTextField.snp.bottom).offset(16)
+            make.left.right.equalTo(safeAreaLayoutGuide).inset(16)
+            make.height.equalTo(50)
+        }
         
+        self.userImage.snp.makeConstraints { make in
+            make.top.leading.equalTo(safeAreaLayoutGuide).inset(16)
+            make.width.height.equalTo(100)
+        }
         
-        // Background avatar (устанавливаем констрейнты для view под маленьким аватаром)
-        ConstraintsForAvatarAndItsBackground.centerXSmallBackgroundView = viewBackground.centerXAnchor.constraint(equalTo: userImage.centerXAnchor)
-        ConstraintsForAvatarAndItsBackground.centerYSmallBackgroundView = viewBackground.centerYAnchor.constraint(equalTo: userImage.centerYAnchor)
-        ConstraintsForAvatarAndItsBackground.widthSmallBackgroundView = viewBackground.widthAnchor.constraint(equalToConstant: 0)
-        ConstraintsForAvatarAndItsBackground.heightSmallBackgroundView = viewBackground.heightAnchor.constraint(equalToConstant: 0)
+        self.viewBackground.snp.makeConstraints { make in
+            make.centerX.centerY.equalTo(userImage)
+            make.width.height.equalTo(0)
+        }
         
-        ConstraintsForAvatarAndItsBackground.centerXSmallBackgroundView?.isActive = true
-        ConstraintsForAvatarAndItsBackground.centerYSmallBackgroundView?.isActive = true
-        ConstraintsForAvatarAndItsBackground.widthSmallBackgroundView?.isActive = true
-        ConstraintsForAvatarAndItsBackground.heightSmallBackgroundView?.isActive = true
+        self.cancelButton.snp.makeConstraints { make in
+            make.top.trailing.equalTo(safeAreaLayoutGuide).inset(16)
+        }
     }
 }

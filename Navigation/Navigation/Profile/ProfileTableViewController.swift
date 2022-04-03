@@ -7,6 +7,7 @@
 
 import UIKit
 import StorageService
+import iOSIntPackage
 
 class ProfileViewController: UIViewController {
     
@@ -28,6 +29,9 @@ class ProfileViewController: UIViewController {
     
     
     // MARK: Private object's
+    
+    // Фильтр для постов
+    private let imageProcessor = ImageProcessor()
     
     // ID для секциий.
     private enum cellReuseIdentifiers {
@@ -68,17 +72,10 @@ class ProfileViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         ])
         
-        // Avatar (сохраняем констрейнты для большого аватара)
-        ProfileHeaderView.ConstraintsForAvatarAndItsBackground.centerXBigImage = profileView.userImage.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ProfileHeaderView.ConstraintsForAvatarAndItsBackground.centerYBigImage = profileView.userImage.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ProfileHeaderView.ConstraintsForAvatarAndItsBackground.widthBigImage = profileView.userImage.widthAnchor.constraint(equalToConstant: view.frame.width)
-        ProfileHeaderView.ConstraintsForAvatarAndItsBackground.heightBigImage = profileView.userImage.heightAnchor.constraint(equalToConstant: view.frame.width)
-
-        // Background avatar (сохраняем констрейнты для бполноэкранного фона)
-        ProfileHeaderView.ConstraintsForAvatarAndItsBackground.centerXBigBackgroundView = profileView.viewBackground.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ProfileHeaderView.ConstraintsForAvatarAndItsBackground.centerYBigBackgroundView = profileView.viewBackground.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ProfileHeaderView.ConstraintsForAvatarAndItsBackground.widthBigBackgroundView = profileView.viewBackground.widthAnchor.constraint(equalToConstant: view.frame.width)
-        ProfileHeaderView.ConstraintsForAvatarAndItsBackground.heightBigBackgroundView = profileView.viewBackground.heightAnchor.constraint(equalToConstant: view.frame.height)
+        // Avatar (передаём размеры, чтобы можно было растянуть аватар на весь экран)
+        ProfileHeaderView.ConstraintsForAvatarAndItsBackground.center = view.center
+        ProfileHeaderView.ConstraintsForAvatarAndItsBackground.width = view.frame.size.width
+        ProfileHeaderView.ConstraintsForAvatarAndItsBackground.heightBackground = view.frame.size.height
     }
 }
 
@@ -109,7 +106,27 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         default:
             guard let cell: PostTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifiers.posts, for: indexPath) as? PostTableViewCell else { fatalError() }
             let data = posts[indexPath.row]
-            cell.update(name: data.author, image: data.image, description: data.description, countLikes: data.likes, countViews: data.views)
+            
+            // Применение фильтров к изображениям постов
+            var filter: ColorFilter?
+            var image: UIImage?
+            
+            switch indexPath.row {
+            case 0:
+                filter = .motionBlur(radius: 10)
+            case 1:
+                filter = .crystallize(radius: 10)
+            case 2:
+                filter = .fade
+            default:
+                filter = .sepia(intensity: 20)
+            }
+            
+            imageProcessor.processImage(sourceImage: data.image, filter: filter!) { editedImage in
+                image = editedImage
+            }
+            
+            cell.update(name: data.author, image: image!, description: data.description, countLikes: data.likes, countViews: data.views)
             return cell
         }
     }
