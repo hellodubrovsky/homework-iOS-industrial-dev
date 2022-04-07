@@ -10,3 +10,9 @@
 - **[ПС] Understanding Scene Delegate & App Delegate:** https://clck.ru/eDJaq
 - **[ПС] Understanding the Structure of an iOS Application:** https://clck.ru/eDJ5R
 - **Процесс выполнения:** https://github.com/hellodubrovsky/homework-iOS-industrial-dev/pull/2
+
+## 📚 Lesson 2.
+- **Тема:** "Структурные паттерны: Delegate, Singleton, Factory"
+- **Лекция:** https://netology.ru/profile/program/iosint-17/lessons/152284/lesson_items/789107
+- **Домашнее задание:** https://github.com/netology-code/iosint-homeworks/tree/iosint-4/4
+- **Процесс выполнения:**
