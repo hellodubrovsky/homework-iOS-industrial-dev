@@ -12,6 +12,7 @@
 		F401807727F1BC090087CD4D /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = F401807627F1BC090087CD4D /* iOSIntPackage */; };
 		F408845D27FF253F002D8812 /* AppFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F408845C27FF253F002D8812 /* AppFactory.swift */; };
 		F408845F27FF255A002D8812 /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F408845E27FF255A002D8812 /* AppManager.swift */; };
+		F408846127FF5CA7002D8812 /* CheckerAuthorizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = F408846027FF5CA7002D8812 /* CheckerAuthorizations.swift */; };
 		F4219566276869AE00487AE7 /* ProfileTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4219565276869AE00487AE7 /* ProfileTableHeaderView.swift */; };
 		F43C9A5B27E9D55B000B8360 /* StorageService.h in Headers */ = {isa = PBXBuildFile; fileRef = F43C9A5A27E9D55B000B8360 /* StorageService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F43C9A5E27E9D55B000B8360 /* StorageService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F43C9A5827E9D55B000B8360 /* StorageService.framework */; };
@@ -20,6 +21,7 @@
 		F467234C278BF63800B78225 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F467234B278BF63800B78225 /* PostTableViewCell.swift */; };
 		F4826DCA279EFC820040A364 /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4826DC9279EFC820040A364 /* PhotosTableViewCell.swift */; };
 		F4826DCC279F35150040A364 /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4826DCB279F35150040A364 /* PhotosViewController.swift */; };
+		F48E5F322803405600EA4BF3 /* LogInFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48E5F312803405600EA4BF3 /* LogInFactory.swift */; };
 		F48F371D27522200008C6565 /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48F371C27522200008C6565 /* ProfileTableViewController.swift */; };
 		F48F37212752290E008C6565 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48F37202752290E008C6565 /* FeedViewController.swift */; };
 		F48F939127F59B530035F9F9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48F939027F59B530035F9F9 /* User.swift */; };
@@ -66,6 +68,7 @@
 		D860E7ACB88176FA80896CCB /* Pods-Navigation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation.release.xcconfig"; path = "Target Support Files/Pods-Navigation/Pods-Navigation.release.xcconfig"; sourceTree = "<group>"; };
 		F408845C27FF253F002D8812 /* AppFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFactory.swift; sourceTree = "<group>"; };
 		F408845E27FF255A002D8812 /* AppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppManager.swift; sourceTree = "<group>"; };
+		F408846027FF5CA7002D8812 /* CheckerAuthorizations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckerAuthorizations.swift; sourceTree = "<group>"; };
 		F4219565276869AE00487AE7 /* ProfileTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableHeaderView.swift; sourceTree = "<group>"; };
 		F43C9A5827E9D55B000B8360 /* StorageService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StorageService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F43C9A5A27E9D55B000B8360 /* StorageService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StorageService.h; sourceTree = "<group>"; };
@@ -73,6 +76,7 @@
 		F467234B278BF63800B78225 /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		F4826DC9279EFC820040A364 /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
 		F4826DCB279F35150040A364 /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
+		F48E5F312803405600EA4BF3 /* LogInFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInFactory.swift; sourceTree = "<group>"; };
 		F48F371C27522200008C6565 /* ProfileTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewController.swift; sourceTree = "<group>"; };
 		F48F37202752290E008C6565 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		F48F939027F59B530035F9F9 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -135,7 +139,9 @@
 		F4219562276868A400487AE7 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				F48E5F312803405600EA4BF3 /* LogInFactory.swift */,
 				F4F675FF27873FAB00465155 /* LogInViewController.swift */,
+				F408846027FF5CA7002D8812 /* CheckerAuthorizations.swift */,
 				F4219565276869AE00487AE7 /* ProfileTableHeaderView.swift */,
 				F48F371C27522200008C6565 /* ProfileTableViewController.swift */,
 				F4DDFA8A27A04A9800CFD226 /* FeedProfile */,
@@ -432,8 +438,10 @@
 				F4219566276869AE00487AE7 /* ProfileTableHeaderView.swift in Sources */,
 				F48F37212752290E008C6565 /* FeedViewController.swift in Sources */,
 				F467234C278BF63800B78225 /* PostTableViewCell.swift in Sources */,
+				F408846127FF5CA7002D8812 /* CheckerAuthorizations.swift in Sources */,
 				F408845D27FF253F002D8812 /* AppFactory.swift in Sources */,
 				F4F6760027873FAB00465155 /* LogInViewController.swift in Sources */,
+				F48E5F322803405600EA4BF3 /* LogInFactory.swift in Sources */,
 				F49DC37B27515432004F9DCE /* AppDelegate.swift in Sources */,
 				F4F0745627541A310034579A /* InfoViewController.swift in Sources */,
 				F4F074542753E0360034579A /* PostViewController.swift in Sources */,

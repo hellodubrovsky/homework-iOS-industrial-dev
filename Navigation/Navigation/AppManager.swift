@@ -23,13 +23,17 @@ final class AppManager {
     
     // MARK: - Private properties
     private let factory: AppFactory = AppFactory()
+    private let logInFactory: LogInFactory = LogInFactory()
     private let feedViewController = FeedViewController()
     private let profileViewController = LogInViewController()
+    private let logInInspector = LogInInspector()
     
     
     
     // MARK: - Private init
     private init() {
+        /// В строчке ниже, не происходит присвоение делегата, почему?
+        profileViewController.delegate = logInFactory.makeLogInInspecctor()
         let feedItemTabBar = factory.makeTabBarItem(title: "Feed", image: UIImage(systemName: "house.fill")!)
         let profileItemTabBar = factory.makeTabBarItem(title: "Profile", image: UIImage(systemName: "person.fill")!)
         let feedNavigationController = factory.makeNavigatioController(viewController: feedViewController, taBarItem: feedItemTabBar)

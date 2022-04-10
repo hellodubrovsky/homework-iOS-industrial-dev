@@ -7,7 +7,38 @@
 
 import UIKit
 
+// MARK: - LogInViewControllerDelegate
+
+protocol LogInViewControllerDelegate: AnyObject {
+    func check(login: String, password: String) -> Bool
+}
+
+
+
+
+
+// MARK: - LogInspector
+
+class LogInInspector: LogInViewControllerDelegate {
+    func check(login: String, password: String) -> Bool {
+        return Checker.shared.check(login: login, password: password)
+    }
+}
+
+
+
+
+
+// MARK: - LogInViewController
+
 final class LogInViewController: UIViewController {
+    
+    // MARK: - Public properties
+    weak var delegate: LogInViewControllerDelegate?
+    
+    
+    
+    // MARK: - Public methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,7 +49,7 @@ final class LogInViewController: UIViewController {
     
     
     // MARK: - Private properties
-
+    
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.showsVerticalScrollIndicator = true
@@ -106,6 +137,7 @@ final class LogInViewController: UIViewController {
             return
         }
         let userName = loginInputTextField.text!
+        let userPassword = passwordInputTextField.text!
         
         #if DEBUG
         let cervice = TestUserService()
@@ -114,6 +146,18 @@ final class LogInViewController: UIViewController {
         let cervice = CurrentUserService(user: user)
         #endif
         
+        
+        // TODO: Проблема! Домашнее задание №4.
+        // Назначение делегата не должно происходить здесь, после нахождения ответа, нужно убрать!
+        let logIn = LogInInspector()
+        self.delegate = logIn
+        
+        
+        
+        guard let check = delegate?.check(login: userName, password: userPassword), check == true else {
+            displayingAnAlertWithWarningForLoginAndPassword()
+            return
+        }
         let viewController = ProfileViewController(userService: cervice, userName: userName)
         navigationController?.pushViewController(viewController, animated: true)
     }
@@ -121,6 +165,20 @@ final class LogInViewController: UIViewController {
     // Показ алерта, информирующего о необходимости заполнения поля login
     private func displayingAnAlertWithWarningForTheLoginField() {
         let alert = UIAlertController(title: "Предупреждение", message: "Поле ввода логина не может быть пустым.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    // Показ алерта, информирующего о необходимости заполнения полей login или password
+    private func displayingAnAlertWithWarningForLoginAndPassword() {
+        
+        var message: String = "Поле 'логин' или 'пароль' содержат некорректные значения."
+        
+        #if DEBUG
+        message = message + "Подсказка для dev-сборки. Логин: login, Пароль: pass."
+        #endif
+
+        let alert = UIAlertController(title: "Предупреждение", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
