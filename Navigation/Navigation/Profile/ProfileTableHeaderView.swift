@@ -10,15 +10,11 @@ import SnapKit
 
 class ProfileHeaderView: UIView {
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.addSubview(userName)
-        self.addSubview(userDescription)
-        self.addSubview(buttonShowStatus)
-        self.addSubview(statusTextField)
-        self.addSubview(viewBackground)
-        self.addSubview(cancelButton)
-        self.addSubview(userImage)
+    init(name: String, status: String?, image: UIImage?) {
+        super.init(frame: .zero)
+        self.name = name
+        self.status = status
+        self.image = image
         setView()
     }
     
@@ -40,27 +36,31 @@ class ProfileHeaderView: UIView {
 
     // MARK: Private object's
     
-    private let userName: UILabel = {
+    private var name: String!
+    private var status: String?
+    private var image: UIImage?
+    
+    private lazy var userName: UILabel = {
         let name = UILabel()
-        name.text = "@ALIEN"
+        name.text = self.name
         name.font = .boldSystemFont(ofSize: 20)
         name.textColor = .white
         name.translatesAutoresizingMaskIntoConstraints = false
         return name
     }()
     
-    private let userDescription: UILabel = {
+    private lazy var userDescription: UILabel = {
         let description = UILabel()
-        description.text = "Waiting for something ..."
+        description.text = self.status ?? "Waiting for something ..."
         description.font = .systemFont(ofSize: 14, weight: .regular)
         description.textColor = .white
         description.translatesAutoresizingMaskIntoConstraints = false
         return description
     }()
     
-    internal lazy var userImage: UIView = {
+    private lazy var userImage: UIView = {
         let image = UIView()
-        image.layer.contents = UIImage(named: "alienHipster")?.cgImage
+        image.layer.contents = self.image?.cgImage ?? UIImage(named: "cat")?.cgImage
         image.layer.contentsGravity = .resizeAspect
         image.layer.masksToBounds = false
         image.layer.borderColor = UIColor.black.cgColor
@@ -177,6 +177,14 @@ class ProfileHeaderView: UIView {
     // MARK: SET VIEW
     
     private func setView() {
+        
+        self.addSubview(userName)
+        self.addSubview(userDescription)
+        self.addSubview(buttonShowStatus)
+        self.addSubview(statusTextField)
+        self.addSubview(viewBackground)
+        self.addSubview(cancelButton)
+        self.addSubview(userImage)
         
         self.userName.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide).inset(27)

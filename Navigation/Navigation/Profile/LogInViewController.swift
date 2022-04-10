@@ -174,8 +174,27 @@ extension LogInViewController {
 extension LogInViewController {
     
     @objc private func buttonLogInAction() {
-        let viewController = ProfileViewController()
+        guard (loginInputTextField.text?.isEmpty == false) else {
+            displayingAnAlertWithWarningForTheLoginField()
+            return
+        }
+        let userName = loginInputTextField.text!
+        
+        #if DEBUG
+        let cervice = TestUserService()
+        #else
+        let user = User(name: userName)
+        let cervice = CurrentUserService(user: user)
+        #endif
+        
+        let viewController = ProfileViewController(userService: cervice, userName: userName)
         navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    private func displayingAnAlertWithWarningForTheLoginField() {
+        let alert = UIAlertController(title: "Предупреждение", message: "Поле ввода логина не может быть пустым.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     private func activatingConstraints() {
