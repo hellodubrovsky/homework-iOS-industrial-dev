@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		9C09816622FD149815F4EBE3 /* Pods_Navigation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD06F957EC9A28208EA2B6FD /* Pods_Navigation.framework */; };
 		C91E4D157D576FEC9C2517B9 /* Pods_StorageService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90A61D00B7944AB98D28F21D /* Pods_StorageService.framework */; };
-		F401807727F1BC090087CD4D /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = F401807627F1BC090087CD4D /* iOSIntPackage */; };
 		F408845D27FF253F002D8812 /* AppFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F408845C27FF253F002D8812 /* AppFactory.swift */; };
 		F408845F27FF255A002D8812 /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F408845E27FF255A002D8812 /* AppManager.swift */; };
 		F408846127FF5CA7002D8812 /* CheckerAuthorizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = F408846027FF5CA7002D8812 /* CheckerAuthorizations.swift */; };
@@ -34,6 +33,7 @@
 		F4F074542753E0360034579A /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F074532753E0360034579A /* PostViewController.swift */; };
 		F4F0745627541A310034579A /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F0745527541A310034579A /* InfoViewController.swift */; };
 		F4F6760027873FAB00465155 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F675FF27873FAB00465155 /* LogInViewController.swift */; };
+		F4F69126280C513C00059B4A /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = F4F69125280C513C00059B4A /* iOSIntPackage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,7 +107,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F401807727F1BC090087CD4D /* iOSIntPackage in Frameworks */,
+				F4F69126280C513C00059B4A /* iOSIntPackage in Frameworks */,
 				F43C9A5E27E9D55B000B8360 /* StorageService.framework in Frameworks */,
 				9C09816622FD149815F4EBE3 /* Pods_Navigation.framework in Frameworks */,
 			);
@@ -285,7 +285,7 @@
 			);
 			name = Navigation;
 			packageProductDependencies = (
-				F401807627F1BC090087CD4D /* iOSIntPackage */,
+				F4F69125280C513C00059B4A /* iOSIntPackage */,
 			);
 			productName = Navigation;
 			productReference = F49DC37727515432004F9DCE /* Navigation.app */;
@@ -319,7 +319,7 @@
 			);
 			mainGroup = F49DC36E27515432004F9DCE;
 			packageReferences = (
-				F401807527F1BC090087CD4D /* XCRemoteSwiftPackageReference "iOSIntPackage" */,
+				F4F69124280C513C00059B4A /* XCRemoteSwiftPackageReference "iOSIntPackage" */,
 			);
 			productRefGroup = F49DC37827515432004F9DCE /* Products */;
 			projectDirPath = "";
@@ -656,7 +656,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 65A4BD7D799EC3C672D3D38A /* Pods-Navigation.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -685,7 +684,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D860E7ACB88176FA80896CCB /* Pods-Navigation.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -743,20 +741,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		F401807527F1BC090087CD4D /* XCRemoteSwiftPackageReference "iOSIntPackage" */ = {
+		F4F69124280C513C00059B4A /* XCRemoteSwiftPackageReference "iOSIntPackage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/TrueMax/iOSIntPackage";
 			requirement = {
-				branch = main;
+				branch = imagepublisher;
 				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		F401807627F1BC090087CD4D /* iOSIntPackage */ = {
+		F4F69125280C513C00059B4A /* iOSIntPackage */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F401807527F1BC090087CD4D /* XCRemoteSwiftPackageReference "iOSIntPackage" */;
+			package = F4F69124280C513C00059B4A /* XCRemoteSwiftPackageReference "iOSIntPackage" */;
 			productName = iOSIntPackage;
 		};
 /* End XCSwiftPackageProductDependency section */
