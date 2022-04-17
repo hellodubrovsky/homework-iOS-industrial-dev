@@ -136,18 +136,13 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		F4219562276868A400487AE7 /* Profile */ = {
+		F4219562276868A400487AE7 /* ProfileScreen */ = {
 			isa = PBXGroup;
 			children = (
-				F48E5F312803405600EA4BF3 /* LogInFactory.swift */,
-				F4F675FF27873FAB00465155 /* LogInViewController.swift */,
-				F408846027FF5CA7002D8812 /* CheckerAuthorizations.swift */,
-				F4219565276869AE00487AE7 /* ProfileTableHeaderView.swift */,
-				F48F371C27522200008C6565 /* ProfileTableViewController.swift */,
-				F4DDFA8A27A04A9800CFD226 /* FeedProfile */,
-				F4DDFA8B27A04AB800CFD226 /* PhotoProfile */,
+				F4C0136B280CC7D90003F2AA /* Authorization */,
+				F4C0136C280CC81A0003F2AA /* Profile */,
 			);
-			path = Profile;
+			path = ProfileScreen;
 			sourceTree = "<group>";
 		};
 		F43C9A5927E9D55B000B8360 /* StorageService */ = {
@@ -159,13 +154,13 @@
 			path = StorageService;
 			sourceTree = "<group>";
 		};
-		F48F938F27F59B290035F9F9 /* User */ = {
+		F48F938F27F59B290035F9F9 /* UserData */ = {
 			isa = PBXGroup;
 			children = (
 				F48F939027F59B530035F9F9 /* User.swift */,
 				F48F939227F59C150035F9F9 /* UserService.swift */,
 			);
-			path = User;
+			path = UserData;
 			sourceTree = "<group>";
 		};
 		F49DC36E27515432004F9DCE = {
@@ -194,23 +189,54 @@
 				F49DC37A27515432004F9DCE /* AppDelegate.swift */,
 				F408845E27FF255A002D8812 /* AppManager.swift */,
 				F408845C27FF253F002D8812 /* AppFactory.swift */,
-				F4EC692F27F9A0A7007273D4 /* Feed */,
-				F4219562276868A400487AE7 /* Profile */,
-				F48F938F27F59B290035F9F9 /* User */,
 				F49DC38527515434004F9DCE /* LaunchScreen.storyboard */,
-				F49DC38327515434004F9DCE /* Assets.xcassets */,
-				F49DC38827515434004F9DCE /* Info.plist */,
+				F4EC692F27F9A0A7007273D4 /* FeedScreen */,
+				F4219562276868A400487AE7 /* ProfileScreen */,
+				F48F938F27F59B290035F9F9 /* UserData */,
+				F4C0136D280CC8F40003F2AA /* Resourses */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
 		};
-		F4DDFA8A27A04A9800CFD226 /* FeedProfile */ = {
+		F4C0136A280CC7B50003F2AA /* PostScreen */ = {
 			isa = PBXGroup;
 			children = (
-				F467234B278BF63800B78225 /* PostTableViewCell.swift */,
-				F4826DC9279EFC820040A364 /* PhotosTableViewCell.swift */,
+				F4F074532753E0360034579A /* PostViewController.swift */,
+				F4F0745527541A310034579A /* InfoViewController.swift */,
 			);
+			path = PostScreen;
+			sourceTree = "<group>";
+		};
+		F4C0136B280CC7D90003F2AA /* Authorization */ = {
+			isa = PBXGroup;
+			children = (
+				F4F675FF27873FAB00465155 /* LogInViewController.swift */,
+				F408846027FF5CA7002D8812 /* CheckerAuthorizations.swift */,
+				F48E5F312803405600EA4BF3 /* LogInFactory.swift */,
+			);
+			name = Authorization;
+			sourceTree = "<group>";
+		};
+		F4C0136C280CC81A0003F2AA /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				F48F371C27522200008C6565 /* ProfileTableViewController.swift */,
+				F4219565276869AE00487AE7 /* ProfileTableHeaderView.swift */,
+				F4826DC9279EFC820040A364 /* PhotosTableViewCell.swift */,
+				F467234B278BF63800B78225 /* PostTableViewCell.swift */,
+				F4DDFA8B27A04AB800CFD226 /* PhotoProfile */,
+			);
+			name = Profile;
 			path = FeedProfile;
+			sourceTree = "<group>";
+		};
+		F4C0136D280CC8F40003F2AA /* Resourses */ = {
+			isa = PBXGroup;
+			children = (
+				F49DC38327515434004F9DCE /* Assets.xcassets */,
+				F49DC38827515434004F9DCE /* Info.plist */,
+			);
+			name = Resourses;
 			sourceTree = "<group>";
 		};
 		F4DDFA8B27A04AB800CFD226 /* PhotoProfile */ = {
@@ -223,14 +249,13 @@
 			path = PhotoProfile;
 			sourceTree = "<group>";
 		};
-		F4EC692F27F9A0A7007273D4 /* Feed */ = {
+		F4EC692F27F9A0A7007273D4 /* FeedScreen */ = {
 			isa = PBXGroup;
 			children = (
 				F48F37202752290E008C6565 /* FeedViewController.swift */,
-				F4F074532753E0360034579A /* PostViewController.swift */,
-				F4F0745527541A310034579A /* InfoViewController.swift */,
+				F4C0136A280CC7B50003F2AA /* PostScreen */,
 			);
-			name = Feed;
+			name = FeedScreen;
 			path = ..;
 			sourceTree = "<group>";
 		};
