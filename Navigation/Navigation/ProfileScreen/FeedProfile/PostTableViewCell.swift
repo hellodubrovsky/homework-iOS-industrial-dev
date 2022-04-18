@@ -89,6 +89,7 @@ final class PostTableViewCell: UITableViewCell {
         contentView.addSubview(postDescriptionLabel)
         contentView.addSubview(postCountLikes)
         contentView.addSubview(postCountViews)
+        contentView.backgroundColor = .white
         installingConstraints()
     }
     

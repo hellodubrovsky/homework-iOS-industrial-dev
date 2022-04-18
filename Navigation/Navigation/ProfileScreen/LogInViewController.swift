@@ -181,7 +181,7 @@ final class LogInViewController: UIViewController {
     
     // Настройка View
     private func settingView() {
-        view.backgroundColor = .black
+        view.backgroundColor = .white
         navigationController?.navigationBar.tintColor = . white
         navigationController?.navigationBar.isHidden = true
         view.addSubview(scrollView)
