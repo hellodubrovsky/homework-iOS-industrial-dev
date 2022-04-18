@@ -34,7 +34,7 @@ class LogInInspector: LogInViewControllerDelegate {
 final class LogInViewController: UIViewController {
     
     // MARK: - Public properties
-    weak var delegate: LogInViewControllerDelegate?
+    var delegate: LogInViewControllerDelegate?
     
     
     
@@ -146,14 +146,6 @@ final class LogInViewController: UIViewController {
         let cervice = CurrentUserService(user: user)
         #endif
         
-        
-        // TODO: Проблема! Домашнее задание №4.
-        // Назначение делегата не должно происходить здесь, после нахождения ответа, нужно убрать!
-        let logIn = LogInInspector()
-        self.delegate = logIn
-        
-        
-        
         guard let check = delegate?.check(login: userName, password: userPassword), check == true else {
             displayingAnAlertWithWarningForLoginAndPassword()
             return
@@ -189,7 +181,7 @@ final class LogInViewController: UIViewController {
     
     // Настройка View
     private func settingView() {
-        view.backgroundColor = .white
+        view.backgroundColor = .black
         navigationController?.navigationBar.tintColor = . white
         navigationController?.navigationBar.isHidden = true
         view.addSubview(scrollView)
