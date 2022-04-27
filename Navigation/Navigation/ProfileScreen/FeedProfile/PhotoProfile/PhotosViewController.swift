@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import iOSIntPackage
+
 
 final class PhotosViewController: UIViewController {
     
@@ -17,6 +19,9 @@ final class PhotosViewController: UIViewController {
     
     
     // MARK: - Private properties.
+    
+    private let imageFacade = ImagePublisherFacade()
+    private var imagesUser: [UIImage] = []
     
     private let collectionView: UICollectionView = {
         var viewLayout = UICollectionViewFlowLayout()
@@ -112,5 +117,19 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 8
+    }
+}
+
+
+
+
+
+// MARK: - Protocol:
+
+extension PhotosViewController: ImageLibrarySubscriber {
+    func receive(images: [UIImage]) {
+        self.imagesUser = []
+        images.forEach { imagesUser.append($0) }
+        self.collectionView.reloadData()
     }
 }
