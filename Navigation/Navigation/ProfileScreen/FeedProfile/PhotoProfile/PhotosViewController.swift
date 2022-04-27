@@ -14,6 +14,8 @@ final class PhotosViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         settingView()
+        imageFacade.subscribe(self)
+        imageFacade.addImagesWithTimer(time: 0.2, repeat: photosNameProfiles.count)
     }
     
     
@@ -29,6 +31,11 @@ final class PhotosViewController: UIViewController {
         collectionView.backgroundColor = .white
         return collectionView
     }()
+    
+    deinit {
+        imageFacade.rechargeImageLibrary()
+        imageFacade.removeSubscription(for: self)
+    }
     
     
     
@@ -72,7 +79,7 @@ extension PhotosViewController: UICollectionViewDataSource {
     
     // Сколько ячеек, будет в одной секции
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photosNameProfiles.count
+        return imagesUser.count
     }
     
     // Заполнение ячеек данными.
