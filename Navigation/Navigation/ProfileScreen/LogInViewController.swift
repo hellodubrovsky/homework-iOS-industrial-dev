@@ -117,12 +117,7 @@ final class LogInViewController: UIViewController {
     }()
     
     private lazy var logInButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Log In", for: .normal)
-        button.backgroundColor = UIColor.init(named: "colorBaseVK")
-        button.layer.cornerRadius = 10
-        button.addTarget(nil, action: #selector(buttonLogInAction), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
+        let button = CustomButton(title: "Log In", titleColor: .white, backgoundColor: UIColor.init(named: "colorBaseVK")!, cornerRadius: 10) { self.buttonLogInAction() }
         return button
     }()
     
@@ -131,7 +126,7 @@ final class LogInViewController: UIViewController {
     // MARK: - Private methods
     
     // Обработка нажатия на кнопку "Log in"
-    @objc private func buttonLogInAction() {
+    private func buttonLogInAction() {
         guard (loginInputTextField.text?.isEmpty == false) else {
             displayingAnAlertWithWarningForTheLoginField()
             return

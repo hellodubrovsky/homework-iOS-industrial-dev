@@ -31,28 +31,20 @@ final class FeedViewController: UIViewController {
     }()
     
     // Cоздание кнопки "Переход к посту". (Первая для стека)
-    private let buttonPostFirst: UIButton = {
-        let button = UIButton(type: .custom) as UIButton
-        button.setTitle("Go to post. #1", for: .normal)
-        button.backgroundColor = UIColor(red: 0.57, green: 0.62, blue: 0.70, alpha: 0.1)
-        button.layer.cornerRadius = 20
+    private lazy var buttonPostFirst: UIButton = {
+        let button = CustomButton(title: "Go to post #1.", titleColor: .white, backgoundColor: UIColor(red: 0.57, green: 0.62, blue: 0.70, alpha: 0.1), cornerRadius: 20) { self.buttonAction() }
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor(red: CGFloat(253.0 / 255.0), green: CGFloat(112.0 / 255.0), blue: CGFloat(20.0 / 255.0), alpha: CGFloat(1.0)).cgColor
-        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         button.heightAnchor.constraint(equalToConstant: 50).isActive = true
         button.widthAnchor.constraint(equalToConstant: 200).isActive = true
         return button
     }()
     
     // Cоздание кнопки "Переход к посту". (Вторая для стека)
-    private let buttonPostSecond: UIButton = {
-        let button = UIButton(type: .custom) as UIButton
-        button.setTitle("Go to post. #2", for: .normal)
-        button.backgroundColor = UIColor(red: 0.57, green: 0.62, blue: 0.70, alpha: 0.1)
-        button.layer.cornerRadius = 20
+    private lazy var buttonPostSecond: UIButton = {
+        let button = CustomButton(title: "Go to post #2.", titleColor: .white, backgoundColor: UIColor(red: 0.57, green: 0.62, blue: 0.70, alpha: 0.1), cornerRadius: 20) { self.buttonAction() }
         button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor(red: CGFloat(255.0 / 255.0), green: CGFloat(170.0 / 255.0), blue: CGFloat(20.0 / 255.0), alpha: CGFloat(1.0)).cgColor
-        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        button.layer.borderColor = UIColor(red: CGFloat(253.0 / 255.0), green: CGFloat(112.0 / 255.0), blue: CGFloat(20.0 / 255.0), alpha: CGFloat(1.0)).cgColor
         button.heightAnchor.constraint(equalToConstant: 50).isActive = true
         button.widthAnchor.constraint(equalToConstant: 200).isActive = true
         return button
@@ -63,7 +55,7 @@ final class FeedViewController: UIViewController {
     // MARK: - Private methods
     
     // Реализация открытия окна "Post" по нажатию кнопки.
-    @objc private func buttonAction(sender: UIButton!) {
+    private func buttonAction() {
         let postViewController = PostViewController()
         let titlePost: Post = Post(title: "Post")
         postViewController.title = titlePost.title
