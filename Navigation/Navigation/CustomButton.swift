@@ -17,11 +17,12 @@ final class CustomButton: UIButton {
     
     // MARK: - Init
     
-    init(title: String, titleColor: UIColor, buttonAction: @escaping () -> Void) {
+    init(title: String, titleColor: UIColor, backgoundColor: UIColor, buttonAction: @escaping () -> Void) {
         self.buttonAction = buttonAction
         super.init(frame: .zero)
         self.setTitle(title, for: .normal)
         self.setTitleColor(titleColor, for: .normal)
+        self.backgroundColor = backgoundColor
         self.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }
     
