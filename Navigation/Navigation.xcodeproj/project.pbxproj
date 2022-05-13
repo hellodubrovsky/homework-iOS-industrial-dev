@@ -28,6 +28,7 @@
 		F49DC37B27515432004F9DCE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49DC37A27515432004F9DCE /* AppDelegate.swift */; };
 		F49DC38427515434004F9DCE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F49DC38327515434004F9DCE /* Assets.xcassets */; };
 		F49DC38727515434004F9DCE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F49DC38527515434004F9DCE /* LaunchScreen.storyboard */; };
+		F4A1B259282E7C2100E413E9 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A1B258282E7C2100E413E9 /* CustomButton.swift */; };
 		F4CC3780279FD26000294ADB /* PhotosModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4CC377F279FD26000294ADB /* PhotosModel.swift */; };
 		F4DDFA8F27A04C4300CFD226 /* PhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DDFA8E27A04C4300CFD226 /* PhotosCollectionViewCell.swift */; };
 		F4F074542753E0360034579A /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F074532753E0360034579A /* PostViewController.swift */; };
@@ -86,6 +87,7 @@
 		F49DC38327515434004F9DCE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F49DC38627515434004F9DCE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F49DC38827515434004F9DCE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F4A1B258282E7C2100E413E9 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		F4CC377F279FD26000294ADB /* PhotosModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosModel.swift; sourceTree = "<group>"; };
 		F4DDFA8E27A04C4300CFD226 /* PhotosCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewCell.swift; sourceTree = "<group>"; };
 		F4F074532753E0360034579A /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
@@ -193,9 +195,18 @@
 				F4EC692F27F9A0A7007273D4 /* FeedScreen */,
 				F4219562276868A400487AE7 /* ProfileScreen */,
 				F48F938F27F59B290035F9F9 /* UserData */,
+				F4A1B257282E7BF700E413E9 /* CustomButton */,
 				F4C0136D280CC8F40003F2AA /* Resourses */,
 			);
 			path = Navigation;
+			sourceTree = "<group>";
+		};
+		F4A1B257282E7BF700E413E9 /* CustomButton */ = {
+			isa = PBXGroup;
+			children = (
+				F4A1B258282E7C2100E413E9 /* CustomButton.swift */,
+			);
+			name = CustomButton;
 			sourceTree = "<group>";
 		};
 		F4C0136A280CC7B50003F2AA /* PostScreen */ = {
@@ -453,6 +464,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F48F939327F59C150035F9F9 /* UserService.swift in Sources */,
+				F4A1B259282E7C2100E413E9 /* CustomButton.swift in Sources */,
 				F48F939127F59B530035F9F9 /* User.swift in Sources */,
 				F4826DCA279EFC820040A364 /* PhotosTableViewCell.swift in Sources */,
 				F4826DCC279F35150040A364 /* PhotosViewController.swift in Sources */,
