@@ -13,11 +13,15 @@ final class FeedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         settingView()
+        addObserversForPassword()
     }
     
     
     
     // MARK: - Private properties
+    
+    // Модель для проверки пароля.
+    private let passwordModel = FeedModel()
     
     // Создание StackView с двумя кнопками.
     private let stackView: UIStackView = {
@@ -60,8 +64,8 @@ final class FeedViewController: UIViewController {
     }()
     
     // Кастомная кнопка для проверки пароля
-    private let buttonCheckPassword: UIButton = {
-        let button = CustomButton(title: "Check", titleColor: .white, backgoundColor: UIColor(red: 0.57, green: 0.62, blue: 0.70, alpha: 0.1), cornerRadius: 20, buttonAction: {})
+    private lazy var buttonCheckPassword: UIButton = {
+        let button = CustomButton(title: "Check", titleColor: .white, backgoundColor: UIColor(red: 0.57, green: 0.62, blue: 0.70, alpha: 0.1), cornerRadius: 20, buttonAction: { self.passwordModel.check(word: self.passwordTextField.text!) })
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.yellow.cgColor
         return button
@@ -73,10 +77,10 @@ final class FeedViewController: UIViewController {
         label.textColor = .white
         label.layer.cornerRadius = 20
         label.layer.borderWidth = 1
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.backgroundColor = .gray
         label.textAlignment = .center
         label.isHidden = true
+        label.clipsToBounds = true
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -90,6 +94,35 @@ final class FeedViewController: UIViewController {
         let titlePost: Post = Post(title: "Post")
         postViewController.title = titlePost.title
         self.navigationController?.pushViewController(postViewController, animated: true)
+    }
+    
+    // Добавление наблюдателей (для пароля).
+    private func addObserversForPassword() {
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(correctPassword), name: Notification.Name("correctPassword"), object: nil)
+        notificationCenter.addObserver(self, selector: #selector(incorrectPassword), name: Notification.Name("incorrectPassword"), object: nil)
+        notificationCenter.addObserver(self, selector: #selector(emptyPassword), name: Notification.Name("emptyPassword"), object: nil)
+    }
+    
+    @objc
+    private func correctPassword() {
+        passwordStatusLabel.isHidden = false
+        passwordStatusLabel.text = "Correct Password"
+        passwordStatusLabel.layer.borderColor = UIColor.green.cgColor
+    }
+    
+    @objc
+    private func incorrectPassword() {
+        passwordStatusLabel.isHidden = false
+        passwordStatusLabel.text = "Incorrect Password"
+        passwordStatusLabel.layer.borderColor = UIColor.red.cgColor
+    }
+    
+    @objc
+    private func emptyPassword() {
+        passwordStatusLabel.isHidden = false
+        passwordStatusLabel.text = "Empty Password"
+        passwordStatusLabel.layer.borderColor = UIColor.purple.cgColor
     }
     
     
