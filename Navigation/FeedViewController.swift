@@ -50,6 +50,36 @@ final class FeedViewController: UIViewController {
         return button
     }()
     
+    // Кастомный textField для ввода пароля
+    private let passwordTextField: UITextField = {
+        let textField = CustomTextField(text: nil, textPlaceholder: "Write password...", colorPlaceholder: .gray, textColor: .white, radius: 20, borderWidth: 1, borderColor: .yellow)
+        textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 50))
+        textField.leftViewMode = .always
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        return textField
+    }()
+    
+    // Кастомная кнопка для проверки пароля
+    private let buttonCheckPassword: UIButton = {
+        let button = CustomButton(title: "Check", titleColor: .white, backgoundColor: UIColor(red: 0.57, green: 0.62, blue: 0.70, alpha: 0.1), cornerRadius: 20, buttonAction: {})
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.yellow.cgColor
+        return button
+    }()
+    
+    // Лейбл, отображающий статус правильности введенного пароля
+    private lazy var passwordStatusLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.layer.cornerRadius = 20
+        label.layer.borderWidth = 1
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.backgroundColor = .gray
+        label.textAlignment = .center
+        label.isHidden = true
+        return label
+    }()
+    
     
     
     // MARK: - Private methods
@@ -71,6 +101,9 @@ final class FeedViewController: UIViewController {
         title = "Feed"
         view.backgroundColor = UIColor(red: 0.53, green: 0.47, blue: 0.68, alpha: 0.1)
         view.addSubview(stackView)
+        view.addSubview(passwordTextField)
+        view.addSubview(buttonCheckPassword)
+        view.addSubview(passwordStatusLabel)
         stackView.addArrangedSubview(buttonPostFirst)
         stackView.addArrangedSubview(buttonPostSecond)
         installingConstants()
@@ -82,7 +115,22 @@ final class FeedViewController: UIViewController {
             stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 0),
             stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0),
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0)
+            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            
+            passwordTextField.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 20),
+            passwordTextField.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20),
+            passwordTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20),
+            passwordTextField.heightAnchor.constraint(equalToConstant: 50),
+            
+            buttonCheckPassword.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 10),
+            buttonCheckPassword.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20),
+            buttonCheckPassword.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20),
+            buttonCheckPassword.heightAnchor.constraint(equalToConstant: 50),
+            
+            passwordStatusLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            passwordStatusLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 50),
+            passwordStatusLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -50),
+            passwordStatusLabel.heightAnchor.constraint(equalToConstant: 50),
         ])
     }
 }
