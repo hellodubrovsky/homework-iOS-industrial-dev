@@ -96,13 +96,11 @@ final class FeedView: UIView {
     
     // Настройка View
     private func settingView() {
+        let subviews = [stackView, passwordTextField, buttonCheckPassword, passwordStatusLabel]
+        let subviewsStack = [buttonPostFirst, buttonPostSecond]
+        self.addSubviews(subviews)
+        self.addArrangedSubviews(stack: stackView, views: subviewsStack)
         self.backgroundColor = UIColor(red: 0.53, green: 0.47, blue: 0.68, alpha: 0.1)
-        self.addSubview(stackView)
-        self.addSubview(passwordTextField)
-        self.addSubview(buttonCheckPassword)
-        self.addSubview(passwordStatusLabel)
-        stackView.addArrangedSubview(buttonPostFirst)
-        stackView.addArrangedSubview(buttonPostSecond)
         installingConstants()
     }
     
