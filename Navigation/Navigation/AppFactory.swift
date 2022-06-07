@@ -18,6 +18,7 @@ final class AppFactory {
         tabBarController.tabBar.unselectedItemTintColor = .black
         let backgroundColor = UIColor(red: CGFloat(238.0 / 255.0), green: CGFloat(238.0 / 255.0), blue: CGFloat(238.0 / 255.0), alpha: CGFloat(1.0))
         tabBarController.tabBar.backgroundColor = backgroundColor
+        tabBarController.tabBar.isTranslucent = false
         return tabBarController
     }
     

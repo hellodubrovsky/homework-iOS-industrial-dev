@@ -6,17 +6,24 @@
 //
 
 import UIKit
+import iOSIntPackage
+
 
 final class PhotosViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         settingView()
+        imageFacade.subscribe(self)
+        imageFacade.addImagesWithTimer(time: 0.2, repeat: photosNameProfiles.count)
     }
     
     
     
     // MARK: - Private properties.
+    
+    private let imageFacade = ImagePublisherFacade()
+    private var imagesUser: [UIImage] = []
     
     private let collectionView: UICollectionView = {
         var viewLayout = UICollectionViewFlowLayout()
@@ -24,6 +31,11 @@ final class PhotosViewController: UIViewController {
         collectionView.backgroundColor = .white
         return collectionView
     }()
+    
+    deinit {
+        imageFacade.rechargeImageLibrary()
+        imageFacade.removeSubscription(for: self)
+    }
     
     
     
@@ -67,7 +79,7 @@ extension PhotosViewController: UICollectionViewDataSource {
     
     // Сколько ячеек, будет в одной секции
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photosNameProfiles.count
+        return imagesUser.count
     }
     
     // Заполнение ячеек данными.
@@ -112,5 +124,19 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 8
+    }
+}
+
+
+
+
+
+// MARK: - Protocol:
+
+extension PhotosViewController: ImageLibrarySubscriber {
+    func receive(images: [UIImage]) {
+        self.imagesUser = []
+        images.forEach { imagesUser.append($0) }
+        self.collectionView.reloadData()
     }
 }
