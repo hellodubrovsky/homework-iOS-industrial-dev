@@ -7,18 +7,16 @@
 
 import UIKit
 
-class InfoViewController: UIViewController {
+final class InfoViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(red: 0.61, green: 0, blue: 0, alpha: 1)
-        navigationController?.navigationBar.tintColor = . white
-        self.title = "Info"
-        view.addSubview(buttonShowAlert)
-        addingLayoutConstraints()
+        settingView()
     }
     
-    // MARK: - Private object's
+    
+    
+    // MARK: - Private properties
     
     // Cоздание кнопки "Показать алерт".
     private let buttonShowAlert: UIButton = {
@@ -29,10 +27,13 @@ class InfoViewController: UIViewController {
         button.layer.cornerRadius = 20
         button.setTitle("Show alert", for: .normal)
         button.addTarget(self, action: #selector(buttonAlertAction), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
-    // MARK: - Private method's
+    
+    
+    // MARK: - Private methods
     
     // Показ алерта при нажатии на кнопку "Показать алерт".
     @objc private func buttonAlertAction(sender: UIButton) {
@@ -44,8 +45,21 @@ class InfoViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    private func addingLayoutConstraints() {
-        buttonShowAlert.translatesAutoresizingMaskIntoConstraints = false
+    
+    
+    // MARK: - View configuration
+    
+    // Настройка View
+    private func settingView() {
+        self.title = "Info"
+        view.backgroundColor = UIColor(red: 0.61, green: 0, blue: 0, alpha: 1)
+        navigationController?.navigationBar.tintColor = .white
+        view.addSubview(buttonShowAlert)
+        installingConstants()
+    }
+    
+    // Настройка констрейнтов
+    private func installingConstants() {
         NSLayoutConstraint.activate([
             buttonShowAlert.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             buttonShowAlert.centerYAnchor.constraint(equalTo: view.centerYAnchor),

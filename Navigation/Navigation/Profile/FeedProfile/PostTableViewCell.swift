@@ -7,16 +7,25 @@
 
 import UIKit
 
-class PostTableViewCell: UITableViewCell {
+final class PostTableViewCell: UITableViewCell {
+    
+    // MARK: - Public methods
+    
+    public func update(name: String, image: UIImage, description: String, countLikes: Int, countViews: Int) {
+        authorPostLabel.text = name
+        postImageView.image = image
+        postDescriptionLabel.text = description
+        postCountLikes.text = "Likes: \(countLikes)"
+        postCountViews.text = "Views: \(countViews)"
+    }
+    
+    
+    
+    // MARK: - Initializer
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
-        contentView.addSubview(authorPostLabel)
-        contentView.addSubview(postImageView)
-        contentView.addSubview(postDescriptionLabel)
-        contentView.addSubview(postCountLikes)
-        contentView.addSubview(postCountViews)
-        addLayoutConstraint()
+        settingView()
     }
     
     required init?(coder: NSCoder) {
@@ -25,7 +34,7 @@ class PostTableViewCell: UITableViewCell {
     
     
     
-    // MARK: Private object's
+    // MARK: - Private properties
     
     private lazy var authorPostLabel: UILabel = {
         let label = UILabel()
@@ -72,21 +81,18 @@ class PostTableViewCell: UITableViewCell {
     
     
     
-    // MARK: Public method's
+    // MARK: - View configuration
     
-    public func update(name: String, image: UIImage, description: String, countLikes: Int, countViews: Int) {
-        authorPostLabel.text = name
-        postImageView.image = image
-        postDescriptionLabel.text = description
-        postCountLikes.text = "Likes: \(countLikes)"
-        postCountViews.text = "Views: \(countViews)"
+    private func settingView() {
+        contentView.addSubview(authorPostLabel)
+        contentView.addSubview(postImageView)
+        contentView.addSubview(postDescriptionLabel)
+        contentView.addSubview(postCountLikes)
+        contentView.addSubview(postCountViews)
+        installingConstraints()
     }
     
-    
-
-    // MARK: Private method's
-    
-    private func addLayoutConstraint() {
+    private func installingConstraints() {
         NSLayoutConstraint.activate([
             contentView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width + 186),
             authorPostLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16.0),

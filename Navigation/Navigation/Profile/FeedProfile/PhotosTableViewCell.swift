@@ -7,18 +7,13 @@
 
 import UIKit
 
-class PhotosTableViewCell: UITableViewCell {
+final class PhotosTableViewCell: UITableViewCell {
 
+    // MARK: - Initializer
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
-        contentView.backgroundColor = .white
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(arrowButton)
-        contentView.addSubview(photosCollectionView)
-        photosCollectionView.dataSource = self
-        photosCollectionView.delegate = self
-        photosCollectionView.register(PhotosCollectionViewCell.self, forCellWithReuseIdentifier: PhotosCollectionViewCell.identifier)
-        addLayoutConstraint()
+        settingView()
     }
 
     required init?(coder: NSCoder) {
@@ -27,7 +22,7 @@ class PhotosTableViewCell: UITableViewCell {
     
     
     
-    // MARK: Private objects.
+    // MARK: Private properties.
     
     private let titleLabel: UILabel = {
         var label = UILabel()
@@ -56,9 +51,20 @@ class PhotosTableViewCell: UITableViewCell {
 
 
 
-    // MARK: Private method's
+    // MARK: View configuration
     
-    private func addLayoutConstraint() {
+    private func settingView() {
+        contentView.backgroundColor = .white
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(arrowButton)
+        contentView.addSubview(photosCollectionView)
+        photosCollectionView.dataSource = self
+        photosCollectionView.delegate = self
+        photosCollectionView.register(PhotosCollectionViewCell.self, forCellWithReuseIdentifier: PhotosCollectionViewCell.identifier)
+        installingConstraints()
+    }
+    
+    private func installingConstraints() {
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
@@ -77,7 +83,7 @@ class PhotosTableViewCell: UITableViewCell {
 
 
 
-// MARK: - DataSource
+// MARK: - Setting cell (DataSource)
 
 extension PhotosTableViewCell: UICollectionViewDataSource {
     
@@ -100,7 +106,7 @@ extension PhotosTableViewCell: UICollectionViewDataSource {
 
 
 
-// MARK: - Delegate
+// MARK: - Setting cell (Delegate)
 
 extension PhotosTableViewCell: UICollectionViewDelegateFlowLayout {
     

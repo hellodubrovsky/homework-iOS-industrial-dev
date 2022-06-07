@@ -12,12 +12,28 @@ protocol ReusableView: AnyObject {
     static var identifier: String { get }
 }
 
-class PhotosCollectionViewCell: UICollectionViewCell {
+final class PhotosCollectionViewCell: UICollectionViewCell {
+    
+    // MARK: - Public methods.
+    
+    func update(with photos: PhotoProfile, for screen: ScreenProfile) {
+        switch screen {
+        case .profilePhoto:
+            photoImageView.image = UIImage(named: photos.imageName)
+        case .profileFeed:
+            photoImageView.clipsToBounds = true
+            photoImageView.layer.cornerRadius = 6.0
+            photoImageView.image = UIImage(named: photos.imageName)
+        }
+    }
+    
+    
+    
+    // MARK: - Initializer
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
-        setupView()
-        setupLayout()
+        settingView()
     }
     
     required init?(coder: NSCoder) {
@@ -26,7 +42,7 @@ class PhotosCollectionViewCell: UICollectionViewCell {
     
     
     
-    // MARK: Private objects.
+    // MARK: - Private properties.
     
     private var photoImageView: UIImageView = {
         var imageView = UIImageView(frame: .zero)
@@ -47,14 +63,15 @@ class PhotosCollectionViewCell: UICollectionViewCell {
     
     
     
-    // MARK: Private methods.
+    // MARK: - View configuration.
     
-    private func setupView() {
+    private func settingView() {
         contentView.clipsToBounds = true
         contentView.addSubview(photoImageView)
+        installingConstraints()
     }
     
-    private func setupLayout() {
+    private func installingConstraints() {
         photoImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             photoImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -63,17 +80,6 @@ class PhotosCollectionViewCell: UICollectionViewCell {
             photoImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
-    
-    func update(with photos: PhotoProfile, for screen: ScreenProfile) {
-        switch screen {
-        case .profilePhoto:
-            photoImageView.image = UIImage(named: photos.imageName)
-        case .profileFeed:
-            photoImageView.clipsToBounds = true
-            photoImageView.layer.cornerRadius = 6.0
-            photoImageView.image = UIImage(named: photos.imageName)
-        }
-    }
 }
 
 
@@ -81,6 +87,7 @@ class PhotosCollectionViewCell: UICollectionViewCell {
 
 
 // MARK: - Unique ID for collectionView
+
 extension PhotosCollectionViewCell: ReusableView {
     static var identifier: String { String(describing: self) }
 }

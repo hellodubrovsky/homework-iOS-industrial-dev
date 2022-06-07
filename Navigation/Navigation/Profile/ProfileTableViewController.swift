@@ -9,16 +9,11 @@ import UIKit
 import StorageService
 import iOSIntPackage
 
-class ProfileViewController: UIViewController {
+final class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(tableView)
-        tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: cellReuseIdentifiers.photo)
-        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: cellReuseIdentifiers.posts)
-        tableView.dataSource = self
-        tableView.delegate = self
-        addLayoutConstraint()
+        settingView()
     }
     
     // Реализовано для того, чтобы при возврате из photosViewController'а скрывался navigationBar.
@@ -28,10 +23,7 @@ class ProfileViewController: UIViewController {
     
     
     
-    // MARK: Private object's
-    
-    private var userService: UserService!
-    private var userName: String!
+    // MARK: - Public initializer
     
     init(userService: UserService, userName: String) {
         super.init(nibName: nil, bundle: nil)
@@ -42,6 +34,13 @@ class ProfileViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    
+    
+    // MARK: - Private properties
+    
+    private var userService: UserService!
+    private var userName: String!
     
     // Фильтр для постов
     private let imageProcessor = ImageProcessor()
@@ -76,26 +75,46 @@ class ProfileViewController: UIViewController {
     
     
     
-    // MARK: Private method's
+    // MARK: - Private methods
     
-    private func addLayoutConstraint() {
+    // Avatar (передаём размеры, чтобы можно было растянуть аватар на весь экран)
+    private func transferOfViewSizes() {
+        ProfileHeaderView.ConstraintsForAvatarAndItsBackground.center = view.center
+        ProfileHeaderView.ConstraintsForAvatarAndItsBackground.width = view.frame.size.width
+        ProfileHeaderView.ConstraintsForAvatarAndItsBackground.heightBackground = view.frame.size.height
+    }
+    
+    
+    
+    // MARK: - View configuration
+    
+    // Настройка view
+    private func settingView() {
+        view.addSubview(tableView)
+        tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: cellReuseIdentifiers.photo)
+        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: cellReuseIdentifiers.posts)
+        tableView.dataSource = self
+        tableView.delegate = self
+        installingConstraints()
+        transferOfViewSizes()
+    }
+    
+    // Настройка констрейнтов
+    private func installingConstraints() {
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         ])
-        
-        // Avatar (передаём размеры, чтобы можно было растянуть аватар на весь экран)
-        ProfileHeaderView.ConstraintsForAvatarAndItsBackground.center = view.center
-        ProfileHeaderView.ConstraintsForAvatarAndItsBackground.width = view.frame.size.width
-        ProfileHeaderView.ConstraintsForAvatarAndItsBackground.heightBackground = view.frame.size.height
     }
 }
 
 
 
-// MARK: - Extension (tableView protocol's)
+
+
+// MARK: - Setting tableView
 
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     

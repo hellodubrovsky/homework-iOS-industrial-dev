@@ -8,21 +8,7 @@
 import UIKit
 import SnapKit
 
-class ProfileHeaderView: UIView {
-    
-    init(name: String, status: String?, image: UIImage?) {
-        super.init(frame: .zero)
-        self.name = name
-        self.status = status
-        self.image = image
-        setView()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    
+final class ProfileHeaderView: UIView {
     
     // MARK: Constants for avatar and it's background
     
@@ -32,9 +18,25 @@ class ProfileHeaderView: UIView {
         static var heightBackground: CGFloat?
     }
     
+    
+    
+    // MARK: - Public initializer
+    
+    init(name: String, status: String?, image: UIImage?) {
+        super.init(frame: .zero)
+        self.name = name
+        self.status = status
+        self.image = image
+        settingView()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
 
 
-    // MARK: Private object's
+    // MARK: - Private properties
     
     private var name: String!
     private var status: String?
@@ -84,7 +86,7 @@ class ProfileHeaderView: UIView {
         return button
     }()
     
-    internal let viewBackground: UIView = {
+    private let viewBackground: UIView = {
         var view = UIView()
         view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.7)
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -125,10 +127,10 @@ class ProfileHeaderView: UIView {
     
     
     
-    // MARK: Private method's
+    // MARK: - Private methods
     
     // Действие, по нажатию на маленький аватар
-    @objc func actionByClickingOnAvatar() {
+    @objc private func actionByClickingOnAvatar() {
         self.userImage.snp.removeConstraints()
         self.userImage.snp.updateConstraints { make in
             make.center.equalTo(ConstraintsForAvatarAndItsBackground.center!)
@@ -150,10 +152,10 @@ class ProfileHeaderView: UIView {
     }
     
     // Действие, по нажатию на расширенный аватар
-    @objc func backButtonAction() {
+    @objc private func backButtonAction() {
         userImage.snp.removeConstraints()
         viewBackground.snp.removeConstraints()
-        setView()
+        settingView()
         
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations: {
             self.layoutIfNeeded()
@@ -163,21 +165,22 @@ class ProfileHeaderView: UIView {
         }, completion: { _ in self.cancelButton.isHidden = true })
     }
     
+    // Обработка нажатия на кнопку отображение статуса
     @objc private func buttonShowStatusPressed() {
         guard statusText != "" else { return }
         userDescription.text = statusText
     }
     
-    @objc func statusTextChanged(_ textField: UITextField) {
+    @objc private func statusTextChanged(_ textField: UITextField) {
         statusText = textField.text ?? ""
     }
     
     
     
-    // MARK: SET VIEW
+    // MARK: - View configuration
     
-    private func setView() {
-        
+    // Настройка View
+    private func settingView() {
         self.addSubview(userName)
         self.addSubview(userDescription)
         self.addSubview(buttonShowStatus)
@@ -185,7 +188,11 @@ class ProfileHeaderView: UIView {
         self.addSubview(viewBackground)
         self.addSubview(cancelButton)
         self.addSubview(userImage)
-        
+        installingConstraints()
+    }
+    
+    // Настройка констрейнтов
+    private func installingConstraints() {
         self.userName.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide).inset(27)
             make.centerX.equalToSuperview()

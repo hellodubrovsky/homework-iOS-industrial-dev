@@ -7,30 +7,49 @@
 
 import UIKit
 
-class LogInViewController: UIViewController {
+// MARK: - LogInViewControllerDelegate
+
+protocol LogInViewControllerDelegate: AnyObject {
+    func check(login: String, password: String) -> Bool
+}
+
+
+
+
+
+// MARK: - LogInspector
+
+class LogInInspector: LogInViewControllerDelegate {
+    func check(login: String, password: String) -> Bool {
+        return Checker.shared.check(login: login, password: password)
+    }
+}
+
+
+
+
+
+// MARK: - LogInViewController
+
+final class LogInViewController: UIViewController {
+    
+    // MARK: - Public properties
+    weak var delegate: LogInViewControllerDelegate?
+    
+    
+    
+    // MARK: - Public methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-        navigationController?.navigationBar.tintColor = . white
-        navigationController?.navigationBar.isHidden = true
-        
-        view.addSubview(scrollView)
-        scrollView.addSubview(contentView)
-        contentView.addSubview(iconLogoVK)
-        contentView.addSubview(inputFieldStackView)
-        contentView.addSubview(logInButton)
-        inputFieldStackView.addArrangedSubview(loginInputTextField)
-        inputFieldStackView.addArrangedSubview(passwordInputTextField)
-        
+        settingView()
         setupTapGesture()
-        activatingConstraints()
     }
     
     
     
-    // MARK: Private object's
-
+    // MARK: - Private properties
+    
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.showsVerticalScrollIndicator = true
@@ -106,79 +125,19 @@ class LogInViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-}
-
-
-
-
-
-// MARK: - Keyboard
-
-extension LogInViewController {
-    
-    // MARK: Observers keyboard.
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(self.willShowKeyboard(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(self.willHideKeyboard(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        let notificationCenter = NotificationCenter.default
-        notificationCenter.removeObserver(self)
-    }
     
     
     
-    // MARK: Show/Hide keyboard method's.
-    /* https://stackoverflow.com/questions/26689232/scrollview-and-keyboard-in-swift */
+    // MARK: - Private methods
     
-    @objc fileprivate func willShowKeyboard(_ notification: NSNotification) {
-        guard let userInfo = notification.userInfo else { return }
-        var keyboardFrame:CGRect = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
-        keyboardFrame = self.view.convert(keyboardFrame, from: nil)
-        var contentInset: UIEdgeInsets = self.scrollView.contentInset
-        contentInset.bottom = keyboardFrame.size.height + 20
-        scrollView.contentInset = contentInset
-    }
-
-    @objc fileprivate func willHideKeyboard(_ notification: NSNotification) {
-        let contentInset: UIEdgeInsets = UIEdgeInsets.zero
-        scrollView.contentInset = contentInset
-    }
-    
-    
-    
-    // MARK: Hiding the keyboard by tap.
-    /* https://developer.apple.com/documentation/uikit/uiview/1622507-layoutifneeded */
-    
-    fileprivate func setupTapGesture() {
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapDismiss)))
-    }
-
-    @objc fileprivate func handleTapDismiss() {
-        view.endEditing(true)
-        view.layoutIfNeeded()
-    }
-}
-
-
-
-
-
-// MARK: - Private method's
-
-extension LogInViewController {
-    
+    // Обработка нажатия на кнопку "Log in"
     @objc private func buttonLogInAction() {
         guard (loginInputTextField.text?.isEmpty == false) else {
             displayingAnAlertWithWarningForTheLoginField()
             return
         }
         let userName = loginInputTextField.text!
+        let userPassword = passwordInputTextField.text!
         
         #if DEBUG
         let cervice = TestUserService()
@@ -187,17 +146,63 @@ extension LogInViewController {
         let cervice = CurrentUserService(user: user)
         #endif
         
+        
+        // TODO: Проблема! Домашнее задание №4.
+        // Назначение делегата не должно происходить здесь, после нахождения ответа, нужно убрать!
+        let logIn = LogInInspector()
+        self.delegate = logIn
+        
+        
+        
+        guard let check = delegate?.check(login: userName, password: userPassword), check == true else {
+            displayingAnAlertWithWarningForLoginAndPassword()
+            return
+        }
         let viewController = ProfileViewController(userService: cervice, userName: userName)
         navigationController?.pushViewController(viewController, animated: true)
     }
     
+    // Показ алерта, информирующего о необходимости заполнения поля login
     private func displayingAnAlertWithWarningForTheLoginField() {
         let alert = UIAlertController(title: "Предупреждение", message: "Поле ввода логина не может быть пустым.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
     
-    private func activatingConstraints() {
+    // Показ алерта, информирующего о необходимости заполнения полей login или password
+    private func displayingAnAlertWithWarningForLoginAndPassword() {
+        
+        var message: String = "Поле 'логин' или 'пароль' содержат некорректные значения."
+        
+        #if DEBUG
+        message = message + "Подсказка для dev-сборки. Логин: login, Пароль: pass."
+        #endif
+
+        let alert = UIAlertController(title: "Предупреждение", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    
+    
+    // MARK: - View configuration
+    
+    // Настройка View
+    private func settingView() {
+        view.backgroundColor = .white
+        navigationController?.navigationBar.tintColor = . white
+        navigationController?.navigationBar.isHidden = true
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        contentView.addSubview(iconLogoVK)
+        contentView.addSubview(inputFieldStackView)
+        contentView.addSubview(logInButton)
+        inputFieldStackView.addArrangedSubview(loginInputTextField)
+        inputFieldStackView.addArrangedSubview(passwordInputTextField)
+        installingConstraints()
+    }
+    
+    private func installingConstraints() {
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -226,5 +231,62 @@ extension LogInViewController {
             logInButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16.0),
             logInButton.heightAnchor.constraint(equalToConstant: 50)
         ])
+    }
+}
+
+
+
+
+
+// MARK: - Keyboard Control
+
+extension LogInViewController {
+    
+    // Observers keyboard.
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(self.willShowKeyboard(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(self.willHideKeyboard(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.removeObserver(self)
+    }
+    
+    
+    
+    // Show/Hide keyboard method's.
+    /* https://stackoverflow.com/questions/26689232/scrollview-and-keyboard-in-swift */
+    
+    @objc fileprivate func willShowKeyboard(_ notification: NSNotification) {
+        guard let userInfo = notification.userInfo else { return }
+        var keyboardFrame:CGRect = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+        keyboardFrame = self.view.convert(keyboardFrame, from: nil)
+        var contentInset: UIEdgeInsets = self.scrollView.contentInset
+        contentInset.bottom = keyboardFrame.size.height + 20
+        scrollView.contentInset = contentInset
+    }
+
+    @objc fileprivate func willHideKeyboard(_ notification: NSNotification) {
+        let contentInset: UIEdgeInsets = UIEdgeInsets.zero
+        scrollView.contentInset = contentInset
+    }
+    
+    
+    
+    // Hiding the keyboard by tap.
+    /* https://developer.apple.com/documentation/uikit/uiview/1622507-layoutifneeded */
+    
+    fileprivate func setupTapGesture() {
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapDismiss)))
+    }
+
+    @objc fileprivate func handleTapDismiss() {
+        view.endEditing(true)
+        view.layoutIfNeeded()
     }
 }
