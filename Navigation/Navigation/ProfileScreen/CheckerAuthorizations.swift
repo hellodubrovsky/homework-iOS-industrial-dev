@@ -23,7 +23,6 @@ final class Checker {
     
     // MARK: - Public methods
     func check(login: String, password: String) -> Bool {
-        guard (login == self.login) && (password == self.password) else { return false }
-        return true
+        login == self.login && password == self.password
     }
 }
