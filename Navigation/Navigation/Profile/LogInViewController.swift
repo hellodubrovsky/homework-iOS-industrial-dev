@@ -34,7 +34,7 @@ class LogInInspector: LogInViewControllerDelegate {
 final class LogInViewController: UIViewController {
     
     // MARK: - Public properties
-    var delegate: LogInViewControllerDelegate?
+    weak var delegate: LogInViewControllerDelegate?
     
     
     
@@ -117,7 +117,12 @@ final class LogInViewController: UIViewController {
     }()
     
     private lazy var logInButton: UIButton = {
-        let button = CustomButton(title: "Log In", titleColor: .white, backgoundColor: UIColor.init(named: "colorBaseVK")!, cornerRadius: 10) { self.buttonLogInAction() }
+        let button = UIButton()
+        button.setTitle("Log In", for: .normal)
+        button.backgroundColor = UIColor.init(named: "colorBaseVK")
+        button.layer.cornerRadius = 10
+        button.addTarget(nil, action: #selector(buttonLogInAction), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
@@ -126,7 +131,7 @@ final class LogInViewController: UIViewController {
     // MARK: - Private methods
     
     // Обработка нажатия на кнопку "Log in"
-    private func buttonLogInAction() {
+    @objc private func buttonLogInAction() {
         guard (loginInputTextField.text?.isEmpty == false) else {
             displayingAnAlertWithWarningForTheLoginField()
             return
@@ -140,6 +145,14 @@ final class LogInViewController: UIViewController {
         let user = User(name: userName)
         let cervice = CurrentUserService(user: user)
         #endif
+        
+        
+        // TODO: Проблема! Домашнее задание №4.
+        // Назначение делегата не должно происходить здесь, после нахождения ответа, нужно убрать!
+        let logIn = LogInInspector()
+        self.delegate = logIn
+        
+        
         
         guard let check = delegate?.check(login: userName, password: userPassword), check == true else {
             displayingAnAlertWithWarningForLoginAndPassword()
