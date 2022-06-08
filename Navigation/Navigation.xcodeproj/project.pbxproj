@@ -33,6 +33,8 @@
 		F49DC38427515434004F9DCE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F49DC38327515434004F9DCE /* Assets.xcassets */; };
 		F49DC38727515434004F9DCE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F49DC38527515434004F9DCE /* LaunchScreen.storyboard */; };
 		F4A1B259282E7C2100E413E9 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A1B258282E7C2100E413E9 /* CustomButton.swift */; };
+		F4BFE1912851027000D3BCEE /* FeedPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BFE1902851027000D3BCEE /* FeedPresenter.swift */; };
+		F4BFE19328510A9C00D3BCEE /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BFE19228510A9C00D3BCEE /* Enums.swift */; };
 		F4CC3780279FD26000294ADB /* PhotosModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4CC377F279FD26000294ADB /* PhotosModel.swift */; };
 		F4DDFA8F27A04C4300CFD226 /* PhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DDFA8E27A04C4300CFD226 /* PhotosCollectionViewCell.swift */; };
 		F4F074542753E0360034579A /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F074532753E0360034579A /* PostViewController.swift */; };
@@ -96,6 +98,8 @@
 		F49DC38627515434004F9DCE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F49DC38827515434004F9DCE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F4A1B258282E7C2100E413E9 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		F4BFE1902851027000D3BCEE /* FeedPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPresenter.swift; sourceTree = "<group>"; };
+		F4BFE19228510A9C00D3BCEE /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		F4CC377F279FD26000294ADB /* PhotosModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosModel.swift; sourceTree = "<group>"; };
 		F4DDFA8E27A04C4300CFD226 /* PhotosCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewCell.swift; sourceTree = "<group>"; };
 		F4F074532753E0360034579A /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
@@ -253,6 +257,7 @@
 		F4C0136D280CC8F40003F2AA /* Resourses */ = {
 			isa = PBXGroup;
 			children = (
+				F4BFE19228510A9C00D3BCEE /* Enums.swift */,
 				F48E4DAF2830CC9E00AA5FC0 /* Extensions.swift */,
 				F49DC38327515434004F9DCE /* Assets.xcassets */,
 				F49DC38827515434004F9DCE /* Info.plist */,
@@ -275,6 +280,7 @@
 			children = (
 				F48E4DAD2830BBF700AA5FC0 /* FeedView.swift */,
 				F48E4DA928306B1700AA5FC0 /* FeedModel.swift */,
+				F4BFE1902851027000D3BCEE /* FeedPresenter.swift */,
 				F48F37202752290E008C6565 /* FeedViewController.swift */,
 				F4C0136A280CC7B50003F2AA /* PostScreen */,
 			);
@@ -477,6 +483,7 @@
 			files = (
 				F48E4DB02830CC9E00AA5FC0 /* Extensions.swift in Sources */,
 				F48F939327F59C150035F9F9 /* UserService.swift in Sources */,
+				F4BFE19328510A9C00D3BCEE /* Enums.swift in Sources */,
 				F4A1B259282E7C2100E413E9 /* CustomButton.swift in Sources */,
 				F48F939127F59B530035F9F9 /* User.swift in Sources */,
 				F48E4DAC28307EC500AA5FC0 /* CustomTextFiled.swift in Sources */,
@@ -485,6 +492,7 @@
 				F48E4DAE2830BBF700AA5FC0 /* FeedView.swift in Sources */,
 				F4CC3780279FD26000294ADB /* PhotosModel.swift in Sources */,
 				F48F371D27522200008C6565 /* ProfileTableViewController.swift in Sources */,
+				F4BFE1912851027000D3BCEE /* FeedPresenter.swift in Sources */,
 				F48E4DAA28306B1700AA5FC0 /* FeedModel.swift in Sources */,
 				F4DDFA8F27A04C4300CFD226 /* PhotosCollectionViewCell.swift in Sources */,
 				F408845F27FF255A002D8812 /* AppManager.swift in Sources */,
