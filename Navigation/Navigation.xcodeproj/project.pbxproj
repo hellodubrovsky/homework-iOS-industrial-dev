@@ -13,6 +13,10 @@
 		F408845F27FF255A002D8812 /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F408845E27FF255A002D8812 /* AppManager.swift */; };
 		F408846127FF5CA7002D8812 /* CheckerAuthorizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = F408846027FF5CA7002D8812 /* CheckerAuthorizations.swift */; };
 		F4219566276869AE00487AE7 /* ProfileTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4219565276869AE00487AE7 /* ProfileTableHeaderView.swift */; };
+		F4221DF9285129B400376F07 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4221DF8285129B400376F07 /* MainTabBarController.swift */; };
+		F4221DFC28512A2A00376F07 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4221DFB28512A2A00376F07 /* MainCoordinator.swift */; };
+		F4221DFE28512A8900376F07 /* FeedCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4221DFD28512A8900376F07 /* FeedCoordinator.swift */; };
+		F4221E0028512AAB00376F07 /* CoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4221DFF28512AAB00376F07 /* CoordinatorProtocol.swift */; };
 		F43C9A5B27E9D55B000B8360 /* StorageService.h in Headers */ = {isa = PBXBuildFile; fileRef = F43C9A5A27E9D55B000B8360 /* StorageService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F43C9A5E27E9D55B000B8360 /* StorageService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F43C9A5827E9D55B000B8360 /* StorageService.framework */; };
 		F43C9A5F27E9D55B000B8360 /* StorageService.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F43C9A5827E9D55B000B8360 /* StorageService.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -77,6 +81,10 @@
 		F408845E27FF255A002D8812 /* AppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppManager.swift; sourceTree = "<group>"; };
 		F408846027FF5CA7002D8812 /* CheckerAuthorizations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckerAuthorizations.swift; sourceTree = "<group>"; };
 		F4219565276869AE00487AE7 /* ProfileTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableHeaderView.swift; sourceTree = "<group>"; };
+		F4221DF8285129B400376F07 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		F4221DFB28512A2A00376F07 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
+		F4221DFD28512A8900376F07 /* FeedCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCoordinator.swift; sourceTree = "<group>"; };
+		F4221DFF28512AAB00376F07 /* CoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocol.swift; sourceTree = "<group>"; };
 		F43C9A5827E9D55B000B8360 /* StorageService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StorageService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F43C9A5A27E9D55B000B8360 /* StorageService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StorageService.h; sourceTree = "<group>"; };
 		F43EC241278D482700B94BC1 /* PublicationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicationModel.swift; sourceTree = "<group>"; };
@@ -159,6 +167,24 @@
 			path = ProfileScreen;
 			sourceTree = "<group>";
 		};
+		F4221DF72851297900376F07 /* MainTabBarController */ = {
+			isa = PBXGroup;
+			children = (
+				F4221DF8285129B400376F07 /* MainTabBarController.swift */,
+			);
+			path = MainTabBarController;
+			sourceTree = "<group>";
+		};
+		F4221DFA28512A1200376F07 /* Coordinators  */ = {
+			isa = PBXGroup;
+			children = (
+				F4221DFB28512A2A00376F07 /* MainCoordinator.swift */,
+				F4221DFF28512AAB00376F07 /* CoordinatorProtocol.swift */,
+				F4221DFD28512A8900376F07 /* FeedCoordinator.swift */,
+			);
+			name = "Coordinators ";
+			sourceTree = "<group>";
+		};
 		F43C9A5927E9D55B000B8360 /* StorageService */ = {
 			isa = PBXGroup;
 			children = (
@@ -204,11 +230,13 @@
 				F408845E27FF255A002D8812 /* AppManager.swift */,
 				F408845C27FF253F002D8812 /* AppFactory.swift */,
 				F49DC38527515434004F9DCE /* LaunchScreen.storyboard */,
+				F4221DF72851297900376F07 /* MainTabBarController */,
 				F4EC692F27F9A0A7007273D4 /* FeedScreen */,
 				F4219562276868A400487AE7 /* ProfileScreen */,
 				F48F938F27F59B290035F9F9 /* UserData */,
 				F4A1B257282E7BF700E413E9 /* CustomElements */,
 				F4C0136D280CC8F40003F2AA /* Resourses */,
+				F4221DFA28512A1200376F07 /* Coordinators  */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -491,6 +519,7 @@
 				F4826DCC279F35150040A364 /* PhotosViewController.swift in Sources */,
 				F48E4DAE2830BBF700AA5FC0 /* FeedView.swift in Sources */,
 				F4CC3780279FD26000294ADB /* PhotosModel.swift in Sources */,
+				F4221E0028512AAB00376F07 /* CoordinatorProtocol.swift in Sources */,
 				F48F371D27522200008C6565 /* ProfileTableViewController.swift in Sources */,
 				F4BFE1912851027000D3BCEE /* FeedPresenter.swift in Sources */,
 				F48E4DAA28306B1700AA5FC0 /* FeedModel.swift in Sources */,
@@ -501,10 +530,13 @@
 				F467234C278BF63800B78225 /* PostTableViewCell.swift in Sources */,
 				F408846127FF5CA7002D8812 /* CheckerAuthorizations.swift in Sources */,
 				F408845D27FF253F002D8812 /* AppFactory.swift in Sources */,
+				F4221DF9285129B400376F07 /* MainTabBarController.swift in Sources */,
 				F4F6760027873FAB00465155 /* LogInViewController.swift in Sources */,
 				F48E5F322803405600EA4BF3 /* LogInFactory.swift in Sources */,
 				F49DC37B27515432004F9DCE /* AppDelegate.swift in Sources */,
+				F4221DFE28512A8900376F07 /* FeedCoordinator.swift in Sources */,
 				F4F0745627541A310034579A /* InfoViewController.swift in Sources */,
+				F4221DFC28512A2A00376F07 /* MainCoordinator.swift in Sources */,
 				F4F074542753E0360034579A /* PostViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

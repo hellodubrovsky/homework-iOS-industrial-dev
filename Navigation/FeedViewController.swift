@@ -22,6 +22,7 @@ final class FeedViewController: UIViewController {
     // Модель для проверки пароля.
     private var presenter: FeedPresenterInput
     private let mainView = FeedView()
+    private var coordinator: FeedCoordinator!
     
     
     
@@ -44,6 +45,7 @@ final class FeedViewController: UIViewController {
         addObserverForView()
         addObserversForPassword()
         self.presenter.set(view: self)
+        self.coordinator = FeedCoordinatorImplementation(navigationController: navigationController ?? UINavigationController())
     }
     
     
@@ -53,12 +55,7 @@ final class FeedViewController: UIViewController {
     // Реализация открытия окна "Post" по нажатию кнопки.
     @objc private func buttonAction() {
         presenter.buttonPost()
-        
-        /* Код ниже, должен забрать к себе coordinator*/
-        let postViewController = PostViewController()
-        let titlePost: Post = Post(title: "Post")
-        postViewController.title = titlePost.title
-        self.navigationController?.pushViewController(postViewController, animated: true)
+        coordinator.openPostViewController()
     }
     
     // Добавление наблюдателей для управления действиями UI-элементов.

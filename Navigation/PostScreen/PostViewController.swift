@@ -8,6 +8,8 @@
 import UIKit
 
 final class PostViewController: UIViewController {
+    
+    private var coordinator: FeedCoordinator!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,13 +19,12 @@ final class PostViewController: UIViewController {
         // Создание barItem'а по которому будет открыто модальное окно.
         let logoutBarButtonItem = UIBarButtonItem(title: "Info", style: .done, target: self, action: #selector(presentInfoViewController))
         self.navigationItem.rightBarButtonItem = logoutBarButtonItem
+        coordinator = FeedCoordinatorImplementation(presenter: self, navigationController: navigationController ?? UINavigationController())
     }
     
     // Реализация открытия модального окна.
     @objc func presentInfoViewController() {
-        let infoViewController = InfoViewController()
-        let infoNavigationController = UINavigationController(rootViewController: infoViewController)
-        present(infoNavigationController, animated: true, completion: nil)
+        coordinator.openInfoViewController()
     }
 }
 

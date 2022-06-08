@@ -37,6 +37,9 @@ final class AppManager {
         let profileItemTabBar = factory.makeTabBarItem(title: "Profile", image: UIImage(systemName: "person.fill")!)
         let feedNavigationController = factory.makeNavigatioController(viewController: feedViewController, taBarItem: feedItemTabBar)
         let profileNavigationController = factory.makeNavigatioController(viewController: profileViewController, taBarItem: profileItemTabBar)
-        rootViewController = factory.makeRootTabBarViewController(viewControllers: [feedNavigationController, profileNavigationController])
+        let rootCoordinator = MainCoordinatorImplementation()
+        let rootTabBarViewController = MainTabBarController(coordinator: rootCoordinator, viewControllers: [feedNavigationController, profileNavigationController])
+        rootCoordinator.tabBarController = rootTabBarViewController
+        rootViewController = rootTabBarViewController.coordinator?.startMainModule() ?? rootTabBarViewController
     }
 }
