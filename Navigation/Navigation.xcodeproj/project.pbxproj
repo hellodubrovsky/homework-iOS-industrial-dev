@@ -17,6 +17,7 @@
 		F4221DFC28512A2A00376F07 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4221DFB28512A2A00376F07 /* MainCoordinator.swift */; };
 		F4221DFE28512A8900376F07 /* FeedCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4221DFD28512A8900376F07 /* FeedCoordinator.swift */; };
 		F4221E0028512AAB00376F07 /* CoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4221DFF28512AAB00376F07 /* CoordinatorProtocol.swift */; };
+		F4221E022851479F00376F07 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4221E012851479F00376F07 /* ProfileCoordinator.swift */; };
 		F43C9A5B27E9D55B000B8360 /* StorageService.h in Headers */ = {isa = PBXBuildFile; fileRef = F43C9A5A27E9D55B000B8360 /* StorageService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F43C9A5E27E9D55B000B8360 /* StorageService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F43C9A5827E9D55B000B8360 /* StorageService.framework */; };
 		F43C9A5F27E9D55B000B8360 /* StorageService.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F43C9A5827E9D55B000B8360 /* StorageService.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -85,6 +86,7 @@
 		F4221DFB28512A2A00376F07 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		F4221DFD28512A8900376F07 /* FeedCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCoordinator.swift; sourceTree = "<group>"; };
 		F4221DFF28512AAB00376F07 /* CoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocol.swift; sourceTree = "<group>"; };
+		F4221E012851479F00376F07 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
 		F43C9A5827E9D55B000B8360 /* StorageService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StorageService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F43C9A5A27E9D55B000B8360 /* StorageService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StorageService.h; sourceTree = "<group>"; };
 		F43EC241278D482700B94BC1 /* PublicationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicationModel.swift; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 				F4221DFB28512A2A00376F07 /* MainCoordinator.swift */,
 				F4221DFF28512AAB00376F07 /* CoordinatorProtocol.swift */,
 				F4221DFD28512A8900376F07 /* FeedCoordinator.swift */,
+				F4221E012851479F00376F07 /* ProfileCoordinator.swift */,
 			);
 			name = "Coordinators ";
 			sourceTree = "<group>";
@@ -537,6 +540,7 @@
 				F4221DFE28512A8900376F07 /* FeedCoordinator.swift in Sources */,
 				F4F0745627541A310034579A /* InfoViewController.swift in Sources */,
 				F4221DFC28512A2A00376F07 /* MainCoordinator.swift in Sources */,
+				F4221E022851479F00376F07 /* ProfileCoordinator.swift in Sources */,
 				F4F074542753E0360034579A /* PostViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
