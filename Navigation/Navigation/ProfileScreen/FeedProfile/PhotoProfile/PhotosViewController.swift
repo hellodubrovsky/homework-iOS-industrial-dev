@@ -23,6 +23,7 @@ final class PhotosViewController: UIViewController {
     // MARK: - Private properties.
     
     private let imageFacade = ImagePublisherFacade()
+    private let imageProcessor = ImageProcessor()
     private var imagesUser: [UIImage] = []
     
     private let collectionView: UICollectionView = {
@@ -135,8 +136,24 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
 
 extension PhotosViewController: ImageLibrarySubscriber {
     func receive(images: [UIImage]) {
-        self.imagesUser = []
-        images.forEach { imagesUser.append($0) }
-        self.collectionView.reloadData()
+        let methodStart = NSDate()
+        
+        // Пару примеров:
+        // C параметром .fade общее время выполнения: 53.5875209569931
+        // C параметром .noir общее время выполнения: 65.24861896038055
+        
+        self.imageProcessor.processImagesOnThread(sourceImages: images, filter: .fade, qos: .utility) { images in
+            DispatchQueue.main.async {
+                self.imagesUser = []
+                for i in images {
+                    guard let image = i else { return }
+                    self.imagesUser.append(UIImage(cgImage: image))
+                }
+                let methodFinish = NSDate()
+                let executionTime = methodFinish.timeIntervalSince(methodStart as Date)
+                print("Время выполнения метода: \(executionTime)")
+                self.collectionView.reloadData()
+            }
+        }
     }
 }
