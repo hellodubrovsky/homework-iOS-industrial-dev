@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 protocol ProfileCoordinator {
-    func openProfileScreen()
+    func openProfileScreen(service: UserService, userName: String)
     func openPhotoUserScreen()
 }
 
@@ -21,6 +21,15 @@ final class ProfileCoordinatorImplementation: ProfileCoordinator, CoordinatorPro
         self.navigationController = navigationController
     }
     
-    func openProfileScreen() {}
-    func openPhotoUserScreen() {}
+    func openProfileScreen(service: UserService, userName: String) {
+        print("TAP -> Открывается окно profile.")
+        let viewController = ProfileViewController(userService: service, userName: userName)
+        navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func openPhotoUserScreen() {
+        print("TAP -> Открывается окно с фотографиями профиля.")
+        let vc = PhotosViewController()
+        navigationController.pushViewController(vc, animated: true)
+    }
 }

@@ -44,11 +44,14 @@ final class LogInViewController: UIViewController {
         super.viewDidLoad()
         settingView()
         setupTapGesture()
+        self.coordinator = ProfileCoordinatorImplementation(navigationController: navigationController ?? UINavigationController())
     }
     
     
     
     // MARK: - Private properties
+    
+    private var coordinator: ProfileCoordinator!
     
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -135,18 +138,17 @@ final class LogInViewController: UIViewController {
         let userPassword = passwordInputTextField.text!
         
         #if DEBUG
-        let cervice = TestUserService()
+        let service = TestUserService()
         #else
         let user = User(name: userName)
-        let cervice = CurrentUserService(user: user)
+        let service = CurrentUserService(user: user)
         #endif
         
         guard let check = delegate?.check(login: userName, password: userPassword), check == true else {
             displayingAnAlertWithWarningForLoginAndPassword()
             return
         }
-        let viewController = ProfileViewController(userService: cervice, userName: userName)
-        navigationController?.pushViewController(viewController, animated: true)
+        coordinator.openProfileScreen(service: service, userName: userName)
     }
     
     // Показ алерта, информирующего о необходимости заполнения поля login
