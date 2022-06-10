@@ -14,15 +14,16 @@ final class PhotosViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         settingView()
-        imageFacade.subscribe(self)
-        imageFacade.addImagesWithTimer(time: 0.2, repeat: photosNameProfiles.count)
+        //imageFacade.subscribe(self)
+        //imageFacade.addImagesWithTimer(time: 0.2, repeat: photosNameProfiles.count)
+        downloadPhotos()
     }
     
     
     
     // MARK: - Private properties.
     
-    private let imageFacade = ImagePublisherFacade()
+    //private let imageFacade = ImagePublisherFacade()
     private let imageProcessor = ImageProcessor()
     private var imagesUser: [UIImage] = []
     
@@ -34,8 +35,8 @@ final class PhotosViewController: UIViewController {
     }()
     
     deinit {
-        imageFacade.rechargeImageLibrary()
-        imageFacade.removeSubscription(for: self)
+        //imageFacade.rechargeImageLibrary()
+        //imageFacade.removeSubscription(for: self)
     }
     
     
@@ -126,6 +127,27 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 8
     }
+    
+    func downloadPhotos() {
+        var imagesFull: [UIImage] = []
+        for i in photosNameProfiles {
+            imagesFull.append(UIImage(named: i.imageName)!)
+        }
+        let methodStart = NSDate()
+        self.imageProcessor.processImagesOnThread(sourceImages: imagesFull, filter: .fade, qos: .utility) { images in
+            DispatchQueue.main.async {
+                self.imagesUser = []
+                for i in images {
+                    guard let image = i else { return }
+                    self.imagesUser.append(UIImage(cgImage: image))
+                }
+                let methodFinish = NSDate()
+                let executionTime = methodFinish.timeIntervalSince(methodStart as Date)
+                print("Время выполнения метода: \(executionTime)")
+                self.collectionView.reloadData()
+            }
+        }
+    }
 }
 
 
@@ -134,6 +156,7 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
 
 // MARK: - Protocol:
 
+/*
 extension PhotosViewController: ImageLibrarySubscriber {
     func receive(images: [UIImage]) {
         let methodStart = NSDate()
@@ -157,3 +180,9 @@ extension PhotosViewController: ImageLibrarySubscriber {
         }
     }
 }
+*/
+
+
+
+
+
