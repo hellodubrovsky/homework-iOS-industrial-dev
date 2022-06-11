@@ -13,11 +13,11 @@ final class PostViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .black
+        view.backgroundColor = .white
         navigationController?.navigationBar.tintColor = . white
         
         // Создание barItem'а по которому будет открыто модальное окно.
-        let logoutBarButtonItem = UIBarButtonItem(title: "Info", style: .done, target: self, action: #selector(presentInfoViewController))
+        let logoutBarButtonItem = UIBarButtonItem(title: "Info", style: .plain, target: self, action: #selector(presentInfoViewController))
         self.navigationItem.rightBarButtonItem = logoutBarButtonItem
         coordinator = FeedCoordinatorImplementation(presenter: self, navigationController: navigationController ?? UINavigationController())
     }
