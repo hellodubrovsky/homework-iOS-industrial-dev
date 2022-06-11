@@ -14,8 +14,6 @@ final class PhotosViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         settingView()
-        //imageFacade.subscribe(self)
-        //imageFacade.addImagesWithTimer(time: 0.2, repeat: photosNameProfiles.count)
         downloadPhotos()
     }
     
@@ -34,9 +32,22 @@ final class PhotosViewController: UIViewController {
         return collectionView
     }()
     
-    deinit {
-        //imageFacade.rechargeImageLibrary()
-        //imageFacade.removeSubscription(for: self)
+    
+    
+    // MARK: - Private methods
+    
+    private func downloadPhotos() {
+        let imagesFull: [UIImage] = photosNameProfiles.map { UIImage(named: $0.imageName)! }
+        let methodStart = NSDate()
+        self.imageProcessor.processImagesOnThread(sourceImages: imagesFull, filter: .fade, qos: .utility) { images in
+            self.imagesUser = images.map { UIImage(cgImage: $0!) }
+            let methodFinish = NSDate()
+            let executionTime = methodFinish.timeIntervalSince(methodStart as Date)
+            print("Время выполнения метода отображения коллекции фото: \(executionTime)")
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        }
     }
     
     
@@ -87,7 +98,7 @@ extension PhotosViewController: UICollectionViewDataSource {
     // Заполнение ячеек данными.
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell: PhotosCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotosCollectionViewCell.identifier, for: indexPath) as? PhotosCollectionViewCell else { fatalError() }
-        let data = photosNameProfiles[indexPath.row]
+        let data = imagesUser[indexPath.row]
         cell.update(with: data, for: .profilePhoto)
         return cell
     }
@@ -127,62 +138,4 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 8
     }
-    
-    func downloadPhotos() {
-        var imagesFull: [UIImage] = []
-        for i in photosNameProfiles {
-            imagesFull.append(UIImage(named: i.imageName)!)
-        }
-        let methodStart = NSDate()
-        self.imageProcessor.processImagesOnThread(sourceImages: imagesFull, filter: .fade, qos: .utility) { images in
-            DispatchQueue.main.async {
-                self.imagesUser = []
-                for i in images {
-                    guard let image = i else { return }
-                    self.imagesUser.append(UIImage(cgImage: image))
-                }
-                let methodFinish = NSDate()
-                let executionTime = methodFinish.timeIntervalSince(methodStart as Date)
-                print("Время выполнения метода: \(executionTime)")
-                self.collectionView.reloadData()
-            }
-        }
-    }
 }
-
-
-
-
-
-// MARK: - Protocol:
-
-/*
-extension PhotosViewController: ImageLibrarySubscriber {
-    func receive(images: [UIImage]) {
-        let methodStart = NSDate()
-        
-        // Пару примеров:
-        // C параметром .fade общее время выполнения: 53.5875209569931
-        // C параметром .noir общее время выполнения: 65.24861896038055
-        
-        self.imageProcessor.processImagesOnThread(sourceImages: images, filter: .fade, qos: .utility) { images in
-            DispatchQueue.main.async {
-                self.imagesUser = []
-                for i in images {
-                    guard let image = i else { return }
-                    self.imagesUser.append(UIImage(cgImage: image))
-                }
-                let methodFinish = NSDate()
-                let executionTime = methodFinish.timeIntervalSince(methodStart as Date)
-                print("Время выполнения метода: \(executionTime)")
-                self.collectionView.reloadData()
-            }
-        }
-    }
-}
-*/
-
-
-
-
-

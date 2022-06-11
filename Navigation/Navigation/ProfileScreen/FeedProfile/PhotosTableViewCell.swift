@@ -24,6 +24,8 @@ final class PhotosTableViewCell: UITableViewCell {
     
     // MARK: Private properties.
     
+    private let userImage: [UIImage] = photosNameProfiles.map { UIImage(named: $0.imageName)! }
+    
     private let titleLabel: UILabel = {
         var label = UILabel()
         label.text = "Photos"
@@ -96,7 +98,7 @@ extension PhotosTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell: PhotosCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotosCollectionViewCell.identifier, for: indexPath) as? PhotosCollectionViewCell else { fatalError() }
         guard indexPath.row <= 3 else { return cell }
-        let data = photosNameProfiles[indexPath.row]
+        let data = userImage[indexPath.row]
         cell.update(with: data, for: .profileFeed)
         return cell
     }
