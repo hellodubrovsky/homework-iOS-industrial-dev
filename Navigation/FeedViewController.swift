@@ -8,26 +8,45 @@
 import UIKit
 
 
-final class FeedViewController: UIViewController {
+protocol FeedViewControllerInput: AnyObject {
+    func resultCheckPassword(_ result: ResultCheckPassword)
+}
 
+
+
+
+final class FeedViewController: UIViewController {
+    
+    // MARK: - Private properties
+    
+    // Модель для проверки пароля.
+    private var presenter: FeedPresenterInput
+    private let mainView = FeedView()
+    private var coordinator: FeedCoordinator!
+    
+    
+    
+    
+    // MARK: - Public Initial
+    
+    init(presenter: FeedPresenterInput) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Feed"
         view = mainView
         addObserverForView()
         addObserversForPassword()
+        self.presenter.set(view: self)
+        self.coordinator = FeedCoordinatorImplementation(navigationController: navigationController ?? UINavigationController())
     }
-    
-    
-    
-    // MARK: - Private properties
-    
-    // Модель для проверки пароля.
-    private let passwordModel = FeedModel()
-    
-    // Главная view
-    private let mainView = FeedView()
-    
     
     
     
@@ -35,10 +54,8 @@ final class FeedViewController: UIViewController {
     
     // Реализация открытия окна "Post" по нажатию кнопки.
     @objc private func buttonAction() {
-        let postViewController = PostViewController()
-        let titlePost: Post = Post(title: "Post")
-        postViewController.title = titlePost.title
-        self.navigationController?.pushViewController(postViewController, animated: true)
+        presenter.buttonPost()
+        coordinator.openPostViewController()
     }
     
     // Добавление наблюдателей для управления действиями UI-элементов.
@@ -48,10 +65,10 @@ final class FeedViewController: UIViewController {
         notificationCenter.addObserver(self, selector: #selector(self.checkPassword(notification:)), name: Notification.Name("notificationForButtonCheckPassword"), object: nil)
     }
     
-    // Текст, введенный в textField пароля, отправляется в бизнес слой, и уже там происходит проверка.
+    // Текст, введенный в textField пароля, отправляется в презентер, и уже там происходит проверка.
     @objc private func checkPassword(notification: NSNotification) {
         guard let text = notification.userInfo?["text"] as? String else { return }
-        passwordModel.check(word: text)
+        presenter.buttonCheckPassword(text: text)
     }
     
     // Добавление наблюдателей (для пароля).
@@ -81,5 +98,25 @@ final class FeedViewController: UIViewController {
         mainView.passwordStatusLabel.isHidden = false
         mainView.passwordStatusLabel.text = "Empty Password"
         mainView.passwordStatusLabel.layer.borderColor = UIColor.purple.cgColor
+    }
+}
+
+
+
+
+
+// MARK: - FeedViewControllerInput
+
+extension FeedViewController: FeedViewControllerInput {
+    func resultCheckPassword(_ result: ResultCheckPassword) {
+        let notificationCenter = NotificationCenter.default
+        switch result {
+        case .empty:
+            notificationCenter.post(name: Notification.Name("emptyPassword"), object: nil)
+        case .correct:
+            notificationCenter.post(name: Notification.Name("correctPassword"), object: nil)
+        case .incorrect:
+            notificationCenter.post(name: Notification.Name("incorrectPassword"), object: nil)
+        }
     }
 }

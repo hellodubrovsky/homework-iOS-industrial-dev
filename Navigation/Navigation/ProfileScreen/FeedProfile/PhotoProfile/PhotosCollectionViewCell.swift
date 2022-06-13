@@ -16,14 +16,14 @@ final class PhotosCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Public methods.
     
-    func update(with photos: PhotoProfile, for screen: ScreenProfile) {
+    func update(with photo: UIImage, for screen: ScreenProfile) {
         switch screen {
         case .profilePhoto:
-            photoImageView.image = UIImage(named: photos.imageName)
+            photoImageView.image = photo
         case .profileFeed:
             photoImageView.clipsToBounds = true
             photoImageView.layer.cornerRadius = 6.0
-            photoImageView.image = UIImage(named: photos.imageName)
+            photoImageView.image = photo
         }
     }
     

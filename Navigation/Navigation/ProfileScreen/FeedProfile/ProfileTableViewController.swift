@@ -14,6 +14,7 @@ final class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         settingView()
+        self.coordinator = ProfileCoordinatorImplementation(navigationController: navigationController ?? UINavigationController())
     }
     
     // Реализовано для того, чтобы при возврате из photosViewController'а скрывался navigationBar.
@@ -41,6 +42,7 @@ final class ProfileViewController: UIViewController {
     
     private var userService: UserService!
     private var userName: String!
+    private var coordinator: ProfileCoordinator!
     
     // Фильтр для постов
     private let imageProcessor = ImageProcessor()
@@ -179,7 +181,6 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     // Действие по нажатию на ячейку.
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard indexPath.section == 0 && indexPath.row == 0 else { return }
-        let vc = PhotosViewController()
-        navigationController?.pushViewController(vc, animated: true)
+        coordinator?.openPhotoUserScreen()
     }
 }

@@ -20,9 +20,7 @@ final class InfoViewController: UIViewController {
     
     // Cоздание кнопки "Показать алерт".
     private lazy var buttonShowAlert: UIButton = {
-        let button = CustomButton(title: "Show alert", titleColor: .white, backgoundColor: UIColor(red: 0.57, green: 0.62, blue: 0.70, alpha: 0.5), cornerRadius: 20) { self.buttonAlertAction() }
-        button.layer.borderColor = UIColor(red: CGFloat(253.0 / 255.0), green: CGFloat(112.0 / 255.0), blue: CGFloat(20.0 / 255.0), alpha: CGFloat(1.0)).cgColor
-        button.layer.borderWidth = 2
+        let button = CustomButton(title: "Show alert", titleColor: .white, backgoundColor: UIColor.init(named: "colorBaseVK")!, cornerRadius: 10) { self.buttonAlertAction() }
         return button
     }()
     
@@ -47,7 +45,7 @@ final class InfoViewController: UIViewController {
     // Настройка View
     private func settingView() {
         self.title = "Info"
-        view.backgroundColor = UIColor(red: 0.61, green: 0, blue: 0, alpha: 1)
+        view.backgroundColor = .white
         navigationController?.navigationBar.tintColor = .white
         view.addSubview(buttonShowAlert)
         installingConstants()

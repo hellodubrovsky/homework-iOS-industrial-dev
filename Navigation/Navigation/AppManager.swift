@@ -24,18 +24,22 @@ final class AppManager {
     // MARK: - Private properties
     private let factory: AppFactory = AppFactory()
     private let logInFactory: LogInFactory = LogInFactory()
-    private let feedViewController = FeedViewController()
+    private let feedPresenter = FeedPresenter()
     private let profileViewController = LogInViewController()
     
     
     
     // MARK: - Private init
     private init() {
+        let feedViewController = FeedViewController(presenter: self.feedPresenter)
         profileViewController.delegate = logInFactory.makeLogInInspecctor()
         let feedItemTabBar = factory.makeTabBarItem(title: "Feed", image: UIImage(systemName: "house.fill")!)
         let profileItemTabBar = factory.makeTabBarItem(title: "Profile", image: UIImage(systemName: "person.fill")!)
         let feedNavigationController = factory.makeNavigatioController(viewController: feedViewController, taBarItem: feedItemTabBar)
         let profileNavigationController = factory.makeNavigatioController(viewController: profileViewController, taBarItem: profileItemTabBar)
-        rootViewController = factory.makeRootTabBarViewController(viewControllers: [feedNavigationController, profileNavigationController])
+        let rootCoordinator = MainCoordinatorImplementation()
+        let rootTabBarViewController = MainTabBarController(coordinator: rootCoordinator, viewControllers: [feedNavigationController, profileNavigationController])
+        rootCoordinator.tabBarController = rootTabBarViewController
+        rootViewController = rootTabBarViewController.coordinator?.startMainModule() ?? rootTabBarViewController
     }
 }
