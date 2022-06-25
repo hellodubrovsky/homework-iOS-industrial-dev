@@ -27,6 +27,31 @@ final class FeedView: UIView {
         return label
     }()
     
+    lazy var timerIndicator: UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.backgroundColor = .green
+        label.layer.cornerRadius = 5
+        label.layer.borderWidth = 0.5
+        label.layer.borderColor = UIColor.black.cgColor
+        label.textAlignment = .center
+        label.alpha = 0.7
+        label.isHidden = true
+        label.clipsToBounds = true
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    // Кастомный textField для ввода пароля
+    let passwordTextField: UITextField = {
+        let textField = CustomTextField(text: nil, textPlaceholder: "Write password...", colorPlaceholder: .gray, textColor: .black, radius: 10, borderWidth: 0.5, borderColor: UIColor.lightGray)
+        textField.font = .systemFont(ofSize: 16.0)
+        textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 50))
+        textField.leftViewMode = .always
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        return textField
+    }()
+    
     
     
     // MARK: - Private properties
@@ -58,16 +83,6 @@ final class FeedView: UIView {
         return button
     }()
     
-    // Кастомный textField для ввода пароля
-    private let passwordTextField: UITextField = {
-        let textField = CustomTextField(text: nil, textPlaceholder: "Write password...", colorPlaceholder: .gray, textColor: .black, radius: 10, borderWidth: 0.5, borderColor: UIColor.lightGray)
-        textField.font = .systemFont(ofSize: 16.0)
-        textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 50))
-        textField.leftViewMode = .always
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        return textField
-    }()
-    
     // Кастомная кнопка для проверки пароля
     private lazy var buttonCheckPassword: UIButton = {
         let button = CustomButton(title: "Check", titleColor: .white, backgoundColor: UIColor.init(named: "colorBaseVK")!, cornerRadius: 10, buttonAction: { self.sendingChangingUiElements(element: .buttonCheckPassword) })
@@ -93,7 +108,7 @@ final class FeedView: UIView {
     
     // Настройка View
     private func settingView() {
-        let subviews = [stackView, passwordTextField, buttonCheckPassword, passwordStatusLabel]
+        let subviews = [stackView, passwordTextField, buttonCheckPassword, passwordStatusLabel, timerIndicator]
         let subviewsStack = [buttonPostFirst, buttonPostSecond]
         self.addSubviews(subviews)
         self.addArrangedSubviews(stack: stackView, views: subviewsStack)
@@ -119,10 +134,15 @@ final class FeedView: UIView {
             buttonCheckPassword.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
             buttonCheckPassword.heightAnchor.constraint(equalToConstant: 50),
             
-            passwordStatusLabel.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 20),
+            passwordStatusLabel.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 50),
             passwordStatusLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
             passwordStatusLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
             passwordStatusLabel.heightAnchor.constraint(equalToConstant: 50),
+            
+            timerIndicator.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 10),
+            timerIndicator.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
+            timerIndicator.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            timerIndicator.heightAnchor.constraint(equalToConstant: 30),
         ])
     }
 }
