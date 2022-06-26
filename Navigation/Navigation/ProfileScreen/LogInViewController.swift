@@ -16,10 +16,19 @@ protocol LogInViewControllerDelegate: AnyObject {
 
 
 
+// MARK: - LogInViewControllerBrutForceDelegate
+
+protocol LogInViewControllerBrutForceDelegate: AnyObject {
+    func bruteForce(passwordToUnlock: String) -> String
+}
+
+
+
+
 
 // MARK: - LogInspector
 
-class LogInInspector: LogInViewControllerDelegate {
+final class LogInInspector: LogInViewControllerDelegate {
     func check(login: String, password: String) -> Bool {
         return Checker.shared.check(login: login, password: password)
     }
@@ -52,6 +61,7 @@ final class LogInViewController: UIViewController {
     // MARK: - Private properties
     
     private var coordinator: ProfileCoordinator!
+    private var brutForceDelegate: LogInViewControllerBrutForceDelegate = BrutForcePassword()
     
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -124,6 +134,18 @@ final class LogInViewController: UIViewController {
         return button
     }()
     
+    private lazy var brutforceButton: UIButton = {
+        let button = CustomButton(title: "Brut force password", titleColor: .white, backgoundColor: .black, cornerRadius: 10, buttonAction: { self.brutforceAction() })
+        return button
+    }()
+    
+    private lazy var activitityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .medium)
+        indicator.color = .white
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
+    }()
+    
     
     
     // MARK: - Private methods
@@ -172,6 +194,24 @@ final class LogInViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    // Подбор пароля
+    private func brutforceAction() {
+        self.activitityIndicator.startAnimating()
+        DispatchQueue.global().async {
+            let password = self.brutForceDelegate.bruteForce(passwordToUnlock: Checker.shared.refundPassword())
+            DispatchQueue.main.async {
+                self.passwordInputTextField.isSecureTextEntry = false
+                self.passwordInputTextField.text = password
+                self.activitityIndicator.stopAnimating()
+            }
+            // Через 5 секунд, скрываю текст в поле пароля
+            sleep(5)
+            DispatchQueue.main.async {
+                self.passwordInputTextField.isSecureTextEntry = true
+            }
+        }
+    }
+    
     
     
     // MARK: - View configuration
@@ -186,6 +226,12 @@ final class LogInViewController: UIViewController {
         contentView.addSubview(iconLogoVK)
         contentView.addSubview(inputFieldStackView)
         contentView.addSubview(logInButton)
+        
+        #if DEBUG
+        contentView.addSubview(brutforceButton)
+        contentView.addSubview(activitityIndicator)
+        #endif
+        
         inputFieldStackView.addArrangedSubview(loginInputTextField)
         inputFieldStackView.addArrangedSubview(passwordInputTextField)
         installingConstraints()
@@ -218,8 +264,20 @@ final class LogInViewController: UIViewController {
             logInButton.topAnchor.constraint(equalTo: inputFieldStackView.bottomAnchor, constant: 16.0),
             logInButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16.0),
             logInButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16.0),
-            logInButton.heightAnchor.constraint(equalToConstant: 50)
+            logInButton.heightAnchor.constraint(equalToConstant: 50),
         ])
+        
+        #if DEBUG
+        NSLayoutConstraint.activate([
+            brutforceButton.topAnchor.constraint(equalTo: logInButton.bottomAnchor, constant: 16.0),
+            brutforceButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16.0),
+            brutforceButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16.0),
+            brutforceButton.heightAnchor.constraint(equalToConstant: 50),
+            
+            activitityIndicator.centerYAnchor.constraint(equalTo: brutforceButton.centerYAnchor),
+            activitityIndicator.trailingAnchor.constraint(equalTo: brutforceButton.trailingAnchor, constant: -16)
+        ])
+        #endif
     }
 }
 
