@@ -23,6 +23,7 @@ final class FeedViewController: UIViewController {
     private var presenter: FeedPresenterInput
     private let mainView = FeedView()
     private var coordinator: FeedCoordinator!
+    private var timer: Timer?
     
     
     
@@ -46,6 +47,41 @@ final class FeedViewController: UIViewController {
         addObserversForPassword()
         self.presenter.set(view: self)
         self.coordinator = FeedCoordinatorImplementation(navigationController: navigationController ?? UINavigationController())
+        
+    }
+    
+    /// Очистка текстового поля ввода пароля. Будет очищаться через установленное время.
+    func clearTextField(withTimeInterval: Double) {
+        self.mainView.timerIndicator.isHidden = false
+        var timerTime = withTimeInterval
+        self.mainView.timerIndicator.text = "До очистки поля ввода пароля осталось: \(timerTime)"
+        
+        DispatchQueue.global().async {
+            self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+                timerTime -= 1
+                DispatchQueue.main.async {
+                    self.mainView.timerIndicator.text = "До очистки поля ввода пароля осталось: \(timerTime)"
+                }
+                if timerTime == 0 {
+                    DispatchQueue.main.async {
+                        self.mainView.timerIndicator.text = "Поле ввода пароля очищено, от чужих глаз."
+                        self.mainView.passwordTextField.text = ""
+                    }
+                    print("Очистка текста в поле ввода пароля.")
+                } else if timerTime == -1 {
+                    DispatchQueue.main.async {
+                        self.mainView.timerIndicator.isHidden = true
+                    }
+                    self.timer?.invalidate()
+                    self.timer = nil
+                    print("Таймер убит.")
+                }
+            }
+            guard let timer = self.timer else { return }
+            RunLoop.current.add(timer, forMode: .common)
+            RunLoop.current.run()
+        }
+        
     }
     
     
@@ -84,6 +120,7 @@ final class FeedViewController: UIViewController {
         mainView.passwordStatusLabel.isHidden = false
         mainView.passwordStatusLabel.text = "Correct Password"
         mainView.passwordStatusLabel.layer.borderColor = UIColor.green.cgColor
+        clearTextField(withTimeInterval: 5)
     }
     
     @objc
