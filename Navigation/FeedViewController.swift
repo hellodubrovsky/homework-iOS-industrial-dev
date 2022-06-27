@@ -103,8 +103,19 @@ final class FeedViewController: UIViewController {
     
     // Текст, введенный в textField пароля, отправляется в презентер, и уже там происходит проверка.
     @objc private func checkPassword(notification: NSNotification) {
-        guard let text = notification.userInfo?["text"] as? String else { return }
-        presenter.buttonCheckPassword(text: text)
+        guard let text = notification.userInfo?["text"] as? String else { preconditionFailure() }
+        let notificationCenter = NotificationCenter.default
+        do {
+            try presenter.buttonCheckPassword(text: text)
+            notificationCenter.post(name: Notification.Name("correctPassword"), object: nil)
+        } catch CheckPasswordPostErrors.emptyPassordField {
+            notificationCenter.post(name: Notification.Name("emptyPassword"), object: nil)
+        } catch CheckPasswordPostErrors.incorrectPassword {
+            notificationCenter.post(name: Notification.Name("incorrectPassword"), object: nil)
+        } catch {
+            print(error.localizedDescription)
+            preconditionFailure()
+        }
     }
     
     // Добавление наблюдателей (для пароля).

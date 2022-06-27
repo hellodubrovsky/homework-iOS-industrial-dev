@@ -7,11 +7,21 @@
 
 import Foundation
 
-// MARK: Authorization
+// MARK: Authorization for Profile
 
 enum AuthorizationErrors: Error {
     case emptyLofinOrPassword
     case emptyLoginField
     case emptyPassordField
     case incorrectPasswordOrLogin
+}
+
+
+
+// MARK: Authorization for Post
+
+enum CheckPasswordPostErrors: Error {
+    case emptyPassordField
+    case incorrectPassword
+    case unowned
 }

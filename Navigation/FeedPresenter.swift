@@ -13,7 +13,7 @@ import Foundation
 
 protocol FeedPresenterInput: AnyObject {
     func buttonPost()
-    func buttonCheckPassword(text: String)
+    func buttonCheckPassword(text: String) throws
     func set(view: FeedViewControllerInput)
 }
 
@@ -38,15 +38,17 @@ final class FeedPresenter: FeedPresenterInput {
     }
     
     // Проверка пароля
-    func buttonCheckPassword(text: String) {
+    func buttonCheckPassword(text: String) throws {
         guard let view = view else { return }
         let correctPassword = model.password
-        if text == "" {
-            view.resultCheckPassword(.empty)
+        if text.isEmpty {
+            throw CheckPasswordPostErrors.emptyPassordField
         } else if text == correctPassword {
             view.resultCheckPassword(.correct)
+        } else if text != correctPassword {
+            throw CheckPasswordPostErrors.incorrectPassword
         } else {
-            view.resultCheckPassword(.incorrect)
+            throw CheckPasswordPostErrors.unowned
         }
     }
 }
