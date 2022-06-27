@@ -10,7 +10,7 @@ import UIKit
 // MARK: - LogInViewControllerDelegate
 
 protocol LogInViewControllerDelegate: AnyObject {
-    func check(login: String, password: String) -> Bool
+    func check(login: String, password: String, completion: @escaping (Result<Bool, AuthorizationErrors>) -> Void)
 }
 
 
@@ -29,8 +29,18 @@ protocol LogInViewControllerBrutForceDelegate: AnyObject {
 // MARK: - LogInspector
 
 final class LogInInspector: LogInViewControllerDelegate {
-    func check(login: String, password: String) -> Bool {
-        return Checker.shared.check(login: login, password: password)
+    func check(login: String, password: String, completion: @escaping (Result<Bool, AuthorizationErrors>) -> Void) {
+        if login.isEmpty && password.isEmpty {
+            completion(.failure(.emptyLofinOrPassword))
+        } else if login.isEmpty {
+            completion(.failure(.emptyLoginField))
+        } else if password.isEmpty {
+            completion(.failure(.emptyPassordField))
+        } else if !Checker.shared.check(login: login, password: password) {
+            completion(.failure(.incorrectPasswordOrLogin))
+        } else {
+            completion(.success(true))
+        }
     }
 }
 
@@ -152,12 +162,9 @@ final class LogInViewController: UIViewController {
     
     // Обработка нажатия на кнопку "Log in"
     private func buttonLogInAction() {
-        guard (loginInputTextField.text?.isEmpty == false) else {
-            displayingAnAlertWithWarningForTheLoginField()
-            return
-        }
-        let userName = loginInputTextField.text!
-        let userPassword = passwordInputTextField.text!
+       
+        let userName: String = loginInputTextField.text!
+        let userPassword: String = passwordInputTextField.text!
         
         #if DEBUG
         let service = TestUserService()
@@ -166,16 +173,28 @@ final class LogInViewController: UIViewController {
         let service = CurrentUserService(user: user)
         #endif
         
-        guard let check = delegate?.check(login: userName, password: userPassword), check == true else {
-            displayingAnAlertWithWarningForLoginAndPassword()
-            return
-        }
-        coordinator.openProfileScreen(service: service, userName: userName)
+        delegate?.check(login: userName, password: userPassword, completion: { [weak self] result in
+            switch result {
+            case .success(_):
+                self?.coordinator.openProfileScreen(service: service, userName: userName)
+            case .failure(let error):
+                switch error {
+                case .emptyLofinOrPassword:
+                    self?.displayingAnAlertWithWarningForTheLoginField(withText: "Поля ввода 'логина' и 'пароля' не могут быть пустыми.")
+                case .emptyLoginField:
+                    self?.displayingAnAlertWithWarningForTheLoginField(withText: "Поле ввода 'логина' не может быть пустым.")
+                case .emptyPassordField:
+                    self?.displayingAnAlertWithWarningForTheLoginField(withText: "Поле ввода 'пароля' не может быть пустым.")
+                case .incorrectPasswordOrLogin:
+                    self?.displayingAnAlertWithWarningForLoginAndPassword()
+                }
+            }
+        })
     }
     
     // Показ алерта, информирующего о необходимости заполнения поля login
-    private func displayingAnAlertWithWarningForTheLoginField() {
-        let alert = UIAlertController(title: "Предупреждение", message: "Поле ввода логина не может быть пустым.", preferredStyle: .alert)
+    private func displayingAnAlertWithWarningForTheLoginField(withText: String) {
+        let alert = UIAlertController(title: "Предупреждение", message: withText, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
@@ -186,7 +205,7 @@ final class LogInViewController: UIViewController {
         var message: String = "Поле 'логин' или 'пароль' содержат некорректные значения."
         
         #if DEBUG
-        message = message + "Подсказка для dev-сборки. Логин: login, Пароль: pass."
+        message = message + "Подсказка для dev-сборки. Логин: login, Пароль: pas."
         #endif
 
         let alert = UIAlertController(title: "Предупреждение", message: message, preferredStyle: .alert)
