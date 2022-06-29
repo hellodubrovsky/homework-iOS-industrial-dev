@@ -26,6 +26,7 @@ final class AppManager {
     private let logInFactory: LogInFactory = LogInFactory()
     private let feedPresenter = FeedPresenter()
     private let profileViewController = LogInViewController()
+    private let multimediaViewController = MultimediaViewController()
     
     
     
@@ -33,12 +34,20 @@ final class AppManager {
     private init() {
         let feedViewController = FeedViewController(presenter: self.feedPresenter)
         profileViewController.delegate = logInFactory.makeLogInInspecctor()
+        
+        // Create tab bar items
         let feedItemTabBar = factory.makeTabBarItem(title: "Feed", image: UIImage(systemName: "house.fill")!)
         let profileItemTabBar = factory.makeTabBarItem(title: "Profile", image: UIImage(systemName: "person.fill")!)
+        let multimediaItemTabBar = factory.makeTabBarItem(title: "Media", image: UIImage(systemName: "music.note.house.fill")!)
+        
+        // Create navigation controllers
         let feedNavigationController = factory.makeNavigatioController(viewController: feedViewController, taBarItem: feedItemTabBar)
         let profileNavigationController = factory.makeNavigatioController(viewController: profileViewController, taBarItem: profileItemTabBar)
+        let mediaNavigationController = factory.makeNavigatioController(viewController: multimediaViewController, taBarItem: multimediaItemTabBar)
+        
+        // Create main tab bar controller
         let rootCoordinator = MainCoordinatorImplementation()
-        let rootTabBarViewController = MainTabBarController(coordinator: rootCoordinator, viewControllers: [feedNavigationController, profileNavigationController])
+        let rootTabBarViewController = MainTabBarController(coordinator: rootCoordinator, viewControllers: [feedNavigationController, mediaNavigationController, profileNavigationController])
         rootCoordinator.tabBarController = rootTabBarViewController
         rootViewController = rootTabBarViewController.coordinator?.startMainModule() ?? rootTabBarViewController
     }

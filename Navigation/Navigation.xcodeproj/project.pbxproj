@@ -12,6 +12,11 @@
 		F408845D27FF253F002D8812 /* AppFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F408845C27FF253F002D8812 /* AppFactory.swift */; };
 		F408845F27FF255A002D8812 /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F408845E27FF255A002D8812 /* AppManager.swift */; };
 		F408846127FF5CA7002D8812 /* CheckerAuthorizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = F408846027FF5CA7002D8812 /* CheckerAuthorizations.swift */; };
+		F40B5347286CDE1C002026A0 /* MultimediaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40B5346286CDE1C002026A0 /* MultimediaViewController.swift */; };
+		F40B5349286CDE3A002026A0 /* MultimediaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40B5348286CDE3A002026A0 /* MultimediaView.swift */; };
+		F40B5350286CDECA002026A0 /* MusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40B534F286CDECA002026A0 /* MusicViewController.swift */; };
+		F40B5353286CDEDE002026A0 /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40B5352286CDEDE002026A0 /* VideoViewController.swift */; };
+		F40B5355286CDEED002026A0 /* RecordAudioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40B5354286CDEED002026A0 /* RecordAudioViewController.swift */; };
 		F4219566276869AE00487AE7 /* ProfileTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4219565276869AE00487AE7 /* ProfileTableHeaderView.swift */; };
 		F4221DF9285129B400376F07 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4221DF8285129B400376F07 /* MainTabBarController.swift */; };
 		F4221DFC28512A2A00376F07 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4221DFB28512A2A00376F07 /* MainCoordinator.swift */; };
@@ -83,6 +88,11 @@
 		F408845C27FF253F002D8812 /* AppFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFactory.swift; sourceTree = "<group>"; };
 		F408845E27FF255A002D8812 /* AppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppManager.swift; sourceTree = "<group>"; };
 		F408846027FF5CA7002D8812 /* CheckerAuthorizations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckerAuthorizations.swift; sourceTree = "<group>"; };
+		F40B5346286CDE1C002026A0 /* MultimediaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultimediaViewController.swift; sourceTree = "<group>"; };
+		F40B5348286CDE3A002026A0 /* MultimediaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultimediaView.swift; sourceTree = "<group>"; };
+		F40B534F286CDECA002026A0 /* MusicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicViewController.swift; sourceTree = "<group>"; };
+		F40B5352286CDEDE002026A0 /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
+		F40B5354286CDEED002026A0 /* RecordAudioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordAudioViewController.swift; sourceTree = "<group>"; };
 		F4219565276869AE00487AE7 /* ProfileTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableHeaderView.swift; sourceTree = "<group>"; };
 		F4221DF8285129B400376F07 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		F4221DFB28512A2A00376F07 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
@@ -164,6 +174,43 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		F40B5343286CDDCE002026A0 /* MultimediaScreen */ = {
+			isa = PBXGroup;
+			children = (
+				F40B5348286CDE3A002026A0 /* MultimediaView.swift */,
+				F40B5346286CDE1C002026A0 /* MultimediaViewController.swift */,
+				F40B534C286CDE6C002026A0 /* Music */,
+				F40B534D286CDE7B002026A0 /* Video */,
+				F40B534E286CDE9F002026A0 /* RecordAudio */,
+			);
+			name = MultimediaScreen;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		F40B534C286CDE6C002026A0 /* Music */ = {
+			isa = PBXGroup;
+			children = (
+				F40B534F286CDECA002026A0 /* MusicViewController.swift */,
+			);
+			name = Music;
+			sourceTree = "<group>";
+		};
+		F40B534D286CDE7B002026A0 /* Video */ = {
+			isa = PBXGroup;
+			children = (
+				F40B5352286CDEDE002026A0 /* VideoViewController.swift */,
+			);
+			path = Video;
+			sourceTree = "<group>";
+		};
+		F40B534E286CDE9F002026A0 /* RecordAudio */ = {
+			isa = PBXGroup;
+			children = (
+				F40B5354286CDEED002026A0 /* RecordAudioViewController.swift */,
+			);
+			name = RecordAudio;
+			sourceTree = "<group>";
+		};
 		F4219562276868A400487AE7 /* ProfileScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -240,6 +287,7 @@
 				F4221DF72851297900376F07 /* MainTabBarController */,
 				F4EC692F27F9A0A7007273D4 /* FeedScreen */,
 				F4219562276868A400487AE7 /* ProfileScreen */,
+				F40B5343286CDDCE002026A0 /* MultimediaScreen */,
 				F48F938F27F59B290035F9F9 /* UserData */,
 				F4A1B257282E7BF700E413E9 /* CustomElements */,
 				F4C0136D280CC8F40003F2AA /* Resourses */,
@@ -520,6 +568,7 @@
 			files = (
 				F48E4DB02830CC9E00AA5FC0 /* Extensions.swift in Sources */,
 				F48F939327F59C150035F9F9 /* UserService.swift in Sources */,
+				F40B5347286CDE1C002026A0 /* MultimediaViewController.swift in Sources */,
 				F4BFE19328510A9C00D3BCEE /* Enums.swift in Sources */,
 				F4A1B259282E7C2100E413E9 /* CustomButton.swift in Sources */,
 				F46BF1222868ED880070BD2B /* Errors.swift in Sources */,
@@ -534,16 +583,20 @@
 				F4BFE1912851027000D3BCEE /* FeedPresenter.swift in Sources */,
 				F48E4DAA28306B1700AA5FC0 /* FeedModel.swift in Sources */,
 				F4DDFA8F27A04C4300CFD226 /* PhotosCollectionViewCell.swift in Sources */,
+				F40B5349286CDE3A002026A0 /* MultimediaView.swift in Sources */,
 				F408845F27FF255A002D8812 /* AppManager.swift in Sources */,
 				F4219566276869AE00487AE7 /* ProfileTableHeaderView.swift in Sources */,
 				F48F37212752290E008C6565 /* FeedViewController.swift in Sources */,
 				F467234C278BF63800B78225 /* PostTableViewCell.swift in Sources */,
 				F408846127FF5CA7002D8812 /* CheckerAuthorizations.swift in Sources */,
+				F40B5350286CDECA002026A0 /* MusicViewController.swift in Sources */,
 				F408845D27FF253F002D8812 /* AppFactory.swift in Sources */,
 				F4221DF9285129B400376F07 /* MainTabBarController.swift in Sources */,
 				F4F6760027873FAB00465155 /* LogInViewController.swift in Sources */,
 				F48E5F322803405600EA4BF3 /* LogInFactory.swift in Sources */,
 				F49DC37B27515432004F9DCE /* AppDelegate.swift in Sources */,
+				F40B5355286CDEED002026A0 /* RecordAudioViewController.swift in Sources */,
+				F40B5353286CDEDE002026A0 /* VideoViewController.swift in Sources */,
 				F4599642286312BF0012435D /* BrutForcePassword.swift in Sources */,
 				F4221DFE28512A8900376F07 /* FeedCoordinator.swift in Sources */,
 				F4F0745627541A310034579A /* InfoViewController.swift in Sources */,
