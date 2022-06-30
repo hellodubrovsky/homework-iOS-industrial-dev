@@ -16,7 +16,7 @@ final class MultimediaViewController: UIViewController, MultimediaViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Multimedia"
+        title = "Media"
         mainView.delegate = self
         view = mainView
     }

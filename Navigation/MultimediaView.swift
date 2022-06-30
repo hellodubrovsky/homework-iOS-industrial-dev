@@ -64,15 +64,14 @@ final class MultimediaView: UIView {
     }
     
     private func installingConstraints() {
-        self.musicButton.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(safeAreaLayoutGuide).inset(100)
+        self.videoButton.snp.makeConstraints { make in
+            make.centerX.centerY.equalToSuperview()
             make.width.equalTo(180)
             make.height.equalTo(80)
         }
-        self.videoButton.snp.makeConstraints { make in
+        self.musicButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(musicButton.snp.bottom).offset(50)
+            make.bottom.equalTo(videoButton.snp.top).offset(-50)
             make.width.equalTo(180)
             make.height.equalTo(80)
         }
