@@ -30,7 +30,8 @@ extension MultimediaViewController {
     
     func pushMusicViewController() {
         let controller = MusicViewController()
-        self.navigationController?.pushViewController(controller, animated: true)
+        let nacCon = UINavigationController(rootViewController: controller)
+        self.navigationController?.present(nacCon, animated: true, completion: nil)
     }
     
     func pushVideoViewController() {

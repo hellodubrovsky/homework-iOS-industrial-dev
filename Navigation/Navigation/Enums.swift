@@ -12,3 +12,8 @@ enum ResultCheckPassword {
     case correct
     case incorrect 
 }
+
+enum ChangeCounterMusic {
+    case forward
+    case backward
+}
