@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 
 final class MusicViewController: UIViewController {
@@ -15,6 +16,7 @@ final class MusicViewController: UIViewController {
     private let presenter = MusicPresenter()
     private var songs = [MusicModel]()
     private var counter = 0
+    private var audioPlayer: AVAudioPlayer!
     
     
     
@@ -30,6 +32,26 @@ final class MusicViewController: UIViewController {
     
     
     // MARK: Private methods
+    
+    /// Настройка музыкального плеера
+    private func setupAudioPlayer(url: URL) {
+        do {
+            try audioPlayer = AVAudioPlayer(contentsOf: url)
+            setupAudioSession()
+        } catch {
+            ()
+        }
+    }
+    
+    /// Настройка аудио-сессии музыкального плеера
+    private func setupAudioSession() {
+        let audioSession = AVAudioSession.sharedInstance()
+        do {
+            try audioSession.setCategory(.playback)
+        } catch {
+            ()
+        }
+    }
     
     /// Изменение счёчика активной песни в положительную или отрицательную сторону.
     private func changeCounter(to way: ChangeCounterMusic) {
@@ -63,6 +85,7 @@ final class MusicViewController: UIViewController {
         
         view = mainView
         title = "Music Player"
+        setupAudioPlayer(url: self.songs[self.counter].filePath)
     }
 }
 
@@ -73,13 +96,8 @@ final class MusicViewController: UIViewController {
 // MARK: - MusicPresenterDelegate
 
 extension MusicViewController: MusicPresenterDelegate {
-    
     func presentList(songs: [MusicModel]) {
         self.songs = songs
-    }
-    
-    func buttonAction() {
-        mainView.updateView()
     }
 }
 
@@ -91,18 +109,41 @@ extension MusicViewController: MusicPresenterDelegate {
 
 extension MusicViewController: MusicViewDelegate {
         
+    /// Обработка нажатия на кнопку "предыдущая серия"
     func nextButtonAction() {
         changeCounter(to: .forward)
+        if audioPlayer.isPlaying {
+            setupAudioPlayer(url: self.songs[self.counter].filePath)
+            audioPlayer.play()
+        } else {
+            audioPlayer.stop()
+            setupAudioPlayer(url: self.songs[self.counter].filePath)
+        }
         mainView.updateView()
     }
     
+    /// Обработка нажатия на кнопку "следующая песня"
     func previousButtonAction() {
         changeCounter(to: .backward)
+        if audioPlayer.isPlaying {
+            setupAudioPlayer(url: self.songs[self.counter].filePath)
+            audioPlayer.play()
+        } else {
+            audioPlayer.stop()
+            setupAudioPlayer(url: self.songs[self.counter].filePath)
+        }
         mainView.updateView()
     }
     
+    /// Обработка нажатия на кнопку play/pause
     func playPauseButtonAction() {
-        
+        if audioPlayer.isPlaying {
+            audioPlayer.stop()
+            mainView.changeStatePlayer(for: .pause)
+        } else {
+            audioPlayer.play()
+            mainView.changeStatePlayer(for: .play)
+        }
     }
     
     func getInfoAboutSong() -> (String, String, UIImage?) {

@@ -82,7 +82,7 @@ final class MusicView: UIView {
         return button
     }()
     
-    private var playPauseSongButton: UIButton = {
+    private var playSongButton: UIButton = {
         let button = UIButton()
         let largeConfig = UIImage.SymbolConfiguration(pointSize: 30, weight: .bold, scale: .large)
         let largeBoldDoc = UIImage(systemName: "play.fill", withConfiguration: largeConfig)
@@ -90,6 +90,18 @@ final class MusicView: UIView {
         button.tintColor = .white
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(playPauseButtonAction), for: .touchUpInside)
+        return button
+    }()
+    
+    private var pauseSongButton: UIButton = {
+        let button = UIButton()
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 30, weight: .bold, scale: .large)
+        let largeBoldDoc = UIImage(systemName: "pause.fill", withConfiguration: largeConfig)
+        button.setImage(largeBoldDoc, for: .normal)
+        button.tintColor = .white
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(playPauseButtonAction), for: .touchUpInside)
+        button.isHidden = true
         return button
     }()
     
@@ -117,6 +129,18 @@ final class MusicView: UIView {
     func setViewDelegate(delegate: MusicViewDelegate) {
         self.delegate = delegate
         displayInfoAboutSong()
+    }
+    
+    /// Изменение иконки play/pause
+    func changeStatePlayer(for state: StatePlayer) {
+        switch state {
+        case .play:
+            playSongButton.isHidden = true
+            pauseSongButton.isHidden = false
+        case .pause:
+            playSongButton.isHidden = false
+            pauseSongButton.isHidden = true
+        }
     }
     
     
@@ -148,7 +172,7 @@ final class MusicView: UIView {
     // MARK: Setting up the View
     
     private func setView() {
-        addSubviews([imageSongLabel, playPauseSongButton, previousSongButton, nextSongButton, nameSongLabel, artisSongLabel])
+        addSubviews([imageSongLabel, playSongButton, pauseSongButton, previousSongButton, nextSongButton, nameSongLabel, artisSongLabel])
         installingConstraints()
     }
     
@@ -159,20 +183,24 @@ final class MusicView: UIView {
             image.trailing.equalTo(self).offset(-60)
             image.height.equalTo(UIScreen.main.bounds.width - 120)
         }
-        playPauseSongButton.snp.makeConstraints { button in
+        playSongButton.snp.makeConstraints { button in
+            button.bottom.equalTo(safeAreaLayoutGuide).offset(-100)
+            button.centerX.equalTo(self)
+        }
+        pauseSongButton.snp.makeConstraints { button in
             button.bottom.equalTo(safeAreaLayoutGuide).offset(-100)
             button.centerX.equalTo(self)
         }
         previousSongButton.snp.makeConstraints { button in
-            button.centerY.equalTo(playPauseSongButton.snp.centerY)
-            button.trailing.equalTo(playPauseSongButton.snp.leading).offset(-50)
+            button.centerY.equalTo(playSongButton.snp.centerY)
+            button.trailing.equalTo(playSongButton.snp.leading).offset(-50)
         }
         nextSongButton.snp.makeConstraints { button in
-            button.centerY.equalTo(playPauseSongButton.snp.centerY)
-            button.leading.equalTo(playPauseSongButton.snp.trailing).offset(50)
+            button.centerY.equalTo(playSongButton.snp.centerY)
+            button.leading.equalTo(playSongButton.snp.trailing).offset(50)
         }
         artisSongLabel.snp.makeConstraints { label in
-            label.bottom.equalTo(playPauseSongButton.snp.top).offset(-40)
+            label.bottom.equalTo(playSongButton.snp.top).offset(-40)
             label.centerX.equalTo(self.snp.centerX)
         }
         nameSongLabel.snp.makeConstraints { label in
