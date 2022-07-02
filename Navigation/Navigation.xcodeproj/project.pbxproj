@@ -24,6 +24,7 @@
 		F43C9A6727E9D730000B8360 /* PublicationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43EC241278D482700B94BC1 /* PublicationModel.swift */; };
 		F4599642286312BF0012435D /* BrutForcePassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4599641286312BF0012435D /* BrutForcePassword.swift */; };
 		F467234C278BF63800B78225 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F467234B278BF63800B78225 /* PostTableViewCell.swift */; };
+		F46BF1222868ED880070BD2B /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46BF1212868ED880070BD2B /* Errors.swift */; };
 		F4826DCA279EFC820040A364 /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4826DC9279EFC820040A364 /* PhotosTableViewCell.swift */; };
 		F4826DCC279F35150040A364 /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4826DCB279F35150040A364 /* PhotosViewController.swift */; };
 		F48E4DAA28306B1700AA5FC0 /* FeedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48E4DA928306B1700AA5FC0 /* FeedModel.swift */; };
@@ -93,6 +94,7 @@
 		F43EC241278D482700B94BC1 /* PublicationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicationModel.swift; sourceTree = "<group>"; };
 		F4599641286312BF0012435D /* BrutForcePassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrutForcePassword.swift; sourceTree = "<group>"; };
 		F467234B278BF63800B78225 /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
+		F46BF1212868ED880070BD2B /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		F4826DC9279EFC820040A364 /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
 		F4826DCB279F35150040A364 /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
 		F48E4DA928306B1700AA5FC0 /* FeedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedModel.swift; sourceTree = "<group>"; };
@@ -291,6 +293,7 @@
 		F4C0136D280CC8F40003F2AA /* Resourses */ = {
 			isa = PBXGroup;
 			children = (
+				F46BF1212868ED880070BD2B /* Errors.swift */,
 				F4BFE19228510A9C00D3BCEE /* Enums.swift */,
 				F48E4DAF2830CC9E00AA5FC0 /* Extensions.swift */,
 				F49DC38327515434004F9DCE /* Assets.xcassets */,
@@ -519,6 +522,7 @@
 				F48F939327F59C150035F9F9 /* UserService.swift in Sources */,
 				F4BFE19328510A9C00D3BCEE /* Enums.swift in Sources */,
 				F4A1B259282E7C2100E413E9 /* CustomButton.swift in Sources */,
+				F46BF1222868ED880070BD2B /* Errors.swift in Sources */,
 				F48F939127F59B530035F9F9 /* User.swift in Sources */,
 				F48E4DAC28307EC500AA5FC0 /* CustomTextFiled.swift in Sources */,
 				F4826DCA279EFC820040A364 /* PhotosTableViewCell.swift in Sources */,

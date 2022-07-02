@@ -23,7 +23,6 @@ final class FeedViewController: UIViewController {
     private var presenter: FeedPresenterInput
     private let mainView = FeedView()
     private var coordinator: FeedCoordinator!
-    private var timer: Timer?
     
     
     
@@ -53,35 +52,21 @@ final class FeedViewController: UIViewController {
     /// Очистка текстового поля ввода пароля. Будет очищаться через установленное время.
     func clearTextField(withTimeInterval: Double) {
         self.mainView.timerIndicator.isHidden = false
-        var timerTime = withTimeInterval
-        self.mainView.timerIndicator.text = "До очистки поля ввода пароля осталось: \(timerTime)"
-        
-        DispatchQueue.global().async {
-            self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
-                timerTime -= 1
-                DispatchQueue.main.async {
-                    self.mainView.timerIndicator.text = "До очистки поля ввода пароля осталось: \(timerTime)"
-                }
-                if timerTime == 0 {
-                    DispatchQueue.main.async {
-                        self.mainView.timerIndicator.text = "Поле ввода пароля очищено, от чужих глаз."
-                        self.mainView.passwordTextField.text = ""
-                    }
-                    print("Очистка текста в поле ввода пароля.")
-                } else if timerTime == -1 {
-                    DispatchQueue.main.async {
-                        self.mainView.timerIndicator.isHidden = true
-                    }
-                    self.timer?.invalidate()
-                    self.timer = nil
-                    print("Таймер убит.")
-                }
+        var timerTime = Int(withTimeInterval)
+        let timerIndicatorText = "До очистки поля ввода пароля осталось: "
+        self.mainView.timerIndicator.text =  timerIndicatorText + String(timerTime)
+        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] timer in
+            guard let self = self else { return }
+            timerTime -= 1
+            self.mainView.timerIndicator.text = timerIndicatorText + String(timerTime)
+            if timerTime == 0 {
+                self.mainView.timerIndicator.text = "Поле ввода пароля очищено, от чужих глаз."
+                self.mainView.passwordTextField.text = nil
+            } else if timerTime == -1 {
+                self.mainView.timerIndicator.isHidden = true
+                timer.invalidate()
             }
-            guard let timer = self.timer else { return }
-            RunLoop.current.add(timer, forMode: .common)
-            RunLoop.current.run()
         }
-        
     }
     
     
@@ -103,8 +88,19 @@ final class FeedViewController: UIViewController {
     
     // Текст, введенный в textField пароля, отправляется в презентер, и уже там происходит проверка.
     @objc private func checkPassword(notification: NSNotification) {
-        guard let text = notification.userInfo?["text"] as? String else { return }
-        presenter.buttonCheckPassword(text: text)
+        guard let text = notification.userInfo?["text"] as? String else { preconditionFailure() }
+        let notificationCenter = NotificationCenter.default
+        do {
+            try presenter.buttonCheckPassword(text: text)
+            notificationCenter.post(name: Notification.Name("correctPassword"), object: nil)
+        } catch CheckPasswordPostErrors.emptyPassordField {
+            notificationCenter.post(name: Notification.Name("emptyPassword"), object: nil)
+        } catch CheckPasswordPostErrors.incorrectPassword {
+            notificationCenter.post(name: Notification.Name("incorrectPassword"), object: nil)
+        } catch {
+            print(error.localizedDescription)
+            preconditionFailure()
+        }
     }
     
     // Добавление наблюдателей (для пароля).
@@ -120,6 +116,7 @@ final class FeedViewController: UIViewController {
         mainView.passwordStatusLabel.isHidden = false
         mainView.passwordStatusLabel.text = "Correct Password"
         mainView.passwordStatusLabel.layer.borderColor = UIColor.green.cgColor
+//        runTimer()
         clearTextField(withTimeInterval: 5)
     }
     
