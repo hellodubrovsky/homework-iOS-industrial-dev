@@ -93,17 +93,12 @@ final class ProfileHeaderView: UIView {
         return view
     }()
     
-    private let buttonShowStatus: UIButton = {
-        let button = UIButton(type: .custom) as UIButton
-        button.setTitle("Set status", for: .normal)
-        button.layer.cornerRadius = 16
-        button.backgroundColor = .systemBlue
+    private lazy var buttonShowStatus: UIButton = {
+        let button = CustomButton(title: "Set status", titleColor: .white, backgoundColor: .systemBlue, cornerRadius: 16) { self.buttonShowStatusPressed() }
         button.layer.shadowOffset = CGSize(width: 4, height: 4)
         button.layer.shadowRadius = 4
         button.layer.shadowOpacity = 0.7
         button.layer.shadowColor = UIColor(ciColor: .black).cgColor
-        button.addTarget(self, action: #selector(buttonShowStatusPressed), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
@@ -166,7 +161,7 @@ final class ProfileHeaderView: UIView {
     }
     
     // Обработка нажатия на кнопку отображение статуса
-    @objc private func buttonShowStatusPressed() {
+    private func buttonShowStatusPressed() {
         guard statusText != "" else { return }
         userDescription.text = statusText
     }

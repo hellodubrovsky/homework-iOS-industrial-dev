@@ -10,7 +10,16 @@ import UIKit
 // MARK: - LogInViewControllerDelegate
 
 protocol LogInViewControllerDelegate: AnyObject {
-    func check(login: String, password: String) -> Bool
+    func check(login: String, password: String, completion: @escaping (Result<Bool, AuthorizationErrors>) -> Void)
+}
+
+
+
+
+// MARK: - LogInViewControllerBrutForceDelegate
+
+protocol LogInViewControllerBrutForceDelegate: AnyObject {
+    func bruteForce(passwordToUnlock: String) -> String
 }
 
 
@@ -19,9 +28,19 @@ protocol LogInViewControllerDelegate: AnyObject {
 
 // MARK: - LogInspector
 
-class LogInInspector: LogInViewControllerDelegate {
-    func check(login: String, password: String) -> Bool {
-        return Checker.shared.check(login: login, password: password)
+final class LogInInspector: LogInViewControllerDelegate {
+    func check(login: String, password: String, completion: @escaping (Result<Bool, AuthorizationErrors>) -> Void) {
+        if login.isEmpty && password.isEmpty {
+            completion(.failure(.emptyLofinOrPassword))
+        } else if login.isEmpty {
+            completion(.failure(.emptyLoginField))
+        } else if password.isEmpty {
+            completion(.failure(.emptyPassordField))
+        } else if !Checker.shared.check(login: login, password: password) {
+            completion(.failure(.incorrectPasswordOrLogin))
+        } else {
+            completion(.success(true))
+        }
     }
 }
 
@@ -44,11 +63,15 @@ final class LogInViewController: UIViewController {
         super.viewDidLoad()
         settingView()
         setupTapGesture()
+        self.coordinator = ProfileCoordinatorImplementation(navigationController: navigationController ?? UINavigationController())
     }
     
     
     
     // MARK: - Private properties
+    
+    private var coordinator: ProfileCoordinator!
+    private var brutForceDelegate: LogInViewControllerBrutForceDelegate = BrutForcePassword()
     
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -117,13 +140,20 @@ final class LogInViewController: UIViewController {
     }()
     
     private lazy var logInButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Log In", for: .normal)
-        button.backgroundColor = UIColor.init(named: "colorBaseVK")
-        button.layer.cornerRadius = 10
-        button.addTarget(nil, action: #selector(buttonLogInAction), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
+        let button = CustomButton(title: "Log In", titleColor: .white, backgoundColor: UIColor.init(named: "colorBaseVK")!, cornerRadius: 10) { self.buttonLogInAction() }
         return button
+    }()
+    
+    private lazy var brutforceButton: UIButton = {
+        let button = CustomButton(title: "Brut force password", titleColor: .white, backgoundColor: .black, cornerRadius: 10, buttonAction: { self.brutforceAction() })
+        return button
+    }()
+    
+    private lazy var activitityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .medium)
+        indicator.color = .white
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
     }()
     
     
@@ -131,32 +161,40 @@ final class LogInViewController: UIViewController {
     // MARK: - Private methods
     
     // Обработка нажатия на кнопку "Log in"
-    @objc private func buttonLogInAction() {
-        guard (loginInputTextField.text?.isEmpty == false) else {
-            displayingAnAlertWithWarningForTheLoginField()
-            return
-        }
-        let userName = loginInputTextField.text!
-        let userPassword = passwordInputTextField.text!
+    private func buttonLogInAction() {
+       
+        let userName: String = loginInputTextField.text!
+        let userPassword: String = passwordInputTextField.text!
         
         #if DEBUG
-        let cervice = TestUserService()
+        let service = TestUserService()
         #else
         let user = User(name: userName)
-        let cervice = CurrentUserService(user: user)
+        let service = CurrentUserService(user: user)
         #endif
         
-        guard let check = delegate?.check(login: userName, password: userPassword), check == true else {
-            displayingAnAlertWithWarningForLoginAndPassword()
-            return
-        }
-        let viewController = ProfileViewController(userService: cervice, userName: userName)
-        navigationController?.pushViewController(viewController, animated: true)
+        delegate?.check(login: userName, password: userPassword, completion: { [weak self] result in
+            switch result {
+            case .success(_):
+                self?.coordinator.openProfileScreen(service: service, userName: userName)
+            case .failure(let error):
+                switch error {
+                case .emptyLofinOrPassword:
+                    self?.displayingAnAlertWithWarningForTheLoginField(withText: "Поля ввода 'логина' и 'пароля' не могут быть пустыми.")
+                case .emptyLoginField:
+                    self?.displayingAnAlertWithWarningForTheLoginField(withText: "Поле ввода 'логина' не может быть пустым.")
+                case .emptyPassordField:
+                    self?.displayingAnAlertWithWarningForTheLoginField(withText: "Поле ввода 'пароля' не может быть пустым.")
+                case .incorrectPasswordOrLogin:
+                    self?.displayingAnAlertWithWarningForLoginAndPassword()
+                }
+            }
+        })
     }
     
     // Показ алерта, информирующего о необходимости заполнения поля login
-    private func displayingAnAlertWithWarningForTheLoginField() {
-        let alert = UIAlertController(title: "Предупреждение", message: "Поле ввода логина не может быть пустым.", preferredStyle: .alert)
+    private func displayingAnAlertWithWarningForTheLoginField(withText: String) {
+        let alert = UIAlertController(title: "Предупреждение", message: withText, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
@@ -167,12 +205,30 @@ final class LogInViewController: UIViewController {
         var message: String = "Поле 'логин' или 'пароль' содержат некорректные значения."
         
         #if DEBUG
-        message = message + "Подсказка для dev-сборки. Логин: login, Пароль: pass."
+        message = message + "Подсказка для dev-сборки. Логин: login, Пароль: pas."
         #endif
 
         let alert = UIAlertController(title: "Предупреждение", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    // Подбор пароля
+    private func brutforceAction() {
+        self.activitityIndicator.startAnimating()
+        DispatchQueue.global().async {
+            let password = self.brutForceDelegate.bruteForce(passwordToUnlock: Checker.shared.refundPassword())
+            DispatchQueue.main.async {
+                self.passwordInputTextField.isSecureTextEntry = false
+                self.passwordInputTextField.text = password
+                self.activitityIndicator.stopAnimating()
+            }
+            // Через 5 секунд, скрываю текст в поле пароля
+            sleep(5)
+            DispatchQueue.main.async {
+                self.passwordInputTextField.isSecureTextEntry = true
+            }
+        }
     }
     
     
@@ -189,6 +245,12 @@ final class LogInViewController: UIViewController {
         contentView.addSubview(iconLogoVK)
         contentView.addSubview(inputFieldStackView)
         contentView.addSubview(logInButton)
+        
+        #if DEBUG
+        contentView.addSubview(brutforceButton)
+        contentView.addSubview(activitityIndicator)
+        #endif
+        
         inputFieldStackView.addArrangedSubview(loginInputTextField)
         inputFieldStackView.addArrangedSubview(passwordInputTextField)
         installingConstraints()
@@ -221,8 +283,20 @@ final class LogInViewController: UIViewController {
             logInButton.topAnchor.constraint(equalTo: inputFieldStackView.bottomAnchor, constant: 16.0),
             logInButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16.0),
             logInButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16.0),
-            logInButton.heightAnchor.constraint(equalToConstant: 50)
+            logInButton.heightAnchor.constraint(equalToConstant: 50),
         ])
+        
+        #if DEBUG
+        NSLayoutConstraint.activate([
+            brutforceButton.topAnchor.constraint(equalTo: logInButton.bottomAnchor, constant: 16.0),
+            brutforceButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16.0),
+            brutforceButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16.0),
+            brutforceButton.heightAnchor.constraint(equalToConstant: 50),
+            
+            activitityIndicator.centerYAnchor.constraint(equalTo: brutforceButton.centerYAnchor),
+            activitityIndicator.trailingAnchor.constraint(equalTo: brutforceButton.trailingAnchor, constant: -16)
+        ])
+        #endif
     }
 }
 

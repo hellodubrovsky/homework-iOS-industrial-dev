@@ -8,89 +8,149 @@
 import UIKit
 
 
-final class FeedViewController: UIViewController {
+protocol FeedViewControllerInput: AnyObject {
+    func resultCheckPassword(_ result: ResultCheckPassword)
+}
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        settingView()
-    }
-    
-    
+
+
+
+final class FeedViewController: UIViewController {
     
     // MARK: - Private properties
     
-    // Создание StackView с двумя кнопками.
-    private let stackView: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .vertical
-        stack.distribution = .equalSpacing
-        stack.alignment = .center
-        stack.spacing = 10.0
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        return stack
-    }()
+    // Модель для проверки пароля.
+    private var presenter: FeedPresenterInput
+    private let mainView = FeedView()
+    private var coordinator: FeedCoordinator!
     
-    // Cоздание кнопки "Переход к посту". (Первая для стека)
-    private let buttonPostFirst: UIButton = {
-        let button = UIButton(type: .custom) as UIButton
-        button.setTitle("Go to post. #1", for: .normal)
-        button.backgroundColor = UIColor(red: 0.57, green: 0.62, blue: 0.70, alpha: 0.1)
-        button.layer.cornerRadius = 20
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor(red: CGFloat(253.0 / 255.0), green: CGFloat(112.0 / 255.0), blue: CGFloat(20.0 / 255.0), alpha: CGFloat(1.0)).cgColor
-        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-        button.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        button.widthAnchor.constraint(equalToConstant: 200).isActive = true
-        return button
-    }()
     
-    // Cоздание кнопки "Переход к посту". (Вторая для стека)
-    private let buttonPostSecond: UIButton = {
-        let button = UIButton(type: .custom) as UIButton
-        button.setTitle("Go to post. #2", for: .normal)
-        button.backgroundColor = UIColor(red: 0.57, green: 0.62, blue: 0.70, alpha: 0.1)
-        button.layer.cornerRadius = 20
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor(red: CGFloat(255.0 / 255.0), green: CGFloat(170.0 / 255.0), blue: CGFloat(20.0 / 255.0), alpha: CGFloat(1.0)).cgColor
-        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-        button.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        button.widthAnchor.constraint(equalToConstant: 200).isActive = true
-        return button
-    }()
+    
+    
+    // MARK: - Public Initial
+    
+    init(presenter: FeedPresenterInput) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        title = "Feed"
+        view = mainView
+        addObserverForView()
+        addObserversForPassword()
+        self.presenter.set(view: self)
+        self.coordinator = FeedCoordinatorImplementation(navigationController: navigationController ?? UINavigationController())
+        
+    }
+    
+    /// Очистка текстового поля ввода пароля. Будет очищаться через установленное время.
+    func clearTextField(withTimeInterval: Double) {
+        self.mainView.timerIndicator.isHidden = false
+        var timerTime = Int(withTimeInterval)
+        let timerIndicatorText = "До очистки поля ввода пароля осталось: "
+        self.mainView.timerIndicator.text =  timerIndicatorText + String(timerTime)
+        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] timer in
+            guard let self = self else { return }
+            timerTime -= 1
+            self.mainView.timerIndicator.text = timerIndicatorText + String(timerTime)
+            if timerTime == 0 {
+                self.mainView.timerIndicator.text = "Поле ввода пароля очищено, от чужих глаз."
+                self.mainView.passwordTextField.text = nil
+            } else if timerTime == -1 {
+                self.mainView.timerIndicator.isHidden = true
+                timer.invalidate()
+            }
+        }
+    }
     
     
     
     // MARK: - Private methods
     
     // Реализация открытия окна "Post" по нажатию кнопки.
-    @objc private func buttonAction(sender: UIButton!) {
-        let postViewController = PostViewController()
-        let titlePost: Post = Post(title: "Post")
-        postViewController.title = titlePost.title
-        self.navigationController?.pushViewController(postViewController, animated: true)
+    @objc private func buttonAction() {
+        presenter.buttonPost()
+        coordinator.openPostViewController()
     }
     
-    
-    
-    // MARK: - View configuration
-    
-    // Настройка View
-    private func settingView() {
-        title = "Feed"
-        view.backgroundColor = UIColor(red: 0.53, green: 0.47, blue: 0.68, alpha: 0.1)
-        view.addSubview(stackView)
-        stackView.addArrangedSubview(buttonPostFirst)
-        stackView.addArrangedSubview(buttonPostSecond)
-        installingConstants()
+    // Добавление наблюдателей для управления действиями UI-элементов.
+    private func addObserverForView() {
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(buttonAction), name: Notification.Name("notificationForButtonPost"), object: nil)
+        notificationCenter.addObserver(self, selector: #selector(self.checkPassword(notification:)), name: Notification.Name("notificationForButtonCheckPassword"), object: nil)
     }
     
-    // Настройка констрейнтов
-    private func installingConstants() {
-        NSLayoutConstraint.activate([
-            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 0),
-            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0),
-            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0)
-        ])
+    // Текст, введенный в textField пароля, отправляется в презентер, и уже там происходит проверка.
+    @objc private func checkPassword(notification: NSNotification) {
+        guard let text = notification.userInfo?["text"] as? String else { preconditionFailure() }
+        let notificationCenter = NotificationCenter.default
+        do {
+            try presenter.buttonCheckPassword(text: text)
+            notificationCenter.post(name: Notification.Name("correctPassword"), object: nil)
+        } catch CheckPasswordPostErrors.emptyPassordField {
+            notificationCenter.post(name: Notification.Name("emptyPassword"), object: nil)
+        } catch CheckPasswordPostErrors.incorrectPassword {
+            notificationCenter.post(name: Notification.Name("incorrectPassword"), object: nil)
+        } catch {
+            print(error.localizedDescription)
+            preconditionFailure()
+        }
+    }
+    
+    // Добавление наблюдателей (для пароля).
+    private func addObserversForPassword() {
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(correctPassword), name: Notification.Name("correctPassword"), object: nil)
+        notificationCenter.addObserver(self, selector: #selector(incorrectPassword), name: Notification.Name("incorrectPassword"), object: nil)
+        notificationCenter.addObserver(self, selector: #selector(emptyPassword), name: Notification.Name("emptyPassword"), object: nil)
+    }
+    
+    @objc
+    private func correctPassword() {
+        mainView.passwordStatusLabel.isHidden = false
+        mainView.passwordStatusLabel.text = "Correct Password"
+        mainView.passwordStatusLabel.layer.borderColor = UIColor.green.cgColor
+//        runTimer()
+        clearTextField(withTimeInterval: 5)
+    }
+    
+    @objc
+    private func incorrectPassword() {
+        mainView.passwordStatusLabel.isHidden = false
+        mainView.passwordStatusLabel.text = "Incorrect Password"
+        mainView.passwordStatusLabel.layer.borderColor = UIColor.red.cgColor
+    }
+    
+    @objc
+    private func emptyPassword() {
+        mainView.passwordStatusLabel.isHidden = false
+        mainView.passwordStatusLabel.text = "Empty Password"
+        mainView.passwordStatusLabel.layer.borderColor = UIColor.purple.cgColor
+    }
+}
+
+
+
+
+
+// MARK: - FeedViewControllerInput
+
+extension FeedViewController: FeedViewControllerInput {
+    func resultCheckPassword(_ result: ResultCheckPassword) {
+        let notificationCenter = NotificationCenter.default
+        switch result {
+        case .empty:
+            notificationCenter.post(name: Notification.Name("emptyPassword"), object: nil)
+        case .correct:
+            notificationCenter.post(name: Notification.Name("correctPassword"), object: nil)
+        case .incorrect:
+            notificationCenter.post(name: Notification.Name("incorrectPassword"), object: nil)
+        }
     }
 }

@@ -14,15 +14,16 @@ final class PhotosViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         settingView()
-        imageFacade.subscribe(self)
-        imageFacade.addImagesWithTimer(time: 0.2, repeat: photosNameProfiles.count)
+        self.activityIndicator.startAnimating()
+        downloadPhotos()
     }
     
     
     
     // MARK: - Private properties.
     
-    private let imageFacade = ImagePublisherFacade()
+    //private let imageFacade = ImagePublisherFacade()
+    private let imageProcessor = ImageProcessor()
     private var imagesUser: [UIImage] = []
     
     private let collectionView: UICollectionView = {
@@ -32,9 +33,29 @@ final class PhotosViewController: UIViewController {
         return collectionView
     }()
     
-    deinit {
-        imageFacade.rechargeImageLibrary()
-        imageFacade.removeSubscription(for: self)
+    private let activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .medium)
+        indicator.color = .black
+        return indicator
+    }()
+    
+    
+    
+    // MARK: - Private methods
+    
+    private func downloadPhotos() {
+        let imagesFull: [UIImage] = photosNameProfiles.map { UIImage(named: $0.imageName)! }
+        let methodStart = NSDate()
+        self.imageProcessor.processImagesOnThread(sourceImages: imagesFull, filter: .fade, qos: .utility) { images in
+            self.imagesUser = images.map { UIImage(cgImage: $0!) }
+            let methodFinish = NSDate()
+            let executionTime = methodFinish.timeIntervalSince(methodStart as Date)
+            print("Время выполнения метода отображения коллекции фото: \(executionTime)")
+            DispatchQueue.main.async {
+                self.activityIndicator.stopAnimating()
+                self.collectionView.reloadData()
+            }
+        }
     }
     
     
@@ -52,6 +73,7 @@ final class PhotosViewController: UIViewController {
         title = "Photo Gallery"
         view.backgroundColor = .systemGray
         view.addSubview(collectionView)
+        view.addSubview(activityIndicator)
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(PhotosCollectionViewCell.self, forCellWithReuseIdentifier: PhotosCollectionViewCell.identifier)
@@ -60,11 +82,16 @@ final class PhotosViewController: UIViewController {
     
     private func installinConstraints() {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
 }
@@ -85,7 +112,7 @@ extension PhotosViewController: UICollectionViewDataSource {
     // Заполнение ячеек данными.
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell: PhotosCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotosCollectionViewCell.identifier, for: indexPath) as? PhotosCollectionViewCell else { fatalError() }
-        let data = photosNameProfiles[indexPath.row]
+        let data = imagesUser[indexPath.row]
         cell.update(with: data, for: .profilePhoto)
         return cell
     }
@@ -124,19 +151,5 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 8
-    }
-}
-
-
-
-
-
-// MARK: - Protocol:
-
-extension PhotosViewController: ImageLibrarySubscriber {
-    func receive(images: [UIImage]) {
-        self.imagesUser = []
-        images.forEach { imagesUser.append($0) }
-        self.collectionView.reloadData()
     }
 }

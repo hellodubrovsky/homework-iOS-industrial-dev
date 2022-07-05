@@ -19,15 +19,8 @@ final class InfoViewController: UIViewController {
     // MARK: - Private properties
     
     // Cоздание кнопки "Показать алерт".
-    private let buttonShowAlert: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = UIColor(red: 0.57, green: 0.62, blue: 0.70, alpha: 0.5)
-        button.layer.borderColor = UIColor(red: CGFloat(253.0 / 255.0), green: CGFloat(112.0 / 255.0), blue: CGFloat(20.0 / 255.0), alpha: CGFloat(1.0)).cgColor
-        button.layer.borderWidth = 2
-        button.layer.cornerRadius = 20
-        button.setTitle("Show alert", for: .normal)
-        button.addTarget(self, action: #selector(buttonAlertAction), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
+    private lazy var buttonShowAlert: UIButton = {
+        let button = CustomButton(title: "Show alert", titleColor: .white, backgoundColor: UIColor.init(named: "colorBaseVK")!, cornerRadius: 10) { self.buttonAlertAction() }
         return button
     }()
     
@@ -36,7 +29,7 @@ final class InfoViewController: UIViewController {
     // MARK: - Private methods
     
     // Показ алерта при нажатии на кнопку "Показать алерт".
-    @objc private func buttonAlertAction(sender: UIButton) {
+    private func buttonAlertAction() {
         let buttonClickOK = { (_: UIAlertAction) -> Void in print("[UIAlertAction] --> Нажата кнопка 'ОК'.") }
         let buttonClickCancel = { (_: UIAlertAction) -> Void in print("[UIAlertAction] --> Нажата кнопка 'Назад'.") }
         let alert = UIAlertController(title: "Title", message: "Text alert.", preferredStyle: .alert)
@@ -52,7 +45,7 @@ final class InfoViewController: UIViewController {
     // Настройка View
     private func settingView() {
         self.title = "Info"
-        view.backgroundColor = UIColor(red: 0.61, green: 0, blue: 0, alpha: 1)
+        view.backgroundColor = .white
         navigationController?.navigationBar.tintColor = .white
         view.addSubview(buttonShowAlert)
         installingConstants()

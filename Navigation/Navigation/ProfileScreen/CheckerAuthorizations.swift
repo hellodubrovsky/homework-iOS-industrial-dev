@@ -17,7 +17,7 @@ final class Checker {
     
     // MARK: - Private properties
     private let login = "login"
-    private let password = "pass"
+    private let password = "pas"
     
     
     
@@ -25,4 +25,6 @@ final class Checker {
     func check(login: String, password: String) -> Bool {
         login == self.login && password == self.password
     }
+
+    func refundPassword() -> String { self.password }
 }

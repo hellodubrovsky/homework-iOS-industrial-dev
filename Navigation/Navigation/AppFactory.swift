@@ -27,6 +27,7 @@ final class AppFactory {
         navigationController.tabBarItem = taBarItem
         let appearance = UINavigationBarAppearance()
         appearance.backgroundColor = UIColor.init(named: "colorBaseVK")
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
         navigationController.navigationBar.scrollEdgeAppearance = appearance
         return navigationController
     }
