@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow()
         window?.rootViewController = AppManager.shared.rootViewController
         window?.makeKeyAndVisible()
+        NetworkService.launchingTheURLSessionDataTask(by: AppConfiguration.allCases.randomElement()?.rawValue ?? AppConfiguration.people.rawValue)
         return true
     }
 }

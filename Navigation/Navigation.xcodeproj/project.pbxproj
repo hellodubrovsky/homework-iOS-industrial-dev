@@ -17,6 +17,7 @@
 		F40B5350286CDECA002026A0 /* MusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40B534F286CDECA002026A0 /* MusicViewController.swift */; };
 		F40B5353286CDEDE002026A0 /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40B5352286CDEDE002026A0 /* VideoViewController.swift */; };
 		F40B5355286CDEED002026A0 /* RecordAudioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40B5354286CDEED002026A0 /* RecordAudioViewController.swift */; };
+		F4160B8F2875D66E00F56803 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4160B8E2875D66E00F56803 /* NetworkService.swift */; };
 		F4219566276869AE00487AE7 /* ProfileTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4219565276869AE00487AE7 /* ProfileTableHeaderView.swift */; };
 		F4221DF9285129B400376F07 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4221DF8285129B400376F07 /* MainTabBarController.swift */; };
 		F4221DFC28512A2A00376F07 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4221DFB28512A2A00376F07 /* MainCoordinator.swift */; };
@@ -103,6 +104,7 @@
 		F40B534F286CDECA002026A0 /* MusicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicViewController.swift; sourceTree = "<group>"; };
 		F40B5352286CDEDE002026A0 /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		F40B5354286CDEED002026A0 /* RecordAudioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordAudioViewController.swift; sourceTree = "<group>"; };
+		F4160B8E2875D66E00F56803 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		F4219565276869AE00487AE7 /* ProfileTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableHeaderView.swift; sourceTree = "<group>"; };
 		F4221DF8285129B400376F07 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		F4221DFB28512A2A00376F07 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
@@ -262,6 +264,14 @@
 			name = "Coordinators ";
 			sourceTree = "<group>";
 		};
+		F429B21F28745FA100364B7F /* NetworkService */ = {
+			isa = PBXGroup;
+			children = (
+				F4160B8E2875D66E00F56803 /* NetworkService.swift */,
+			);
+			name = NetworkService;
+			sourceTree = "<group>";
+		};
 		F43C9A5927E9D55B000B8360 /* StorageService */ = {
 			isa = PBXGroup;
 			children = (
@@ -329,6 +339,7 @@
 				F4A1B257282E7BF700E413E9 /* CustomElements */,
 				F4C0136D280CC8F40003F2AA /* Resourses */,
 				F4221DFA28512A1200376F07 /* Coordinators  */,
+				F429B21F28745FA100364B7F /* NetworkService */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -636,6 +647,7 @@
 				F48F37212752290E008C6565 /* FeedViewController.swift in Sources */,
 				F467234C278BF63800B78225 /* PostTableViewCell.swift in Sources */,
 				F408846127FF5CA7002D8812 /* CheckerAuthorizations.swift in Sources */,
+				F4160B8F2875D66E00F56803 /* NetworkService.swift in Sources */,
 				F40B5350286CDECA002026A0 /* MusicViewController.swift in Sources */,
 				F408845D27FF253F002D8812 /* AppFactory.swift in Sources */,
 				F4221DF9285129B400376F07 /* MainTabBarController.swift in Sources */,
