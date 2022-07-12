@@ -34,6 +34,16 @@ final class InfoViewController: UIViewController {
         return label
     }()
     
+    private lazy var orbitalPeriodLabel: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = .white
+        label.layer.cornerRadius = 10
+        label.layer.borderColor = UIColor.init(named: "colorBaseVK")!.cgColor
+        label.layer.borderWidth = 2
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     
     
     // MARK: - Private methods
@@ -57,7 +67,7 @@ final class InfoViewController: UIViewController {
                         let serializedDictionary = try JSONSerialization.jsonObject(with: uwrappedData, options: [])
                         if let dictionary = serializedDictionary as? [[String: Any]], let title = dictionary.randomElement()!["title"] as? String {
                             DispatchQueue.main.async {
-                                self?.titleUserLabel.text = title
+                                self?.titleUserLabel.text = " " + title
                             }
                         }
                     } catch let error {
@@ -71,6 +81,27 @@ final class InfoViewController: UIViewController {
         }
     }
     
+    // Загрузка данных для label -> orbitalPeriodUserLabel.
+    private func uploadDataForOrbitalPeriodLabel() {
+        if let url = URL(string: "https://swapi.dev/api/planets/1") {
+            let task = URLSession.shared.dataTask(with: url, completionHandler: { [weak self] data, response, error in
+                if let unwrappedData = data {
+                    do {
+                        let planet = try JSONDecoder().decode(InfoModel.self, from: unwrappedData)
+                        DispatchQueue.main.async {
+                            self?.orbitalPeriodLabel.text = " The orbital period of the planet '\(planet.name)' = \(planet.orbitalPeriod)"
+                        }
+                    } catch let error {
+                        print("\n⚠️ Что-то пошло не так. Error:", String(describing: error))
+                    }
+                }
+            })
+            task.resume()
+        } else {
+            print("\n⚠️ Что-то пошло не так. URL: https://swapi.dev/api/planets/1")
+        }
+    }
+    
     
     
     // MARK: - View configuration
@@ -80,9 +111,10 @@ final class InfoViewController: UIViewController {
         self.title = "Info"
         view.backgroundColor = .white
         navigationController?.navigationBar.tintColor = .white
-        view.addSubviews([buttonShowAlert, titleUserLabel])
+        view.addSubviews([buttonShowAlert, titleUserLabel, orbitalPeriodLabel])
         installingConstants()
         uploadData()
+        uploadDataForOrbitalPeriodLabel()
     }
     
     // Настройка констрейнтов
@@ -97,6 +129,11 @@ final class InfoViewController: UIViewController {
             titleUserLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             titleUserLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             titleUserLabel.heightAnchor.constraint(equalToConstant: 40),
+            
+            orbitalPeriodLabel.topAnchor.constraint(equalTo: titleUserLabel.bottomAnchor, constant: 16),
+            orbitalPeriodLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            orbitalPeriodLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            orbitalPeriodLabel.heightAnchor.constraint(equalToConstant: 40),
         ])
     }
 }
