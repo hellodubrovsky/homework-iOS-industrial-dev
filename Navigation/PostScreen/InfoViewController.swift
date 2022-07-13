@@ -24,6 +24,26 @@ final class InfoViewController: UIViewController {
         return button
     }()
     
+    private lazy var titleUserLabel: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = .white
+        label.layer.cornerRadius = 10
+        label.layer.borderColor = UIColor.init(named: "colorBaseVK")!.cgColor
+        label.layer.borderWidth = 2
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var orbitalPeriodLabel: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = .white
+        label.layer.cornerRadius = 10
+        label.layer.borderColor = UIColor.init(named: "colorBaseVK")!.cgColor
+        label.layer.borderWidth = 2
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     
     
     // MARK: - Private methods
@@ -38,6 +58,50 @@ final class InfoViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    // Загрузка данных (загруженные данные вставляем в label)
+    private func uploadData() {
+        if let url = URL(string: "https://jsonplaceholder.typicode.com/todos/") {
+            let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+                if let uwrappedData = data {
+                    do {
+                        let serializedDictionary = try JSONSerialization.jsonObject(with: uwrappedData, options: [])
+                        if let dictionary = serializedDictionary as? [[String: Any]], let title = dictionary.randomElement()!["title"] as? String {
+                            DispatchQueue.main.async {
+                                self?.titleUserLabel.text = " " + title
+                            }
+                        }
+                    } catch let error {
+                        print("\n⚠️ Что-то пошло не так. Error:", String(describing: error))
+                    }
+                }
+            }
+            task.resume()
+        } else {
+            print("\n⚠️ Что-то пошло не так. URL: https://jsonplaceholder.typicode.com/todos/")
+        }
+    }
+    
+    // Загрузка данных для label -> orbitalPeriodUserLabel.
+    private func uploadDataForOrbitalPeriodLabel() {
+        if let url = URL(string: "https://swapi.dev/api/planets/1") {
+            let task = URLSession.shared.dataTask(with: url, completionHandler: { [weak self] data, response, error in
+                if let unwrappedData = data {
+                    do {
+                        let planet = try JSONDecoder().decode(InfoModel.self, from: unwrappedData)
+                        DispatchQueue.main.async {
+                            self?.orbitalPeriodLabel.text = " The orbital period of the planet '\(planet.name)' = \(planet.orbitalPeriod)"
+                        }
+                    } catch let error {
+                        print("\n⚠️ Что-то пошло не так. Error:", String(describing: error))
+                    }
+                }
+            })
+            task.resume()
+        } else {
+            print("\n⚠️ Что-то пошло не так. URL: https://swapi.dev/api/planets/1")
+        }
+    }
+    
     
     
     // MARK: - View configuration
@@ -47,8 +111,10 @@ final class InfoViewController: UIViewController {
         self.title = "Info"
         view.backgroundColor = .white
         navigationController?.navigationBar.tintColor = .white
-        view.addSubview(buttonShowAlert)
+        view.addSubviews([buttonShowAlert, titleUserLabel, orbitalPeriodLabel])
         installingConstants()
+        uploadData()
+        uploadDataForOrbitalPeriodLabel()
     }
     
     // Настройка констрейнтов
@@ -57,7 +123,17 @@ final class InfoViewController: UIViewController {
             buttonShowAlert.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             buttonShowAlert.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             buttonShowAlert.widthAnchor.constraint(equalToConstant: 200),
-            buttonShowAlert.heightAnchor.constraint(equalToConstant: 40)
+            buttonShowAlert.heightAnchor.constraint(equalToConstant: 40),
+            
+            titleUserLabel.topAnchor.constraint(equalTo: buttonShowAlert.bottomAnchor, constant: 16),
+            titleUserLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            titleUserLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            titleUserLabel.heightAnchor.constraint(equalToConstant: 40),
+            
+            orbitalPeriodLabel.topAnchor.constraint(equalTo: titleUserLabel.bottomAnchor, constant: 16),
+            orbitalPeriodLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            orbitalPeriodLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            orbitalPeriodLabel.heightAnchor.constraint(equalToConstant: 40),
         ])
     }
 }
