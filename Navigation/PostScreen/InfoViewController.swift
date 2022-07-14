@@ -58,47 +58,40 @@ final class InfoViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    // Загрузка данных (загруженные данные вставляем в label)
-    private func uploadData() {
-        if let url = URL(string: "https://jsonplaceholder.typicode.com/todos/") {
-            let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
-                if let uwrappedData = data {
-                    do {
-                        let serializedDictionary = try JSONSerialization.jsonObject(with: uwrappedData, options: [])
-                        if let dictionary = serializedDictionary as? [[String: Any]], let title = dictionary.randomElement()!["title"] as? String {
-                            DispatchQueue.main.async {
-                                self?.titleUserLabel.text = " " + title
-                            }
-                        }
-                    } catch let error {
-                        print("\n⚠️ Что-то пошло не так. Error:", String(describing: error))
-                    }
-                }
-            }
-            task.resume()
-        } else {
-            print("\n⚠️ Что-то пошло не так. URL: https://jsonplaceholder.typicode.com/todos/")
-        }
-    }
-    
-    // Загрузка данных для label -> orbitalPeriodUserLabel.
-    private func uploadDataForOrbitalPeriodLabel() {
-        if let url = URL(string: "https://swapi.dev/api/planets/1") {
-            let task = URLSession.shared.dataTask(with: url, completionHandler: { [weak self] data, response, error in
-                if let unwrappedData = data {
-                    do {
-                        let planet = try JSONDecoder().decode(InfoModel.self, from: unwrappedData)
+    // Загрузка данных из сети.
+    private func loadingData() {
+        // Загрузка данных для titleUserLabel.
+        NetworkService.loadData(stringURL: "https://jsonplaceholder.typicode.com/todos/") { [weak self] data in
+            if let uwrappedData = data {
+                do {
+                    let serializedDictionary = try JSONSerialization.jsonObject(with: uwrappedData, options: [])
+                    if let dictionary = serializedDictionary as? [[String: Any]], let title = dictionary.randomElement()!["title"] as? String {
                         DispatchQueue.main.async {
-                            self?.orbitalPeriodLabel.text = " The orbital period of the planet '\(planet.name)' = \(planet.orbitalPeriod)"
+                            self?.titleUserLabel.text = " " + title
                         }
-                    } catch let error {
-                        print("\n⚠️ Что-то пошло не так. Error:", String(describing: error))
                     }
+                } catch let error {
+                    print("⚠️ Error:", String(describing: error))
                 }
-            })
-            task.resume()
-        } else {
-            print("\n⚠️ Что-то пошло не так. URL: https://swapi.dev/api/planets/1")
+            } else {
+                print("⚠️ Warning: Data empty.")
+            }
+        }
+        
+        // Загрузка данных для orbitalPeriodUserLabel.
+        NetworkService.loadData(stringURL: "https://swapi.dev/api/planets/1") { [weak self] data in
+            if let unwrappedData = data {
+                do {
+                    let planet = try JSONDecoder().decode(InfoModel.self, from: unwrappedData)
+                    DispatchQueue.main.async {
+                        self?.orbitalPeriodLabel.text = " The orbital period of the planet '\(planet.name)' = \(planet.orbitalPeriod)"
+                    }
+                } catch let error {
+                    print("⚠️ Error:", String(describing: error))
+                }
+            } else {
+                print("⚠️ Warning: Data empty.")
+            }
         }
     }
     
@@ -113,8 +106,7 @@ final class InfoViewController: UIViewController {
         navigationController?.navigationBar.tintColor = .white
         view.addSubviews([buttonShowAlert, titleUserLabel, orbitalPeriodLabel])
         installingConstants()
-        uploadData()
-        uploadDataForOrbitalPeriodLabel()
+        loadingData()
     }
     
     // Настройка констрейнтов

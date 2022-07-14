@@ -37,4 +37,21 @@ struct NetworkService {
             print("🌶 URL incorrect.")
         }
     }
+    
+    /// Метод загрузки данных из сети, с помощью строки URL.
+    static func loadData(stringURL: String, completion: @escaping (Data?) -> Void) -> Void {
+        if let url = URL(string: stringURL) {
+            let task = URLSession.shared.dataTask(with: url) { data, response, error in
+                if let data = data, let response = response as? HTTPURLResponse, error == nil {
+                    print("🧿 Response URL (\(stringURL)): \(response.statusCode).")
+                    completion(data)
+                } else {
+                    print("⚠️ Error load data: \(error?.localizedDescription ?? "unknown error")")
+                }
+            }
+            task.resume()
+        } else {
+            print("⚠️ URL Error: \(stringURL)")
+        }
+    }
 }
