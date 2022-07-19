@@ -30,7 +30,10 @@
 		F43C9A5E27E9D55B000B8360 /* StorageService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F43C9A5827E9D55B000B8360 /* StorageService.framework */; };
 		F43C9A5F27E9D55B000B8360 /* StorageService.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F43C9A5827E9D55B000B8360 /* StorageService.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F43C9A6727E9D730000B8360 /* PublicationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43EC241278D482700B94BC1 /* PublicationModel.swift */; };
-		F4599642286312BF0012435D /* BrutForcePassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4599641286312BF0012435D /* BrutForcePassword.swift */; };
+		F447088F2885A75E00811BFD /* AuthorizationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F447088E2885A75E00811BFD /* AuthorizationView.swift */; };
+		F44708942885ABCE00811BFD /* AuthorizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44708932885ABCE00811BFD /* AuthorizationViewController.swift */; };
+		F44708982885AC2500811BFD /* LogInInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44708972885AC2500811BFD /* LogInInspector.swift */; };
+		F447089A2885AC4A00811BFD /* BrutForcePasswordService .swift in Sources */ = {isa = PBXBuildFile; fileRef = F44708992885AC4A00811BFD /* BrutForcePasswordService .swift */; };
 		F467234C278BF63800B78225 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F467234B278BF63800B78225 /* PostTableViewCell.swift */; };
 		F46BF1222868ED880070BD2B /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46BF1212868ED880070BD2B /* Errors.swift */; };
 		F4826DCA279EFC820040A364 /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4826DC9279EFC820040A364 /* PhotosTableViewCell.swift */; };
@@ -47,7 +50,6 @@
 		F48E4DAC28307EC500AA5FC0 /* CustomTextFiled.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48E4DAB28307EC500AA5FC0 /* CustomTextFiled.swift */; };
 		F48E4DAE2830BBF700AA5FC0 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48E4DAD2830BBF700AA5FC0 /* FeedView.swift */; };
 		F48E4DB02830CC9E00AA5FC0 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48E4DAF2830CC9E00AA5FC0 /* Extensions.swift */; };
-		F48E5F322803405600EA4BF3 /* LogInFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48E5F312803405600EA4BF3 /* LogInFactory.swift */; };
 		F48F371D27522200008C6565 /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48F371C27522200008C6565 /* ProfileTableViewController.swift */; };
 		F48F37212752290E008C6565 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48F37202752290E008C6565 /* FeedViewController.swift */; };
 		F48F939127F59B530035F9F9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48F939027F59B530035F9F9 /* User.swift */; };
@@ -63,7 +65,6 @@
 		F4DDFA8F27A04C4300CFD226 /* PhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DDFA8E27A04C4300CFD226 /* PhotosCollectionViewCell.swift */; };
 		F4F074542753E0360034579A /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F074532753E0360034579A /* PostViewController.swift */; };
 		F4F0745627541A310034579A /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F0745527541A310034579A /* InfoViewController.swift */; };
-		F4F6760027873FAB00465155 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F675FF27873FAB00465155 /* LogInViewController.swift */; };
 		F4F69126280C513C00059B4A /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = F4F69125280C513C00059B4A /* iOSIntPackage */; };
 /* End PBXBuildFile section */
 
@@ -117,7 +118,10 @@
 		F43C9A5827E9D55B000B8360 /* StorageService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StorageService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F43C9A5A27E9D55B000B8360 /* StorageService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StorageService.h; sourceTree = "<group>"; };
 		F43EC241278D482700B94BC1 /* PublicationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicationModel.swift; sourceTree = "<group>"; };
-		F4599641286312BF0012435D /* BrutForcePassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrutForcePassword.swift; sourceTree = "<group>"; };
+		F447088E2885A75E00811BFD /* AuthorizationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationView.swift; sourceTree = "<group>"; };
+		F44708932885ABCE00811BFD /* AuthorizationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationViewController.swift; sourceTree = "<group>"; };
+		F44708972885AC2500811BFD /* LogInInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInInspector.swift; sourceTree = "<group>"; };
+		F44708992885AC4A00811BFD /* BrutForcePasswordService .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BrutForcePasswordService .swift"; sourceTree = "<group>"; };
 		F467234B278BF63800B78225 /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		F46BF1212868ED880070BD2B /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		F4826DC9279EFC820040A364 /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
@@ -134,7 +138,6 @@
 		F48E4DAB28307EC500AA5FC0 /* CustomTextFiled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextFiled.swift; sourceTree = "<group>"; };
 		F48E4DAD2830BBF700AA5FC0 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
 		F48E4DAF2830CC9E00AA5FC0 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		F48E5F312803405600EA4BF3 /* LogInFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInFactory.swift; sourceTree = "<group>"; };
 		F48F371C27522200008C6565 /* ProfileTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewController.swift; sourceTree = "<group>"; };
 		F48F37202752290E008C6565 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		F48F939027F59B530035F9F9 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -152,7 +155,6 @@
 		F4DDFA8E27A04C4300CFD226 /* PhotosCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewCell.swift; sourceTree = "<group>"; };
 		F4F074532753E0360034579A /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		F4F0745527541A310034579A /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
-		F4F675FF27873FAB00465155 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		FD06F957EC9A28208EA2B6FD /* Pods_Navigation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Navigation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -368,10 +370,11 @@
 		F4C0136B280CC7D90003F2AA /* Authorization */ = {
 			isa = PBXGroup;
 			children = (
-				F4F675FF27873FAB00465155 /* LogInViewController.swift */,
+				F447088E2885A75E00811BFD /* AuthorizationView.swift */,
+				F44708932885ABCE00811BFD /* AuthorizationViewController.swift */,
+				F44708972885AC2500811BFD /* LogInInspector.swift */,
 				F408846027FF5CA7002D8812 /* CheckerAuthorizations.swift */,
-				F48E5F312803405600EA4BF3 /* LogInFactory.swift */,
-				F4599641286312BF0012435D /* BrutForcePassword.swift */,
+				F44708992885AC4A00811BFD /* BrutForcePasswordService .swift */,
 			);
 			name = Authorization;
 			sourceTree = "<group>";
@@ -643,6 +646,8 @@
 				F48F371D27522200008C6565 /* ProfileTableViewController.swift in Sources */,
 				F4BFE1912851027000D3BCEE /* FeedPresenter.swift in Sources */,
 				F48E4DAA28306B1700AA5FC0 /* FeedModel.swift in Sources */,
+				F44708982885AC2500811BFD /* LogInInspector.swift in Sources */,
+				F44708942885ABCE00811BFD /* AuthorizationViewController.swift in Sources */,
 				F4DDFA8F27A04C4300CFD226 /* PhotosCollectionViewCell.swift in Sources */,
 				F40B5349286CDE3A002026A0 /* MultimediaView.swift in Sources */,
 				F408845F27FF255A002D8812 /* AppManager.swift in Sources */,
@@ -655,18 +660,17 @@
 				F40B5350286CDECA002026A0 /* MusicViewController.swift in Sources */,
 				F408845D27FF253F002D8812 /* AppFactory.swift in Sources */,
 				F4221DF9285129B400376F07 /* MainTabBarController.swift in Sources */,
-				F4F6760027873FAB00465155 /* LogInViewController.swift in Sources */,
-				F48E5F322803405600EA4BF3 /* LogInFactory.swift in Sources */,
 				F49DC37B27515432004F9DCE /* AppDelegate.swift in Sources */,
 				F40B5355286CDEED002026A0 /* RecordAudioViewController.swift in Sources */,
 				F40B5353286CDEDE002026A0 /* VideoViewController.swift in Sources */,
-				F4599642286312BF0012435D /* BrutForcePassword.swift in Sources */,
 				F4221DFE28512A8900376F07 /* FeedCoordinator.swift in Sources */,
 				F4F0745627541A310034579A /* InfoViewController.swift in Sources */,
+				F447089A2885AC4A00811BFD /* BrutForcePasswordService .swift in Sources */,
 				F487B20F286DB1EF007350CD /* MusicPresenter.swift in Sources */,
 				F4221DFC28512A2A00376F07 /* MainCoordinator.swift in Sources */,
 				F4221E022851479F00376F07 /* ProfileCoordinator.swift in Sources */,
 				F4F074542753E0360034579A /* PostViewController.swift in Sources */,
+				F447088F2885A75E00811BFD /* AuthorizationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

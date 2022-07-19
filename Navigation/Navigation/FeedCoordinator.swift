@@ -14,7 +14,7 @@ protocol FeedCoordinator {
 }
 
 
-final class FeedCoordinatorImplementation: FeedCoordinator, CoordinatorProtocol {
+final class FeedCoordinatorImplementation: FeedCoordinator {
     
     var navigationController: UINavigationController
     weak var presenter: UIViewController?
