@@ -8,6 +8,7 @@
 
 
 import UIKit
+import FirebaseCore
 
 
 @main
@@ -20,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = AppManager.shared.rootViewController
         window?.makeKeyAndVisible()
         NetworkService.launchingTheURLSessionDataTask(by: AppConfiguration.allCases.randomElement()?.rawValue ?? AppConfiguration.people.rawValue)
+        FirebaseApp.configure()
         return true
     }
 }

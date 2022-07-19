@@ -34,6 +34,7 @@
 		F44708942885ABCE00811BFD /* AuthorizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44708932885ABCE00811BFD /* AuthorizationViewController.swift */; };
 		F44708982885AC2500811BFD /* LogInInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44708972885AC2500811BFD /* LogInInspector.swift */; };
 		F447089A2885AC4A00811BFD /* BrutForcePasswordService .swift in Sources */ = {isa = PBXBuildFile; fileRef = F44708992885AC4A00811BFD /* BrutForcePasswordService .swift */; };
+		F447089E2886F20200811BFD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F447089D2886F20200811BFD /* GoogleService-Info.plist */; };
 		F467234C278BF63800B78225 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F467234B278BF63800B78225 /* PostTableViewCell.swift */; };
 		F46BF1222868ED880070BD2B /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46BF1212868ED880070BD2B /* Errors.swift */; };
 		F4826DCA279EFC820040A364 /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4826DC9279EFC820040A364 /* PhotosTableViewCell.swift */; };
@@ -122,6 +123,7 @@
 		F44708932885ABCE00811BFD /* AuthorizationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationViewController.swift; sourceTree = "<group>"; };
 		F44708972885AC2500811BFD /* LogInInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInInspector.swift; sourceTree = "<group>"; };
 		F44708992885AC4A00811BFD /* BrutForcePasswordService .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BrutForcePasswordService .swift"; sourceTree = "<group>"; };
+		F447089D2886F20200811BFD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F467234B278BF63800B78225 /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		F46BF1212868ED880070BD2B /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		F4826DC9279EFC820040A364 /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
@@ -401,6 +403,7 @@
 				F48E4DAF2830CC9E00AA5FC0 /* Extensions.swift */,
 				F49DC38327515434004F9DCE /* Assets.xcassets */,
 				F49DC38827515434004F9DCE /* Info.plist */,
+				F447089D2886F20200811BFD /* GoogleService-Info.plist */,
 			);
 			name = Resourses;
 			sourceTree = "<group>";
@@ -544,6 +547,7 @@
 				F43465A5287072CF00EE8505 /* music7.mp3 in Resources */,
 				F487B21C286DC379007350CD /* music5.mp3 in Resources */,
 				F487B21A286DC379007350CD /* music1.mp3 in Resources */,
+				F447089E2886F20200811BFD /* GoogleService-Info.plist in Resources */,
 				F49DC38427515434004F9DCE /* Assets.xcassets in Resources */,
 				F43465A3287072C800EE8505 /* music6.mp3 in Resources */,
 			);
