@@ -65,6 +65,7 @@ class AuthorizationViewController: UIViewController {
         navigationController?.navigationBar.isHidden = true
         self.coordinator.set(navigationController: self.navigationController!)
         self.addObserverForView()
+        self.addObserverForChangesToTextFields()
     }
     
     
@@ -76,6 +77,23 @@ class AuthorizationViewController: UIViewController {
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(buttonLogInAction), name: Notification.Name("notificationForButtonLogIn"), object: nil)
         notificationCenter.addObserver(self, selector: #selector(brutForceAction), name: Notification.Name("notificationForButtonBrutForce"), object: nil)
+    }
+    
+    // Наблюление за изменениями полей ввода логина и пароля.
+    private func addObserverForChangesToTextFields() {
+        self.mainView.loginInputTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        self.mainView.passwordInputTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+    }
+    
+    // Делает кнопку "LogIn" недоступной для нажатия, если текстовые поля незаполнены.
+    @objc private func textFieldDidChange(_ textField: UITextField) {
+        if self.mainView.loginInputTextField.text!.isEmpty || self.mainView.passwordInputTextField.text!.isEmpty {
+            self.mainView.logInButton.isEnabled = false
+            self.mainView.logInButton.alpha = 0.5
+        } else {
+            self.mainView.logInButton.isEnabled = true
+            self.mainView.logInButton.alpha = 1.0
+        }
     }
     
     // Обработка нажатия на кнопку "Log in"

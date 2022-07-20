@@ -61,6 +61,14 @@ class AuthorizationView: UIView {
         return indicator
     }()
     
+    // Кнопка авторизация
+    lazy var logInButton: UIButton = {
+        let button = CustomButton(title: "Log In", titleColor: .white, backgoundColor: UIColor.init(named: "colorBaseVK")!, cornerRadius: 10) { self.sendingChangingUiElements(element: .buttonLogIn) }
+        button.isEnabled = false
+        button.alpha = 0.5
+        return button
+    }()
+    
     
     
     // MARK: Private properties (UI)
@@ -92,12 +100,6 @@ class AuthorizationView: UIView {
         stack.clipsToBounds = true
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
-    }()
-    
-    // Кнопка авторизация
-    private lazy var logInButton: UIButton = {
-        let button = CustomButton(title: "Log In", titleColor: .white, backgoundColor: UIColor.init(named: "colorBaseVK")!, cornerRadius: 10) { self.sendingChangingUiElements(element: .buttonLogIn) }
-        return button
     }()
     
     // Кнопка подбора пароля
