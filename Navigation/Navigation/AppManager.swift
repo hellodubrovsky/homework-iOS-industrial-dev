@@ -41,8 +41,7 @@ final class AppManager {
         // Autorization
         let authorizationViewControllerCoordinator = ProfileCoordinatorImplementation()
         let authorizationDelegate: AuthorizationCheckerDelegate = LogInInspector()
-        let brutForceDelegate: AuthorizationBrutForceDelegate = BrutForcePasswordService()
-        let authorizationViewController = AuthorizationViewController(coordinator: authorizationViewControllerCoordinator, authorizationDelegate: authorizationDelegate, brutForceDelegate: brutForceDelegate)
+        let authorizationViewController = AuthorizationViewController(coordinator: authorizationViewControllerCoordinator, authorizationDelegate: authorizationDelegate)
         
         // Create tab bar items
         let feedItemTabBar = factory.makeTabBarItem(title: "Feed", image: UIImage(systemName: "house.fill")!)
@@ -56,7 +55,7 @@ final class AppManager {
         
         // Create main tab bar controller
         let rootCoordinator = MainCoordinatorImplementation()
-        let rootTabBarViewController = MainTabBarController(coordinator: rootCoordinator, viewControllers: [feedNavigationController, mediaNavigationController, profileNavigationController])
+        let rootTabBarViewController = MainTabBarController(coordinator: rootCoordinator, viewControllers: [profileNavigationController, feedNavigationController, mediaNavigationController])
         rootCoordinator.tabBarController = rootTabBarViewController
         rootViewController = rootTabBarViewController.coordinator?.startMainModule() ?? rootTabBarViewController
     }

@@ -2,9 +2,12 @@
 //  AuthorizationModel.swift
 //  Navigation
 //
-//  Created by Илья on 18.07.2022.
+//  Created by Илья on 29.07.2022.
 //
 
 import Foundation
 
-final class AuthorizationModel {}
+struct AuthorizationModel {
+    var email: String
+    var UID: String
+}

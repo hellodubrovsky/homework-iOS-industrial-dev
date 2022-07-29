@@ -9,18 +9,27 @@ import Foundation
 
 final class LogInInspector: AuthorizationCheckerDelegate {
     
-    /// Метод проверки логина и пароля.
-    func check(login: String, password: String, completion: @escaping (Result<Bool, AuthorizationErrors>) -> Void) {
-        if login.isEmpty && password.isEmpty {
-            completion(.failure(.emptyLofinOrPassword))
-        } else if login.isEmpty {
-            completion(.failure(.emptyLoginField))
-        } else if password.isEmpty {
-            completion(.failure(.emptyPassordField))
-        } else if !Checker.shared.check(login: login, password: password) {
-            completion(.failure(.incorrectPasswordOrLogin))
-        } else {
-            completion(.success(true))
+    // Проверка существующего пользователя.
+    func checkCredentials(login: String, password: String, completion: @escaping (Result<AuthorizationModel, Error>) -> Void) {
+        Checker.shared.checkCredentials(login: login, password: password) { result, error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                let user = AuthorizationModel(email: (result?.user.email)!, UID: (result?.user.uid)!)
+                completion(.success(user))
+            }
+        }
+    }
+    
+    // Регистрация нового пользователя.
+    func signUp(login: String, password: String, completion: @escaping (Result<AuthorizationModel, Error>) -> Void) {
+        Checker.shared.signUp(login: login, password: password) { result, error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                let user = AuthorizationModel(email: (result?.user.email)!, UID: (result?.user.uid)!)
+                completion(.success(user))
+            }
         }
     }
 }

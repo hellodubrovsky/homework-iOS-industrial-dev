@@ -60,7 +60,7 @@ final class BrutForcePasswordService {
 
 
 // MARK: - AuthorizationBrutForceDelegate
-
+/*
 extension BrutForcePasswordService: AuthorizationBrutForceDelegate {
     
     func bruteForce(passwordToUnlock: String) -> String {
@@ -72,3 +72,4 @@ extension BrutForcePasswordService: AuthorizationBrutForceDelegate {
         return password
     }
 }
+*/

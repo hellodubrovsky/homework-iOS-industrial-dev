@@ -18,6 +18,7 @@
 		F40B5353286CDEDE002026A0 /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40B5352286CDEDE002026A0 /* VideoViewController.swift */; };
 		F40B5355286CDEED002026A0 /* RecordAudioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40B5354286CDEED002026A0 /* RecordAudioViewController.swift */; };
 		F4160B8F2875D66E00F56803 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4160B8E2875D66E00F56803 /* NetworkService.swift */; };
+		F41C99E42894116D007484E5 /* AuthorizationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41C99E32894116D007484E5 /* AuthorizationModel.swift */; };
 		F4219566276869AE00487AE7 /* ProfileTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4219565276869AE00487AE7 /* ProfileTableHeaderView.swift */; };
 		F4221DF9285129B400376F07 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4221DF8285129B400376F07 /* MainTabBarController.swift */; };
 		F4221DFC28512A2A00376F07 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4221DFB28512A2A00376F07 /* MainCoordinator.swift */; };
@@ -108,6 +109,7 @@
 		F40B5352286CDEDE002026A0 /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		F40B5354286CDEED002026A0 /* RecordAudioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordAudioViewController.swift; sourceTree = "<group>"; };
 		F4160B8E2875D66E00F56803 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		F41C99E32894116D007484E5 /* AuthorizationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationModel.swift; sourceTree = "<group>"; };
 		F4219565276869AE00487AE7 /* ProfileTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableHeaderView.swift; sourceTree = "<group>"; };
 		F4221DF8285129B400376F07 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		F4221DFB28512A2A00376F07 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
@@ -377,6 +379,7 @@
 				F44708972885AC2500811BFD /* LogInInspector.swift */,
 				F408846027FF5CA7002D8812 /* CheckerAuthorizations.swift */,
 				F44708992885AC4A00811BFD /* BrutForcePasswordService .swift */,
+				F41C99E32894116D007484E5 /* AuthorizationModel.swift */,
 			);
 			name = Authorization;
 			sourceTree = "<group>";
@@ -657,6 +660,7 @@
 				F408845F27FF255A002D8812 /* AppManager.swift in Sources */,
 				F4219566276869AE00487AE7 /* ProfileTableHeaderView.swift in Sources */,
 				F487B20D286DB1E0007350CD /* MusicView.swift in Sources */,
+				F41C99E42894116D007484E5 /* AuthorizationModel.swift in Sources */,
 				F48F37212752290E008C6565 /* FeedViewController.swift in Sources */,
 				F467234C278BF63800B78225 /* PostTableViewCell.swift in Sources */,
 				F408846127FF5CA7002D8812 /* CheckerAuthorizations.swift in Sources */,

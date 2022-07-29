@@ -6,22 +6,14 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 
 // MARK: - AuthorizationCheckerDelegate
 
 protocol AuthorizationCheckerDelegate: AnyObject {
-    func check(login: String, password: String, completion: @escaping (Result<Bool, AuthorizationErrors>) -> Void)
-}
-
-
-
-
-
-// MARK: - AuthorizationBrutForceDelegate
-
-protocol AuthorizationBrutForceDelegate: AnyObject {
-    func bruteForce(passwordToUnlock: String) -> String
+    func checkCredentials(login: String, password: String, completion: @escaping (Result<AuthorizationModel, Error>) -> Void)
+    func signUp(login: String, password: String, completion: @escaping (Result<AuthorizationModel, Error>) -> Void)
 }
 
 
@@ -37,16 +29,14 @@ class AuthorizationViewController: UIViewController {
     private let mainView = AuthorizationView()
     private let coordinator: ProfileCoordinator!
     private let authorizationDelegate: AuthorizationCheckerDelegate!
-    private let brutForceDelegate: AuthorizationBrutForceDelegate!
     
     
     
     
     // MARK: Init
-    init(coordinator: ProfileCoordinator, authorizationDelegate: AuthorizationCheckerDelegate, brutForceDelegate: AuthorizationBrutForceDelegate) {
+    init(coordinator: ProfileCoordinator, authorizationDelegate: AuthorizationCheckerDelegate) {
         self.coordinator = coordinator
         self.authorizationDelegate = authorizationDelegate
-        self.brutForceDelegate = brutForceDelegate
         super.init(nibName: nil, bundle: nil)
         
     }
@@ -76,7 +66,7 @@ class AuthorizationViewController: UIViewController {
     private func addObserverForView() {
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(buttonLogInAction), name: Notification.Name("notificationForButtonLogIn"), object: nil)
-        notificationCenter.addObserver(self, selector: #selector(brutForceAction), name: Notification.Name("notificationForButtonBrutForce"), object: nil)
+        notificationCenter.addObserver(self, selector: #selector(buttonSingUpAction), name: Notification.Name("notificationForButtonSignUp"), object: nil)
     }
     
     // Наблюление за изменениями полей ввода логина и пароля.
@@ -96,73 +86,50 @@ class AuthorizationViewController: UIViewController {
         }
     }
     
+    // Получение введенных логина и пароля
+    private func getEnteredLoginAndPassword() -> (String, String) {
+        let login: String = mainView.loginInputTextField.text!
+        let password: String = mainView.passwordInputTextField.text!
+        return (login, password)
+    }
+    
+    // Обработка нажатия на кнопку "Sing Up"
+    @objc private func buttonSingUpAction() {
+        let user = User(name: getEnteredLoginAndPassword().0)
+        let userService = CurrentUserService(user: user)
+        
+        self.authorizationDelegate.signUp(login: getEnteredLoginAndPassword().0, password: getEnteredLoginAndPassword().1) { [weak self] result in
+            switch result {
+            case .success(let user):
+                self?.coordinator.openProfileScreen(service: userService, userName: user.email)
+            case .failure(let error):
+                self?.displayingAnAlertWithWarningForTheLoginField(withText: error.localizedDescription)
+            }
+        }
+    }
+    
     // Обработка нажатия на кнопку "Log in"
     @objc private func buttonLogInAction() {
-        let userLogin: String = mainView.loginInputTextField.text!
-        let userPassword: String = mainView.passwordInputTextField.text!
-        
         #if DEBUG
         let userService = TestUserService()
         #else
-        let user = User(name: userName)
+        let user = User(name: getEnteredLoginAndPassword().0)
         let userService = CurrentUserService(user: user)
         #endif
         
-        self.authorizationDelegate.check(login: userLogin, password: userPassword) { [weak self] result in
-            guard let self = self else { return }
+        self.authorizationDelegate.checkCredentials(login: getEnteredLoginAndPassword().0, password: getEnteredLoginAndPassword().1) { [weak self] result in
             switch result {
             case .success(_):
-                self.coordinator.openProfileScreen(service: userService, userName: userLogin)
+                self?.coordinator.openProfileScreen(service: userService, userName: userService.user.name)
             case .failure(let error):
-                switch error {
-                case .emptyLofinOrPassword:
-                    self.displayingAnAlertWithWarningForTheLoginField(withText: "Поля ввода 'логина' и 'пароля' не могут быть пустыми.")
-                case .emptyLoginField:
-                    self.displayingAnAlertWithWarningForTheLoginField(withText: "Поле ввода 'логина' не может быть пустым.")
-                case .emptyPassordField:
-                    self.displayingAnAlertWithWarningForTheLoginField(withText: "Поле ввода 'пароля' не может быть пустым.")
-                case .incorrectPasswordOrLogin:
-                    self.displayingAnAlertWithWarningForLoginAndPassword()
-                }
-            }
-        }
-    }
-    
-    // Подбор пароля
-    @objc private func brutForceAction() {
-        mainView.activitityIndicator.startAnimating()
-        DispatchQueue.global().async {
-            let password = self.brutForceDelegate.bruteForce(passwordToUnlock: Checker.shared.refundPassword())
-            DispatchQueue.main.async {
-                self.mainView.passwordInputTextField.isSecureTextEntry = false
-                self.mainView.passwordInputTextField.text = password
-                self.mainView.activitityIndicator.stopAnimating()
-            }
-            // Через 5 секунд, скрывается текст в поле пароля
-            sleep(5)
-            DispatchQueue.main.async {
-                self.mainView.passwordInputTextField.isSecureTextEntry = true
+                self?.displayingAnAlertWithWarningForTheLoginField(withText: error.localizedDescription)
             }
         }
     }
 
-    // Показ алерта, информирующего о необходимости заполнения поля login
+    // Показ информационного алерта.
     private func displayingAnAlertWithWarningForTheLoginField(withText: String) {
-        let alert = UIAlertController(title: "Предупреждение", message: withText, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    // Показ алерта, информирующего о необходимости заполнения полей login или password
-    private func displayingAnAlertWithWarningForLoginAndPassword() {
-        
-        var message: String = "Поле 'логин' или 'пароль' содержат некорректные значения."
-        
-        #if DEBUG
-        message = message + "Подсказка для dev-сборки. Логин: login, Пароль: pas."
-        #endif
-
-        let alert = UIAlertController(title: "Предупреждение", message: message, preferredStyle: .alert)
+        let alert = UIAlertController(title: "Warning", message: withText, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }

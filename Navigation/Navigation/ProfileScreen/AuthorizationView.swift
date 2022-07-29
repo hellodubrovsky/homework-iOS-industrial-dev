@@ -25,7 +25,7 @@ class AuthorizationView: UIView {
         let loginTextFileld = UITextField()
         loginTextFileld.backgroundColor = .systemGray6.withAlphaComponent(0.1)
         loginTextFileld.textColor = .black
-        loginTextFileld.attributedPlaceholder = NSAttributedString(string: "Email or phone", attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray])
+        loginTextFileld.attributedPlaceholder = NSAttributedString(string: "Phone number or email address", attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray])
         loginTextFileld.font = .systemFont(ofSize: 16.0)
         loginTextFileld.tintColor = UIColor(named: "colorBaseVK")
         loginTextFileld.autocapitalizationType = .none
@@ -53,20 +53,33 @@ class AuthorizationView: UIView {
         return passworfTextFileld
     }()
     
-    // Индикатор загрузки (используется при подборе пароля)
-    lazy var activitityIndicator: UIActivityIndicatorView = {
-        let indicator = UIActivityIndicatorView(style: .medium)
-        indicator.color = .white
-        indicator.translatesAutoresizingMaskIntoConstraints = false
-        return indicator
-    }()
-    
     // Кнопка авторизация
     lazy var logInButton: UIButton = {
         let button = CustomButton(title: "Log In", titleColor: .white, backgoundColor: UIColor.init(named: "colorBaseVK")!, cornerRadius: 10) { self.sendingChangingUiElements(element: .buttonLogIn) }
         button.isEnabled = false
         button.alpha = 0.5
         return button
+    }()
+    
+    // Кнопка регистрации
+    lazy var signUpButton: UIButton = {
+        let button = CustomButton(title: "Sign Up", titleColor: .white, backgoundColor: .black, cornerRadius: 10) { self.sendingChangingUiElements(element: .buttonSignUp) }
+        return button
+    }()
+    
+    // Стек, внутри которого находится поля с вводом логина и пароля
+    lazy var inputFieldStackView: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.distribution = .fillEqually
+        stack.alignment = .fill
+        stack.layer.cornerRadius = 10
+        stack.layer.borderWidth = 0.5
+        stack.layer.borderColor = UIColor.lightGray.cgColor
+        stack.spacing = 0.5
+        stack.clipsToBounds = true
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
     }()
     
     
@@ -85,27 +98,6 @@ class AuthorizationView: UIView {
         let imageView = UIImageView(image: image)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
-    }()
-    
-    // Стек, внутри которого находится поля с вводом логина и пароля
-    private lazy var inputFieldStackView: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .vertical
-        stack.distribution = .fillEqually
-        stack.alignment = .fill
-        stack.layer.cornerRadius = 10
-        stack.layer.borderWidth = 0.5
-        stack.layer.borderColor = UIColor.lightGray.cgColor
-        stack.spacing = 0.5
-        stack.clipsToBounds = true
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        return stack
-    }()
-    
-    // Кнопка подбора пароля
-    private lazy var brutforceButton: UIButton = {
-        let button = CustomButton(title: "Brut force password", titleColor: .white, backgoundColor: .black, cornerRadius: 10, buttonAction: { self.sendingChangingUiElements(element: .buttonBrutForce) })
-        return button
     }()
     
     
@@ -127,12 +119,8 @@ class AuthorizationView: UIView {
     
     private func setView() {
         self.backgroundColor = .white
-        self.addSubviews([scrollView, contentView, iconLogoVK, inputFieldStackView, logInButton])
+        self.addSubviews([scrollView, contentView, iconLogoVK, inputFieldStackView, logInButton, signUpButton])
         self.addArrangedSubviews(stack: inputFieldStackView, views: [loginInputTextField, passwordInputTextField])
-        #if DEBUG
-        contentView.addSubview(brutforceButton)
-        contentView.addSubview(activitityIndicator)
-        #endif
         installingConstraints()
     }
     
@@ -164,19 +152,12 @@ class AuthorizationView: UIView {
             logInButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16.0),
             logInButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16.0),
             logInButton.heightAnchor.constraint(equalToConstant: 50),
-        ])
-        
-        #if DEBUG
-        NSLayoutConstraint.activate([
-            brutforceButton.topAnchor.constraint(equalTo: logInButton.bottomAnchor, constant: 16.0),
-            brutforceButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16.0),
-            brutforceButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16.0),
-            brutforceButton.heightAnchor.constraint(equalToConstant: 50),
             
-            activitityIndicator.centerYAnchor.constraint(equalTo: brutforceButton.centerYAnchor),
-            activitityIndicator.trailingAnchor.constraint(equalTo: brutforceButton.trailingAnchor, constant: -16)
+            signUpButton.topAnchor.constraint(equalTo: logInButton.bottomAnchor, constant: 16.0),
+            signUpButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16.0),
+            signUpButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16.0),
+            signUpButton.heightAnchor.constraint(equalToConstant: 50),
         ])
-        #endif
     }
 }
 
@@ -190,7 +171,7 @@ extension AuthorizationView {
     
     private enum elementUI {
         case buttonLogIn
-        case buttonBrutForce
+        case buttonSignUp
     }
     
     // Отправка события нажатия на определенную кнопку.
@@ -199,8 +180,8 @@ extension AuthorizationView {
         switch element {
         case .buttonLogIn:
             notificationCenter.post(name: Notification.Name("notificationForButtonLogIn"), object: nil)
-        case .buttonBrutForce:
-            notificationCenter.post(name: Notification.Name("notificationForButtonBrutForce"), object: nil)
+        case .buttonSignUp:
+            notificationCenter.post(name: Notification.Name("notificationForButtonSignUp"), object: nil)
         }
     }
 }
