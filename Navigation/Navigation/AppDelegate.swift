@@ -8,6 +8,8 @@
 
 
 import UIKit
+import FirebaseCore
+import FirebaseAuth
 
 
 @main
@@ -20,6 +22,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = AppManager.shared.rootViewController
         window?.makeKeyAndVisible()
         NetworkService.launchingTheURLSessionDataTask(by: AppConfiguration.allCases.randomElement()?.rawValue ?? AppConfiguration.people.rawValue)
+        FirebaseApp.configure()
         return true
+    }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+        do {
+            try Auth.auth().signOut()
+        } catch {
+            print(error.localizedDescription)
+        }
     }
 }

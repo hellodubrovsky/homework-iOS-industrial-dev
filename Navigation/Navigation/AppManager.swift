@@ -23,31 +23,39 @@ final class AppManager {
     
     // MARK: - Private properties
     private let factory: AppFactory = AppFactory()
-    private let logInFactory: LogInFactory = LogInFactory()
-    private let feedPresenter = FeedPresenter()
-    private let profileViewController = LogInViewController()
-    private let multimediaViewController = MultimediaViewController()
+    
+   
     
     
     
     // MARK: - Private init
     private init() {
-        let feedViewController = FeedViewController(presenter: self.feedPresenter)
-        profileViewController.delegate = logInFactory.makeLogInInspecctor()
+        
+        // Feed
+        let feedPresenter = FeedPresenter()
+        let feedViewController = FeedViewController(presenter: feedPresenter)
+        
+        // Multimedia
+        let multimediaViewController = MultimediaViewController()
+        
+        // Autorization
+        let authorizationViewControllerCoordinator = ProfileCoordinatorImplementation()
+        let authorizationDelegate: AuthorizationCheckerDelegate = LogInInspector()
+        let authorizationViewController = AuthorizationViewController(coordinator: authorizationViewControllerCoordinator, authorizationDelegate: authorizationDelegate)
         
         // Create tab bar items
         let feedItemTabBar = factory.makeTabBarItem(title: "Feed", image: UIImage(systemName: "house.fill")!)
-        let profileItemTabBar = factory.makeTabBarItem(title: "Profile", image: UIImage(systemName: "person.crop.circle.fill")!)
         let multimediaItemTabBar = factory.makeTabBarItem(title: "Media", image: UIImage(systemName: "music.note.house.fill")!)
+        let profileItemTabBar = factory.makeTabBarItem(title: "Profile", image: UIImage(systemName: "person.crop.circle.fill")!)
         
         // Create navigation controllers
         let feedNavigationController = factory.makeNavigatioController(viewController: feedViewController, taBarItem: feedItemTabBar)
-        let profileNavigationController = factory.makeNavigatioController(viewController: profileViewController, taBarItem: profileItemTabBar)
         let mediaNavigationController = factory.makeNavigatioController(viewController: multimediaViewController, taBarItem: multimediaItemTabBar)
+        let profileNavigationController = factory.makeNavigatioController(viewController: authorizationViewController, taBarItem: profileItemTabBar)
         
         // Create main tab bar controller
         let rootCoordinator = MainCoordinatorImplementation()
-        let rootTabBarViewController = MainTabBarController(coordinator: rootCoordinator, viewControllers: [feedNavigationController, mediaNavigationController, profileNavigationController])
+        let rootTabBarViewController = MainTabBarController(coordinator: rootCoordinator, viewControllers: [profileNavigationController, feedNavigationController, mediaNavigationController])
         rootCoordinator.tabBarController = rootTabBarViewController
         rootViewController = rootTabBarViewController.coordinator?.startMainModule() ?? rootTabBarViewController
     }

@@ -34,7 +34,7 @@ final class CurrentUserService: UserService {
 // MARK: TestUserService. Mock-Data for debug build.
 
 final class TestUserService: UserService {
-    var user = User(name: "@ALIEN", status: "It's time to start the invasion...", image: UIImage(named: "alienHipster")!)
+    var user = User(name: "@DEBUG-USER", status: "It's time to start the invasion...", image: UIImage(named: "alienHipster")!)
     
     func searchUserBy(name: String) -> User? {
         return user
