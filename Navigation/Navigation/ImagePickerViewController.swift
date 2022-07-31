@@ -29,8 +29,7 @@ extension ImagePickerViewController: UIImagePickerControllerDelegate, UINavigati
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerOriginalImage")] as? UIImage {
-            // тут должно происходить сохранение фотографии.
-            print("🖼 Image: \(image)")
+            PhotoFileManager.shared.savingAn(image: image)
         }
         picker.dismiss(animated: true)
     }
