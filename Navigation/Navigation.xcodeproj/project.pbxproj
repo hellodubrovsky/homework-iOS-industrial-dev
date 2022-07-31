@@ -21,6 +21,8 @@
 		F41C99E42894116D007484E5 /* AuthorizationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41C99E32894116D007484E5 /* AuthorizationModel.swift */; };
 		F41C99E82895932E007484E5 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41C99E72895932E007484E5 /* FileManager.swift */; };
 		F41C99EB2895B9BA007484E5 /* ImagePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41C99EA2895B9BA007484E5 /* ImagePickerViewController.swift */; };
+		F41C99EE2896CA77007484E5 /* ImagesUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41C99ED2896CA77007484E5 /* ImagesUserViewController.swift */; };
+		F41C99F02896E436007484E5 /* ImagesUserCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41C99EF2896E436007484E5 /* ImagesUserCollectionViewCell.swift */; };
 		F4219566276869AE00487AE7 /* ProfileTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4219565276869AE00487AE7 /* ProfileTableHeaderView.swift */; };
 		F4221DF9285129B400376F07 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4221DF8285129B400376F07 /* MainTabBarController.swift */; };
 		F4221DFC28512A2A00376F07 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4221DFB28512A2A00376F07 /* MainCoordinator.swift */; };
@@ -114,6 +116,8 @@
 		F41C99E32894116D007484E5 /* AuthorizationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationModel.swift; sourceTree = "<group>"; };
 		F41C99E72895932E007484E5 /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		F41C99EA2895B9BA007484E5 /* ImagePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerViewController.swift; sourceTree = "<group>"; };
+		F41C99ED2896CA77007484E5 /* ImagesUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesUserViewController.swift; sourceTree = "<group>"; };
+		F41C99EF2896E436007484E5 /* ImagesUserCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesUserCollectionViewCell.swift; sourceTree = "<group>"; };
 		F4219565276869AE00487AE7 /* ProfileTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableHeaderView.swift; sourceTree = "<group>"; };
 		F4221DF8285129B400376F07 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		F4221DFB28512A2A00376F07 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
@@ -262,6 +266,15 @@
 				F41C99EA2895B9BA007484E5 /* ImagePickerViewController.swift */,
 			);
 			name = AddingPhotosScreen;
+			sourceTree = "<group>";
+		};
+		F41C99EC2896CA19007484E5 /* ImagesUserViewController */ = {
+			isa = PBXGroup;
+			children = (
+				F41C99ED2896CA77007484E5 /* ImagesUserViewController.swift */,
+				F41C99EF2896E436007484E5 /* ImagesUserCollectionViewCell.swift */,
+			);
+			name = ImagesUserViewController;
 			sourceTree = "<group>";
 		};
 		F4219562276868A400487AE7 /* ProfileScreen */ = {
@@ -451,6 +464,7 @@
 				F4BFE1902851027000D3BCEE /* FeedPresenter.swift */,
 				F48F37202752290E008C6565 /* FeedViewController.swift */,
 				F4C0136A280CC7B50003F2AA /* PostScreen */,
+				F41C99EC2896CA19007484E5 /* ImagesUserViewController */,
 			);
 			name = FeedScreen;
 			path = ..;
@@ -698,9 +712,11 @@
 				F4221DFE28512A8900376F07 /* FeedCoordinator.swift in Sources */,
 				F4F0745627541A310034579A /* InfoViewController.swift in Sources */,
 				F447089A2885AC4A00811BFD /* BrutForcePasswordService .swift in Sources */,
+				F41C99EE2896CA77007484E5 /* ImagesUserViewController.swift in Sources */,
 				F487B20F286DB1EF007350CD /* MusicPresenter.swift in Sources */,
 				F4221DFC28512A2A00376F07 /* MainCoordinator.swift in Sources */,
 				F4221E022851479F00376F07 /* ProfileCoordinator.swift in Sources */,
+				F41C99F02896E436007484E5 /* ImagesUserCollectionViewCell.swift in Sources */,
 				F4F074542753E0360034579A /* PostViewController.swift in Sources */,
 				F447088F2885A75E00811BFD /* AuthorizationView.swift in Sources */,
 			);

@@ -30,6 +30,8 @@ extension ImagePickerViewController: UIImagePickerControllerDelegate, UINavigati
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerOriginalImage")] as? UIImage {
             PhotoFileManager.shared.savingAn(image: image)
+            let notificationCenter = NotificationCenter.default
+            notificationCenter.post(name: NSNotification.Name("addNewImageInFolderDocuments"), object: nil)
         }
         picker.dismiss(animated: true)
     }
