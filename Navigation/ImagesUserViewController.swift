@@ -38,11 +38,6 @@ class ImagesUserViewController: UIViewController {
         getData()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        print("yes")
-    }
-    
     
     // MARK: Private methods
     
@@ -87,6 +82,16 @@ class ImagesUserViewController: UIViewController {
         self.collectionView.reloadData()
         getData()
     }
+    
+    private func showAlertAboutDeletingAnImage(for indexPath: IndexPath) {
+        let alert = UIAlertController(title: "Confirmation of deletion", message: "Are you sure you want to delete the selected image?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Delete", style: .default) { [weak self] _ in
+            PhotoFileManager.shared.remove(image: (self?.images[indexPath.row])!)
+            self?.updateData()
+        })
+        self.present(alert, animated: true)
+    }
 }
 
 
@@ -106,6 +111,10 @@ extension ImagesUserViewController: UICollectionViewDataSource, UICollectionView
         let data = images[indexPath.row]
         cell.update(with: data)
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.showAlertAboutDeletingAnImage(for: indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
