@@ -43,19 +43,24 @@ final class AppManager {
         let authorizationDelegate: AuthorizationCheckerDelegate = LogInInspector()
         let authorizationViewController = AuthorizationViewController(coordinator: authorizationViewControllerCoordinator, authorizationDelegate: authorizationDelegate)
         
+        // Adding photos
+        let imagePickerViewController = ImagePickerViewController()
+        
         // Create tab bar items
         let feedItemTabBar = factory.makeTabBarItem(title: "Feed", image: UIImage(systemName: "house.fill")!)
         let multimediaItemTabBar = factory.makeTabBarItem(title: "Media", image: UIImage(systemName: "music.note.house.fill")!)
         let profileItemTabBar = factory.makeTabBarItem(title: "Profile", image: UIImage(systemName: "person.crop.circle.fill")!)
+        let imagePickerTabBar = factory.makeTabBarItem(title: "Add photo", image: UIImage(systemName: "plus.circle.fill")!)
         
         // Create navigation controllers
         let feedNavigationController = factory.makeNavigatioController(viewController: feedViewController, taBarItem: feedItemTabBar)
         let mediaNavigationController = factory.makeNavigatioController(viewController: multimediaViewController, taBarItem: multimediaItemTabBar)
         let profileNavigationController = factory.makeNavigatioController(viewController: authorizationViewController, taBarItem: profileItemTabBar)
+        imagePickerViewController.tabBarItem = imagePickerTabBar
         
         // Create main tab bar controller
         let rootCoordinator = MainCoordinatorImplementation()
-        let rootTabBarViewController = MainTabBarController(coordinator: rootCoordinator, viewControllers: [profileNavigationController, feedNavigationController, mediaNavigationController])
+        let rootTabBarViewController = MainTabBarController(coordinator: rootCoordinator, viewControllers: [feedNavigationController, mediaNavigationController, profileNavigationController, imagePickerViewController])
         rootCoordinator.tabBarController = rootTabBarViewController
         rootViewController = rootTabBarViewController.coordinator?.startMainModule() ?? rootTabBarViewController
     }

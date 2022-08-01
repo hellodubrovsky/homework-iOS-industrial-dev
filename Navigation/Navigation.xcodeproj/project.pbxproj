@@ -19,6 +19,10 @@
 		F40B5355286CDEED002026A0 /* RecordAudioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40B5354286CDEED002026A0 /* RecordAudioViewController.swift */; };
 		F4160B8F2875D66E00F56803 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4160B8E2875D66E00F56803 /* NetworkService.swift */; };
 		F41C99E42894116D007484E5 /* AuthorizationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41C99E32894116D007484E5 /* AuthorizationModel.swift */; };
+		F41C99E82895932E007484E5 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41C99E72895932E007484E5 /* FileManager.swift */; };
+		F41C99EB2895B9BA007484E5 /* ImagePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41C99EA2895B9BA007484E5 /* ImagePickerViewController.swift */; };
+		F41C99EE2896CA77007484E5 /* ImagesUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41C99ED2896CA77007484E5 /* ImagesUserViewController.swift */; };
+		F41C99F02896E436007484E5 /* ImagesUserCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41C99EF2896E436007484E5 /* ImagesUserCollectionViewCell.swift */; };
 		F4219566276869AE00487AE7 /* ProfileTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4219565276869AE00487AE7 /* ProfileTableHeaderView.swift */; };
 		F4221DF9285129B400376F07 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4221DF8285129B400376F07 /* MainTabBarController.swift */; };
 		F4221DFC28512A2A00376F07 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4221DFB28512A2A00376F07 /* MainCoordinator.swift */; };
@@ -110,6 +114,10 @@
 		F40B5354286CDEED002026A0 /* RecordAudioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordAudioViewController.swift; sourceTree = "<group>"; };
 		F4160B8E2875D66E00F56803 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		F41C99E32894116D007484E5 /* AuthorizationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationModel.swift; sourceTree = "<group>"; };
+		F41C99E72895932E007484E5 /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
+		F41C99EA2895B9BA007484E5 /* ImagePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerViewController.swift; sourceTree = "<group>"; };
+		F41C99ED2896CA77007484E5 /* ImagesUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesUserViewController.swift; sourceTree = "<group>"; };
+		F41C99EF2896E436007484E5 /* ImagesUserCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesUserCollectionViewCell.swift; sourceTree = "<group>"; };
 		F4219565276869AE00487AE7 /* ProfileTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableHeaderView.swift; sourceTree = "<group>"; };
 		F4221DF8285129B400376F07 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		F4221DFB28512A2A00376F07 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
@@ -244,6 +252,31 @@
 			name = RecordAudio;
 			sourceTree = "<group>";
 		};
+		F41C99E6289592FD007484E5 /* FileManager */ = {
+			isa = PBXGroup;
+			children = (
+				F41C99E72895932E007484E5 /* FileManager.swift */,
+			);
+			name = FileManager;
+			sourceTree = "<group>";
+		};
+		F41C99E92895B0B5007484E5 /* AddingPhotosScreen */ = {
+			isa = PBXGroup;
+			children = (
+				F41C99EA2895B9BA007484E5 /* ImagePickerViewController.swift */,
+			);
+			name = AddingPhotosScreen;
+			sourceTree = "<group>";
+		};
+		F41C99EC2896CA19007484E5 /* ImagesUserViewController */ = {
+			isa = PBXGroup;
+			children = (
+				F41C99ED2896CA77007484E5 /* ImagesUserViewController.swift */,
+				F41C99EF2896E436007484E5 /* ImagesUserCollectionViewCell.swift */,
+			);
+			name = ImagesUserViewController;
+			sourceTree = "<group>";
+		};
 		F4219562276868A400487AE7 /* ProfileScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -341,13 +374,15 @@
 				F49DC38527515434004F9DCE /* LaunchScreen.storyboard */,
 				F4221DF72851297900376F07 /* MainTabBarController */,
 				F4EC692F27F9A0A7007273D4 /* FeedScreen */,
-				F4219562276868A400487AE7 /* ProfileScreen */,
 				F40B5343286CDDCE002026A0 /* MultimediaScreen */,
+				F4219562276868A400487AE7 /* ProfileScreen */,
+				F41C99E92895B0B5007484E5 /* AddingPhotosScreen */,
 				F48F938F27F59B290035F9F9 /* UserData */,
 				F4A1B257282E7BF700E413E9 /* CustomElements */,
 				F4C0136D280CC8F40003F2AA /* Resourses */,
 				F4221DFA28512A1200376F07 /* Coordinators  */,
 				F429B21F28745FA100364B7F /* NetworkService */,
+				F41C99E6289592FD007484E5 /* FileManager */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -429,6 +464,7 @@
 				F4BFE1902851027000D3BCEE /* FeedPresenter.swift */,
 				F48F37202752290E008C6565 /* FeedViewController.swift */,
 				F4C0136A280CC7B50003F2AA /* PostScreen */,
+				F41C99EC2896CA19007484E5 /* ImagesUserViewController */,
 			);
 			name = FeedScreen;
 			path = ..;
@@ -645,11 +681,13 @@
 				F48E4DAC28307EC500AA5FC0 /* CustomTextFiled.swift in Sources */,
 				F4826DCA279EFC820040A364 /* PhotosTableViewCell.swift in Sources */,
 				F4826DCC279F35150040A364 /* PhotosViewController.swift in Sources */,
+				F41C99EB2895B9BA007484E5 /* ImagePickerViewController.swift in Sources */,
 				F48E4DAE2830BBF700AA5FC0 /* FeedView.swift in Sources */,
 				F4C9BBFD287CC51600E925FB /* InfoModel.swift in Sources */,
 				F4CC3780279FD26000294ADB /* PhotosModel.swift in Sources */,
 				F4221E0028512AAB00376F07 /* CoordinatorProtocol.swift in Sources */,
 				F487B211286DB1FD007350CD /* MusicModel.swift in Sources */,
+				F41C99E82895932E007484E5 /* FileManager.swift in Sources */,
 				F48F371D27522200008C6565 /* ProfileTableViewController.swift in Sources */,
 				F4BFE1912851027000D3BCEE /* FeedPresenter.swift in Sources */,
 				F48E4DAA28306B1700AA5FC0 /* FeedModel.swift in Sources */,
@@ -674,9 +712,11 @@
 				F4221DFE28512A8900376F07 /* FeedCoordinator.swift in Sources */,
 				F4F0745627541A310034579A /* InfoViewController.swift in Sources */,
 				F447089A2885AC4A00811BFD /* BrutForcePasswordService .swift in Sources */,
+				F41C99EE2896CA77007484E5 /* ImagesUserViewController.swift in Sources */,
 				F487B20F286DB1EF007350CD /* MusicPresenter.swift in Sources */,
 				F4221DFC28512A2A00376F07 /* MainCoordinator.swift in Sources */,
 				F4221E022851479F00376F07 /* ProfileCoordinator.swift in Sources */,
+				F41C99F02896E436007484E5 /* ImagesUserCollectionViewCell.swift in Sources */,
 				F4F074542753E0360034579A /* PostViewController.swift in Sources */,
 				F447088F2885A75E00811BFD /* AuthorizationView.swift in Sources */,
 			);
@@ -897,6 +937,7 @@
 				DEVELOPMENT_TEAM = SX29N764W2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Navigation/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "In order for $(PRODUCT_NAME) to display the added photos, please allow access to the Photos app.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -925,6 +966,7 @@
 				DEVELOPMENT_TEAM = SX29N764W2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Navigation/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "In order for $(PRODUCT_NAME) to display the added photos, please allow access to the Photos app.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
