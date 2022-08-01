@@ -73,10 +73,6 @@ final class FeedViewController: UIViewController {
     
     // MARK: - Private methods
     
-    @objc private func buttonImagesScreenAction() {
-        coordinator.openImageUserViewController()
-    }
-    
     // Реализация открытия окна "Post" по нажатию кнопки.
     @objc private func buttonAction() {
         presenter.buttonPost()
@@ -88,7 +84,6 @@ final class FeedViewController: UIViewController {
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(buttonAction), name: Notification.Name("notificationForButtonPost"), object: nil)
         notificationCenter.addObserver(self, selector: #selector(self.checkPassword(notification:)), name: Notification.Name("notificationForButtonCheckPassword"), object: nil)
-        notificationCenter.addObserver(self, selector: #selector(buttonImagesScreenAction), name: Notification.Name("notificationForButtonImagesUserScreen"), object: nil)
     }
     
     // Текст, введенный в textField пароля, отправляется в презентер, и уже там происходит проверка.

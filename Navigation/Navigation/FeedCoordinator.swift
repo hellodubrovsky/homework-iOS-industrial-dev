@@ -11,7 +11,6 @@ import UIKit
 protocol FeedCoordinator {
     func openPostViewController()
     func openInfoViewController()
-    func openImageUserViewController()
 }
 
 
@@ -42,10 +41,5 @@ final class FeedCoordinatorImplementation: FeedCoordinator {
         let infoViewController = InfoViewController()
         let infoNavigationController = UINavigationController(rootViewController: infoViewController)
         presenter?.present(infoNavigationController, animated: true)
-    }
-    
-    func openImageUserViewController() {
-        let imagesUsserViewController = ImagesUserViewController()
-        self.navigationController.pushViewController(imagesUsserViewController, animated: true)
     }
 }

@@ -89,11 +89,6 @@ final class FeedView: UIView {
         return button
     }()
     
-    private lazy var buttonImagesUser: UIButton = {
-        let button = CustomButton(title: "Images from folder documents :)", titleColor: .white, backgoundColor: UIColor.init(named: "colorBaseVK")!, cornerRadius: 10, buttonAction: { self.sendingChangingUiElements(element: .buttonImagesUserScreen) })
-        return button
-    }()
-    
     
     
     // MARK: - Init
@@ -113,7 +108,7 @@ final class FeedView: UIView {
     
     // Настройка View
     private func settingView() {
-        let subviews = [stackView, passwordTextField, buttonCheckPassword, passwordStatusLabel, timerIndicator, buttonImagesUser]
+        let subviews = [stackView, passwordTextField, buttonCheckPassword, passwordStatusLabel, timerIndicator]
         let subviewsStack = [buttonPostFirst, buttonPostSecond]
         self.addSubviews(subviews)
         self.addArrangedSubviews(stack: stackView, views: subviewsStack)
@@ -148,11 +143,6 @@ final class FeedView: UIView {
             timerIndicator.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
             timerIndicator.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             timerIndicator.heightAnchor.constraint(equalToConstant: 30),
-            
-            buttonImagesUser.bottomAnchor.constraint(equalTo: stackView.topAnchor, constant: -20),
-            buttonImagesUser.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
-            buttonImagesUser.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
-            buttonImagesUser.heightAnchor.constraint(equalToConstant: 50),
         ])
     }
 }
@@ -168,7 +158,6 @@ extension FeedView {
     private enum elementUI {
         case buttonPost
         case buttonCheckPassword
-        case buttonImagesUserScreen
     }
     
     // Отправка изменение.
@@ -180,8 +169,6 @@ extension FeedView {
         case .buttonCheckPassword:
             let textInPasswordTextView: [String: String] = ["text": passwordTextField.text!]
             notificationCenter.post(name: Notification.Name("notificationForButtonCheckPassword"), object: nil, userInfo: textInPasswordTextView)
-        case .buttonImagesUserScreen:
-            notificationCenter.post(name: Notification.Name("notificationForButtonImagesUserScreen"), object: nil)
         }
     }
 }
