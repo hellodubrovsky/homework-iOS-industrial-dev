@@ -40,6 +40,7 @@ final class FeedPresenter: FeedPresenterInput {
     // Проверка пароля
     func buttonCheckPassword(text: String) throws {
         guard let view = view else { return }
+        guard text.rangeOfCharacter(from: CharacterSet.whitespaces) == nil else { throw CheckPasswordPostErrors.incorrectSymbols }
         let correctPassword = model.password
         if text == correctPassword {
             view.resultCheckPassword(.correct)

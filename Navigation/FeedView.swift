@@ -33,6 +33,14 @@ final class FeedView: UIView {
         return textField
     }()
     
+    // Кастомная кнопка для проверки пароля
+    lazy var buttonCheckPassword: UIButton = {
+        let button = CustomButton(title: "Check", titleColor: .white, backgoundColor: UIColor.init(named: "colorBaseVK")!, cornerRadius: 10, buttonAction: { self.sendingChangingUiElements(element: .buttonCheckPassword) })
+        button.isEnabled = false
+        button.alpha = 0.5
+        return button
+    }()
+    
     
     
     // MARK: - Private properties
@@ -64,17 +72,6 @@ final class FeedView: UIView {
         return button
     }()
     
-    // Кастомная кнопка для проверки пароля
-    private lazy var buttonCheckPassword: UIButton = {
-        let button = CustomButton(title: "Check", titleColor: .white, backgoundColor: UIColor.init(named: "colorBaseVK")!, cornerRadius: 10, buttonAction: { self.sendingChangingUiElements(element: .buttonCheckPassword) })
-        return button
-    }()
-    
-    private lazy var buttonImagesUser: UIButton = {
-        let button = CustomButton(title: "Images from folder documents :)", titleColor: .white, backgoundColor: UIColor.init(named: "colorBaseVK")!, cornerRadius: 10, buttonAction: { self.sendingChangingUiElements(element: .buttonImagesUserScreen) })
-        return button
-    }()
-    
     
     
     // MARK: - Init
@@ -94,7 +91,7 @@ final class FeedView: UIView {
     
     // Настройка View
     private func settingView() {
-        let subviews = [stackView, passwordTextField, buttonCheckPassword, passwordStatusLabel, buttonImagesUser]
+        let subviews = [stackView, passwordTextField, buttonCheckPassword, passwordStatusLabel]
         let subviewsStack = [buttonPostFirst, buttonPostSecond]
         self.addSubviews(subviews)
         self.addArrangedSubviews(stack: stackView, views: subviewsStack)
@@ -120,11 +117,6 @@ final class FeedView: UIView {
             buttonCheckPassword.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
             buttonCheckPassword.heightAnchor.constraint(equalToConstant: 50),
             
-            buttonImagesUser.bottomAnchor.constraint(equalTo: stackView.topAnchor, constant: -20),
-            buttonImagesUser.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
-            buttonImagesUser.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
-            buttonImagesUser.heightAnchor.constraint(equalToConstant: 50),
-            
             passwordStatusLabel.bottomAnchor.constraint(equalTo: passwordTextField.topAnchor, constant: -6),
             passwordStatusLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
             passwordStatusLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
@@ -144,7 +136,6 @@ extension FeedView {
     private enum elementUI {
         case buttonPost
         case buttonCheckPassword
-        case buttonImagesUserScreen
         case changedTextInPasswordTextField
     }
     
@@ -157,14 +148,12 @@ extension FeedView {
         case .buttonCheckPassword:
             let textInPasswordTextView: [String: String] = ["text": passwordTextField.text!]
             notificationCenter.post(name: Notification.Name("notificationForButtonCheckPassword"), object: nil, userInfo: textInPasswordTextView)
-        case .buttonImagesUserScreen:
-            notificationCenter.post(name: Notification.Name("notificationForButtonImagesUserScreen"), object: nil)
         case .changedTextInPasswordTextField:
             notificationCenter.post(name: Notification.Name("notificationAboutChangedTextInPasswordTextField"), object: nil)
         }
     }
     
-    // Отправка события о том, что текстовое поле пароля изменилось. 
+    // Отправка события о том, что текстовое поле пароля изменилось.
     @objc private func editingChanged(_ textField: UITextField) {
         self.sendingChangingUiElements(element: .changedTextInPasswordTextField)
     }

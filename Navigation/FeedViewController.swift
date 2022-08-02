@@ -43,19 +43,14 @@ final class FeedViewController: UIViewController {
         title = "Feed"
         view = mainView
         addObserverForView()
-        addObserversForPassword()
         self.presenter.set(view: self)
         self.coordinator = FeedCoordinatorImplementation(navigationController: navigationController ?? UINavigationController())
-        
+        self.mainView.passwordTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
     
     
     
     // MARK: - Private methods
-    
-    @objc private func buttonImagesScreenAction() {
-        coordinator.openImageUserViewController()
-    }
     
     @objc private func changedTextInPasswordTextField() {
         mainView.passwordStatusLabel.isHidden = true
@@ -74,47 +69,56 @@ final class FeedViewController: UIViewController {
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(buttonAction), name: Notification.Name("notificationForButtonPost"), object: nil)
         notificationCenter.addObserver(self, selector: #selector(self.checkPassword(notification:)), name: Notification.Name("notificationForButtonCheckPassword"), object: nil)
-        notificationCenter.addObserver(self, selector: #selector(buttonImagesScreenAction), name: Notification.Name("notificationForButtonImagesUserScreen"), object: nil)
         notificationCenter.addObserver(self, selector: #selector(changedTextInPasswordTextField), name: Notification.Name("notificationAboutChangedTextInPasswordTextField"), object: nil)
     }
     
     // Текст, введенный в textField пароля, отправляется в презентер, и уже там происходит проверка.
     @objc private func checkPassword(notification: NSNotification) {
         guard let text = notification.userInfo?["text"] as? String else { preconditionFailure() }
-        let notificationCenter = NotificationCenter.default
         do {
             try presenter.buttonCheckPassword(text: text)
-            // Тут должен открываться новый экран
+            coordinator.openImageUserViewController()
         } catch CheckPasswordPostErrors.invalidPassword {
-            notificationCenter.post(name: Notification.Name("invalidPassword"), object: nil)
+            self.invalidPassword()
         } catch CheckPasswordPostErrors.invalidVerificationPassword {
-            notificationCenter.post(name: Notification.Name("invalidVerificationPassword"), object: nil)
+            self.invalidVerificationPassword()
+        } catch CheckPasswordPostErrors.incorrectSymbols {
+            self.incorrectSymbolsInPassword()
         } catch {
             print(error.localizedDescription)
             preconditionFailure()
         }
     }
-    
-    // Добавление наблюдателей (для пароля).
-    private func addObserversForPassword() {
-        let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(invalidPassword), name: Notification.Name("invalidPassword"), object: nil)
-        notificationCenter.addObserver(self, selector: #selector(invalidVerificationPassword), name: Notification.Name("invalidVerificationPassword"), object: nil)
-    }
-    
-    @objc
+
     private func invalidPassword() {
         mainView.passwordStatusLabel.isHidden = false
         mainView.passwordStatusLabel.text = "Введён неверный пароль"
         mainView.passwordTextField.layer.borderColor = UIColor.red.cgColor
     }
     
-    @objc
     private func invalidVerificationPassword() {
         mainView.passwordStatusLabel.isHidden = false
         mainView.passwordStatusLabel.text = "Введён неверный проверочный пароль"
         mainView.passwordTextField.layer.borderColor = UIColor.red.cgColor
         // TODO: Здесь, по таймеру нужно убрать ошибку, и вернуть экран к первоначальному состоянию
+    }
+    
+    private func incorrectSymbolsInPassword() {
+        mainView.passwordStatusLabel.isHidden = false
+        mainView.passwordStatusLabel.text = "Пароль не может содержать пробелы"
+        mainView.passwordTextField.layer.borderColor = UIColor.red.cgColor
+    }
+    
+    // Делает кнопку "Проверки пароля" недоступной для нажатия, если текстовое поле содержит меньше 4 символов.
+    @objc private func textFieldDidChange(_ textField: UITextField) {
+        let string = self.mainView.passwordTextField.text!
+        if string.count >= 4 {
+            self.mainView.buttonCheckPassword.isEnabled = true
+            self.mainView.buttonCheckPassword.alpha = 1.0
+        } else {
+            self.mainView.buttonCheckPassword.isEnabled = false
+            self.mainView.buttonCheckPassword.alpha = 0.5
+        }
     }
 }
 

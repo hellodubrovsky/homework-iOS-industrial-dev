@@ -22,6 +22,7 @@ enum AuthorizationErrors: Error {
 
 enum CheckPasswordPostErrors: Error {
     case unowned
+    case incorrectSymbols
     case invalidPassword
     case invalidVerificationPassword
 }
