@@ -41,12 +41,10 @@ final class FeedPresenter: FeedPresenterInput {
     func buttonCheckPassword(text: String) throws {
         guard let view = view else { return }
         let correctPassword = model.password
-        if text.isEmpty {
-            throw CheckPasswordPostErrors.emptyPassordField
-        } else if text == correctPassword {
+        if text == correctPassword {
             view.resultCheckPassword(.correct)
         } else if text != correctPassword {
-            throw CheckPasswordPostErrors.incorrectPassword
+            throw CheckPasswordPostErrors.invalidPassword
         } else {
             throw CheckPasswordPostErrors.unowned
         }

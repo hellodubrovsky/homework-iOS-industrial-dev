@@ -49,26 +49,6 @@ final class FeedViewController: UIViewController {
         
     }
     
-    /// Очистка текстового поля ввода пароля. Будет очищаться через установленное время.
-    func clearTextField(withTimeInterval: Double) {
-        self.mainView.timerIndicator.isHidden = false
-        var timerTime = Int(withTimeInterval)
-        let timerIndicatorText = "До очистки поля ввода пароля осталось: "
-        self.mainView.timerIndicator.text =  timerIndicatorText + String(timerTime)
-        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] timer in
-            guard let self = self else { return }
-            timerTime -= 1
-            self.mainView.timerIndicator.text = timerIndicatorText + String(timerTime)
-            if timerTime == 0 {
-                self.mainView.timerIndicator.text = "Поле ввода пароля очищено, от чужих глаз."
-                self.mainView.passwordTextField.text = nil
-            } else if timerTime == -1 {
-                self.mainView.timerIndicator.isHidden = true
-                timer.invalidate()
-            }
-        }
-    }
-    
     
     
     // MARK: - Private methods
@@ -77,10 +57,16 @@ final class FeedViewController: UIViewController {
         coordinator.openImageUserViewController()
     }
     
+    @objc private func changedTextInPasswordTextField() {
+        mainView.passwordStatusLabel.isHidden = true
+        mainView.passwordTextField.layer.borderColor = UIColor.lightGray.cgColor
+    }
+    
     // Реализация открытия окна "Post" по нажатию кнопки.
     @objc private func buttonAction() {
         presenter.buttonPost()
         coordinator.openPostViewController()
+        mainView.passwordTextField.layer.borderColor = UIColor.lightGray.cgColor
     }
     
     // Добавление наблюдателей для управления действиями UI-элементов.
@@ -89,6 +75,7 @@ final class FeedViewController: UIViewController {
         notificationCenter.addObserver(self, selector: #selector(buttonAction), name: Notification.Name("notificationForButtonPost"), object: nil)
         notificationCenter.addObserver(self, selector: #selector(self.checkPassword(notification:)), name: Notification.Name("notificationForButtonCheckPassword"), object: nil)
         notificationCenter.addObserver(self, selector: #selector(buttonImagesScreenAction), name: Notification.Name("notificationForButtonImagesUserScreen"), object: nil)
+        notificationCenter.addObserver(self, selector: #selector(changedTextInPasswordTextField), name: Notification.Name("notificationAboutChangedTextInPasswordTextField"), object: nil)
     }
     
     // Текст, введенный в textField пароля, отправляется в презентер, и уже там происходит проверка.
@@ -97,11 +84,11 @@ final class FeedViewController: UIViewController {
         let notificationCenter = NotificationCenter.default
         do {
             try presenter.buttonCheckPassword(text: text)
-            notificationCenter.post(name: Notification.Name("correctPassword"), object: nil)
-        } catch CheckPasswordPostErrors.emptyPassordField {
-            notificationCenter.post(name: Notification.Name("emptyPassword"), object: nil)
-        } catch CheckPasswordPostErrors.incorrectPassword {
-            notificationCenter.post(name: Notification.Name("incorrectPassword"), object: nil)
+            // Тут должен открываться новый экран
+        } catch CheckPasswordPostErrors.invalidPassword {
+            notificationCenter.post(name: Notification.Name("invalidPassword"), object: nil)
+        } catch CheckPasswordPostErrors.invalidVerificationPassword {
+            notificationCenter.post(name: Notification.Name("invalidVerificationPassword"), object: nil)
         } catch {
             print(error.localizedDescription)
             preconditionFailure()
@@ -111,32 +98,23 @@ final class FeedViewController: UIViewController {
     // Добавление наблюдателей (для пароля).
     private func addObserversForPassword() {
         let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(correctPassword), name: Notification.Name("correctPassword"), object: nil)
-        notificationCenter.addObserver(self, selector: #selector(incorrectPassword), name: Notification.Name("incorrectPassword"), object: nil)
-        notificationCenter.addObserver(self, selector: #selector(emptyPassword), name: Notification.Name("emptyPassword"), object: nil)
+        notificationCenter.addObserver(self, selector: #selector(invalidPassword), name: Notification.Name("invalidPassword"), object: nil)
+        notificationCenter.addObserver(self, selector: #selector(invalidVerificationPassword), name: Notification.Name("invalidVerificationPassword"), object: nil)
     }
     
     @objc
-    private func correctPassword() {
+    private func invalidPassword() {
         mainView.passwordStatusLabel.isHidden = false
-        mainView.passwordStatusLabel.text = "Correct Password"
-        mainView.passwordStatusLabel.layer.borderColor = UIColor.green.cgColor
-//        runTimer()
-        clearTextField(withTimeInterval: 5)
+        mainView.passwordStatusLabel.text = "Введён неверный пароль"
+        mainView.passwordTextField.layer.borderColor = UIColor.red.cgColor
     }
     
     @objc
-    private func incorrectPassword() {
+    private func invalidVerificationPassword() {
         mainView.passwordStatusLabel.isHidden = false
-        mainView.passwordStatusLabel.text = "Incorrect Password"
-        mainView.passwordStatusLabel.layer.borderColor = UIColor.red.cgColor
-    }
-    
-    @objc
-    private func emptyPassword() {
-        mainView.passwordStatusLabel.isHidden = false
-        mainView.passwordStatusLabel.text = "Empty Password"
-        mainView.passwordStatusLabel.layer.borderColor = UIColor.purple.cgColor
+        mainView.passwordStatusLabel.text = "Введён неверный проверочный пароль"
+        mainView.passwordTextField.layer.borderColor = UIColor.red.cgColor
+        // TODO: Здесь, по таймеру нужно убрать ошибку, и вернуть экран к первоначальному состоянию
     }
 }
 
