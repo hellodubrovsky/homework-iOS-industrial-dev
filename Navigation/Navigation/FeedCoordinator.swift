@@ -11,7 +11,7 @@ import UIKit
 protocol FeedCoordinator {
     func openPostViewController()
     func openInfoViewController()
-    func openImageUserViewController()
+    func openImagesUserTabBarController()
 }
 
 
@@ -44,8 +44,26 @@ final class FeedCoordinatorImplementation: FeedCoordinator {
         presenter?.present(infoNavigationController, animated: true)
     }
     
-    func openImageUserViewController() {
-        let imagesUsserViewController = ImagesUserViewController()
-        self.navigationController.pushViewController(imagesUsserViewController, animated: true)
+    func openImagesUserTabBarController() {
+        let imagesViewController = ImagesUserViewController()
+        let imagesNavigationController = UINavigationController(rootViewController: imagesViewController)
+        let imagesTabBarItem = UITabBarItem()
+        imagesTabBarItem.title = "Images"
+        imagesTabBarItem.image = UIImage(systemName: "photo.circle.fill")
+        imagesNavigationController.tabBarItem = imagesTabBarItem
+        
+        let settingsViewController = SettingsViewController()
+        let settingsNavigationController = UINavigationController(rootViewController: settingsViewController)
+        let settingsTabBarItem = UITabBarItem()
+        settingsTabBarItem.title = "Settings"
+        settingsTabBarItem.image = UIImage(systemName: "gear")
+        settingsNavigationController.tabBarItem = settingsTabBarItem
+        
+        let imagesUserCoordinator = UserImagesCoordinatorImplementation()
+        let imagesUserTabBarController = ImagesUserTabBarController(coordinator: imagesUserCoordinator, viewControllers: [imagesNavigationController, settingsNavigationController])
+        
+        let appDelegate = UIApplication.shared.delegate! as! AppDelegate
+        appDelegate.window?.rootViewController = imagesUserTabBarController
+        appDelegate.window?.makeKeyAndVisible()
     }
 }

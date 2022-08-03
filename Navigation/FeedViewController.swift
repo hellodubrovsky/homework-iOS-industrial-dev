@@ -104,7 +104,7 @@ final class FeedViewController: UIViewController {
             // Попадаем сюда, если у пользователя есть сохраненный пароль.
             do {
                 try presenter.buttonCheckPassword(text: text)
-                coordinator.openImageUserViewController()
+                coordinator.openImagesUserTabBarController()
             } catch CheckPasswordPostErrors.invalidPassword {
                 self.invalidPassword()
             } catch CheckPasswordPostErrors.incorrectSymbols {
@@ -139,7 +139,7 @@ final class FeedViewController: UIViewController {
     @objc private func checkVerificationPassword(notification: NSNotification) {
         guard let text = notification.userInfo?["verificationText"] as? String else { preconditionFailure() }
         guard presenter.comparisonOfVerificationPassword(text: text) == false else {
-            coordinator.openImageUserViewController()
+            coordinator.openImagesUserTabBarController()
             return
         }
         self.invalidVerificationPassword()

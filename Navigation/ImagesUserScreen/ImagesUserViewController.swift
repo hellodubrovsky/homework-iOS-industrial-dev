@@ -42,9 +42,12 @@ class ImagesUserViewController: UIViewController {
     // MARK: Private methods
     
     private func setView() {
-        title = "User images"
-        view.backgroundColor = .systemGray
-        navigationController?.navigationBar.tintColor = . white
+        title = "User Images"
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = UIColor.init(named: "colorBaseVK")
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+       
         view.addSubview(collectionView)
         view.addSubview(activityIndicator)
         collectionView.dataSource = self
@@ -56,7 +59,7 @@ class ImagesUserViewController: UIViewController {
     
     private func installingConstraints() {
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
