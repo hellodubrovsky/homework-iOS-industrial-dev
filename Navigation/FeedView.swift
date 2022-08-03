@@ -35,9 +35,16 @@ final class FeedView: UIView {
     
     // Кастомная кнопка для проверки пароля
     lazy var buttonCheckPassword: UIButton = {
-        let button = CustomButton(title: "Check", titleColor: .white, backgoundColor: UIColor.init(named: "colorBaseVK")!, cornerRadius: 10, buttonAction: { self.sendingChangingUiElements(element: .buttonCheckPassword) })
+        let button = CustomButton(title: "", titleColor: .white, backgoundColor: UIColor.init(named: "colorBaseVK")!, cornerRadius: 10, buttonAction: { self.sendingChangingUiElements(element: .buttonCheckPassword) })
         button.isEnabled = false
         button.alpha = 0.5
+        return button
+    }()
+    
+    // Кастомная кнопка для проверки пароля
+    lazy var buttonCheckVerificationPassword: UIButton = {
+        let button = CustomButton(title: "Проверить пароль", titleColor: .white, backgoundColor: UIColor.init(named: "colorBaseVK")!, cornerRadius: 10, buttonAction: { self.sendingChangingUiElements(element: .buttonCheckVerificationPassword) })
+        button.isHidden = true
         return button
     }()
     
@@ -91,7 +98,7 @@ final class FeedView: UIView {
     
     // Настройка View
     private func settingView() {
-        let subviews = [stackView, passwordTextField, buttonCheckPassword, passwordStatusLabel]
+        let subviews = [stackView, passwordTextField, buttonCheckPassword, passwordStatusLabel, buttonCheckVerificationPassword]
         let subviewsStack = [buttonPostFirst, buttonPostSecond]
         self.addSubviews(subviews)
         self.addArrangedSubviews(stack: stackView, views: subviewsStack)
@@ -117,6 +124,11 @@ final class FeedView: UIView {
             buttonCheckPassword.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
             buttonCheckPassword.heightAnchor.constraint(equalToConstant: 50),
             
+            buttonCheckVerificationPassword.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 10),
+            buttonCheckVerificationPassword.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
+            buttonCheckVerificationPassword.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+            buttonCheckVerificationPassword.heightAnchor.constraint(equalToConstant: 50),
+            
             passwordStatusLabel.bottomAnchor.constraint(equalTo: passwordTextField.topAnchor, constant: -6),
             passwordStatusLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
             passwordStatusLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
@@ -136,6 +148,7 @@ extension FeedView {
     private enum elementUI {
         case buttonPost
         case buttonCheckPassword
+        case buttonCheckVerificationPassword
         case changedTextInPasswordTextField
     }
     
@@ -148,6 +161,9 @@ extension FeedView {
         case .buttonCheckPassword:
             let textInPasswordTextView: [String: String] = ["text": passwordTextField.text!]
             notificationCenter.post(name: Notification.Name("notificationForButtonCheckPassword"), object: nil, userInfo: textInPasswordTextView)
+        case .buttonCheckVerificationPassword:
+            let textInPasswordTextView: [String: String] = ["verificationText": passwordTextField.text!]
+            notificationCenter.post(name: Notification.Name("notificationForButtonCheckVerificationPassword"), object: nil, userInfo: textInPasswordTextView)
         case .changedTextInPasswordTextField:
             notificationCenter.post(name: Notification.Name("notificationAboutChangedTextInPasswordTextField"), object: nil)
         }

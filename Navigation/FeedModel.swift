@@ -8,5 +8,5 @@
 import Foundation
 
 final class FeedModel {
-    let password: String = "1"
+    var password: String? = "0000"
 }

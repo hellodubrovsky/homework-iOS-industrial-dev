@@ -12,9 +12,12 @@ import Foundation
 // MARK: - FeedPresenterInput
 
 protocol FeedPresenterInput: AnyObject {
+    func set(view: FeedViewControllerInput)
     func buttonPost()
     func buttonCheckPassword(text: String) throws
-    func set(view: FeedViewControllerInput)
+    func checkingForExistenceOfPassword() -> Bool
+    func savingPasswordForComparison(text: String) throws
+    func comparisonOfVerificationPassword(text: String) -> Bool
 }
 
 
@@ -25,6 +28,7 @@ final class FeedPresenter: FeedPresenterInput {
     
     weak private var view: FeedViewControllerInput!
     private let model = FeedModel()
+    private var passwordForCheckVerification: String?
     
     // Привязка view к презентеру
     func set(view: FeedViewControllerInput) {
@@ -49,5 +53,23 @@ final class FeedPresenter: FeedPresenterInput {
         } else {
             throw CheckPasswordPostErrors.unowned
         }
+    }
+    
+    /// Сохранение в presenter пароля, который в дальнейшем нужно сравнить.
+    func savingPasswordForComparison(text: String) throws {
+        guard text.rangeOfCharacter(from: CharacterSet.whitespaces) == nil else { throw CheckPasswordPostErrors.incorrectSymbols }
+        self.passwordForCheckVerification = text
+    }
+    
+    /// Сравнение переданного пароля (который планируется сохранить), с уже сохраненным в презентере.
+    func comparisonOfVerificationPassword(text: String) -> Bool {
+        guard text == self.passwordForCheckVerification else { return false }
+        self.model.password = text
+        return true
+    }
+    
+    /// Проверка, имеется ли у пользователя сохраненный пароль.
+    func checkingForExistenceOfPassword() -> Bool {
+        return model.password != nil
     }
 }
