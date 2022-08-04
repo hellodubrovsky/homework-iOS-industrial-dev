@@ -47,6 +47,7 @@
 		F4834DAA289AF46E00F5AF8F /* ImagesUserTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4834DA9289AF46E00F5AF8F /* ImagesUserTabBarController.swift */; };
 		F4834DAC289AF76100F5AF8F /* UserImagesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4834DAB289AF76100F5AF8F /* UserImagesCoordinator.swift */; };
 		F4834DB0289B009500F5AF8F /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4834DAF289B009500F5AF8F /* SettingsViewController.swift */; };
+		F4834DB2289B9FDB00F5AF8F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4834DB1289B9FDB00F5AF8F /* SettingsView.swift */; };
 		F487B20D286DB1E0007350CD /* MusicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F487B20C286DB1E0007350CD /* MusicView.swift */; };
 		F487B20F286DB1EF007350CD /* MusicPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F487B20E286DB1EF007350CD /* MusicPresenter.swift */; };
 		F487B211286DB1FD007350CD /* MusicModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F487B210286DB1FD007350CD /* MusicModel.swift */; };
@@ -144,6 +145,7 @@
 		F4834DA9289AF46E00F5AF8F /* ImagesUserTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesUserTabBarController.swift; sourceTree = "<group>"; };
 		F4834DAB289AF76100F5AF8F /* UserImagesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserImagesCoordinator.swift; sourceTree = "<group>"; };
 		F4834DAF289B009500F5AF8F /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		F4834DB1289B9FDB00F5AF8F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		F487B20C286DB1E0007350CD /* MusicView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicView.swift; sourceTree = "<group>"; };
 		F487B20E286DB1EF007350CD /* MusicPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPresenter.swift; sourceTree = "<group>"; };
 		F487B210286DB1FD007350CD /* MusicModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicModel.swift; sourceTree = "<group>"; };
@@ -342,6 +344,7 @@
 		F4834DAE289B007200F5AF8F /* SettingsScreen */ = {
 			isa = PBXGroup;
 			children = (
+				F4834DB1289B9FDB00F5AF8F /* SettingsView.swift */,
 				F4834DAF289B009500F5AF8F /* SettingsViewController.swift */,
 			);
 			name = SettingsScreen;
@@ -721,6 +724,7 @@
 				F44708942885ABCE00811BFD /* AuthorizationViewController.swift in Sources */,
 				F4DDFA8F27A04C4300CFD226 /* PhotosCollectionViewCell.swift in Sources */,
 				F40B5349286CDE3A002026A0 /* MultimediaView.swift in Sources */,
+				F4834DB2289B9FDB00F5AF8F /* SettingsView.swift in Sources */,
 				F408845F27FF255A002D8812 /* AppManager.swift in Sources */,
 				F4219566276869AE00487AE7 /* ProfileTableHeaderView.swift in Sources */,
 				F487B20D286DB1E0007350CD /* MusicView.swift in Sources */,

@@ -7,15 +7,36 @@
 
 import UIKit
 
-class SettingsViewController: UIViewController {
-
+final class SettingsViewController: UIViewController {
+    
+    
+    // MARK: ViewDidLoad
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Settings"
-        view.backgroundColor = .white
+        let mainView = SettingsView(delegate: self, sortingStatus: false)
+        view = mainView
         let appearance = UINavigationBarAppearance()
         appearance.backgroundColor = UIColor.init(named: "colorBaseVK")
         appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
+    }
+}
+
+
+
+
+
+// MARK: - SettingsViewDelegate
+
+extension SettingsViewController: SettingsViewDelegate {
+    
+    func switchStatusChanged(on: Bool) {
+        // TODO: Нужно сохранять в UserDefaults
+    }
+    
+    func pressingButtonToOpenPasswordChangeWindow() {
+        // TODO: ННужно открыть окно с изменением пароля
     }
 }
