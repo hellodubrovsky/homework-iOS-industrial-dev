@@ -12,6 +12,7 @@ class ImagesUserViewController: UIViewController {
     
     // MARK: Private properties
     private var images: [UIImage] = []
+    private var sortAlphabetically: Bool = true // TODO: Нужно будет брать из UserDefualts
     
     private let collectionView: UICollectionView = {
         var viewLayout = UICollectionViewFlowLayout()
@@ -72,7 +73,7 @@ class ImagesUserViewController: UIViewController {
     private func getData() {
         self.activityIndicator.startAnimating()
         DispatchQueue.global().async {
-            self.images = PhotoFileManager.shared.gettingImages()
+            self.images = PhotoFileManager.shared.gettingImages(sortAlphabetically: self.sortAlphabetically)
             DispatchQueue.main.async {
                 self.activityIndicator.stopAnimating()
                 self.collectionView.reloadData()
