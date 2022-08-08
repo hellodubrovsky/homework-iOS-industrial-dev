@@ -12,7 +12,7 @@ class ImagesUserViewController: UIViewController {
     
     // MARK: Private properties
     private var images: [UIImage] = []
-    private var sortAlphabetically: Bool = true // TODO: Нужно будет брать из UserDefualts
+    private var sortAlphabetically: Bool = UserDefaults.standard.bool(forKey: "sortAlphabetically")
     
     private let collectionView: UICollectionView = {
         var viewLayout = UICollectionViewFlowLayout()
@@ -37,6 +37,15 @@ class ImagesUserViewController: UIViewController {
         setView()
         installingConstraints()
         getData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let valueInUserDefaults: Bool = UserDefaults.standard.bool(forKey: "sortAlphabetically")
+        if valueInUserDefaults != self.sortAlphabetically {
+            self.sortAlphabetically = valueInUserDefaults
+            updateData()
+        }
     }
     
     
@@ -72,6 +81,9 @@ class ImagesUserViewController: UIViewController {
     
     private func getData() {
         self.activityIndicator.startAnimating()
+        if UserDefaults.standard.object(forKey: "sortAlphabetically") == nil {
+            self.sortAlphabetically = true
+        }
         DispatchQueue.global().async {
             self.images = PhotoFileManager.shared.gettingImages(sortAlphabetically: self.sortAlphabetically)
             DispatchQueue.main.async {
@@ -143,5 +155,12 @@ extension ImagesUserViewController: UICollectionViewDataSource, UICollectionView
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 8
+    }
+}
+
+
+extension UserDefaults {
+    @objc dynamic var sortAlphabetically: Bool {
+        return bool(forKey: "sortAlphabetically")
     }
 }

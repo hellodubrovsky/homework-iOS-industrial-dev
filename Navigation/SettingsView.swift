@@ -45,7 +45,7 @@ class SettingsView: UIView {
     
     // MARK: Initial
     
-    init(delegate: SettingsViewDelegate ,sortingStatus: Bool) {
+    init(delegate: SettingsViewDelegate, sortingStatus: Bool) {
         self.delegate = delegate
         self.switchSorting.isOn = sortingStatus
         super.init(frame: .zero)

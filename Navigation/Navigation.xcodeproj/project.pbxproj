@@ -48,6 +48,7 @@
 		F4834DAC289AF76100F5AF8F /* UserImagesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4834DAB289AF76100F5AF8F /* UserImagesCoordinator.swift */; };
 		F4834DB0289B009500F5AF8F /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4834DAF289B009500F5AF8F /* SettingsViewController.swift */; };
 		F4834DB2289B9FDB00F5AF8F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4834DB1289B9FDB00F5AF8F /* SettingsView.swift */; };
+		F4834DB6289CE2E200F5AF8F /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4834DB5289CE2E100F5AF8F /* UserDefaultsManager.swift */; };
 		F487B20D286DB1E0007350CD /* MusicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F487B20C286DB1E0007350CD /* MusicView.swift */; };
 		F487B20F286DB1EF007350CD /* MusicPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F487B20E286DB1EF007350CD /* MusicPresenter.swift */; };
 		F487B211286DB1FD007350CD /* MusicModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F487B210286DB1FD007350CD /* MusicModel.swift */; };
@@ -146,6 +147,7 @@
 		F4834DAB289AF76100F5AF8F /* UserImagesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserImagesCoordinator.swift; sourceTree = "<group>"; };
 		F4834DAF289B009500F5AF8F /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		F4834DB1289B9FDB00F5AF8F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		F4834DB5289CE2E100F5AF8F /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		F487B20C286DB1E0007350CD /* MusicView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicView.swift; sourceTree = "<group>"; };
 		F487B20E286DB1EF007350CD /* MusicPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPresenter.swift; sourceTree = "<group>"; };
 		F487B210286DB1FD007350CD /* MusicModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicModel.swift; sourceTree = "<group>"; };
@@ -350,6 +352,21 @@
 			name = SettingsScreen;
 			sourceTree = "<group>";
 		};
+		F4834DB3289C0EF600F5AF8F /* UserDefaultsManager */ = {
+			isa = PBXGroup;
+			children = (
+				F4834DB5289CE2E100F5AF8F /* UserDefaultsManager.swift */,
+			);
+			path = UserDefaultsManager;
+			sourceTree = "<group>";
+		};
+		F4834DB4289C0F0C00F5AF8F /* KeyChainManager  */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "KeyChainManager ";
+			sourceTree = "<group>";
+		};
 		F487B212286DC1CE007350CD /* MultimediaFiles  */ = {
 			isa = PBXGroup;
 			children = (
@@ -411,6 +428,8 @@
 				F4221DFA28512A1200376F07 /* Coordinators  */,
 				F429B21F28745FA100364B7F /* NetworkService */,
 				F41C99E6289592FD007484E5 /* FileManager */,
+				F4834DB4289C0F0C00F5AF8F /* KeyChainManager  */,
+				F4834DB3289C0EF600F5AF8F /* UserDefaultsManager */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -723,6 +742,7 @@
 				F4834DAC289AF76100F5AF8F /* UserImagesCoordinator.swift in Sources */,
 				F44708942885ABCE00811BFD /* AuthorizationViewController.swift in Sources */,
 				F4DDFA8F27A04C4300CFD226 /* PhotosCollectionViewCell.swift in Sources */,
+				F4834DB6289CE2E200F5AF8F /* UserDefaultsManager.swift in Sources */,
 				F40B5349286CDE3A002026A0 /* MultimediaView.swift in Sources */,
 				F4834DB2289B9FDB00F5AF8F /* SettingsView.swift in Sources */,
 				F408845F27FF255A002D8812 /* AppManager.swift in Sources */,

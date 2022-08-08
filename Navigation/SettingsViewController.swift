@@ -15,12 +15,22 @@ final class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Settings"
-        let mainView = SettingsView(delegate: self, sortingStatus: false)
+        let mainView = SettingsView(delegate: self, sortingStatus: checkingForPresenceOfSavedData())
         view = mainView
         let appearance = UINavigationBarAppearance()
         appearance.backgroundColor = UIColor.init(named: "colorBaseVK")
         appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
+    }
+    
+    private func checkingForPresenceOfSavedData() -> Bool {
+        let userDefaults = UserDefaults.standard
+        if userDefaults.object(forKey: "sortAlphabetically") == nil {
+            userDefaults.setValue(true, forKey: "sortAlphabetically")
+            return true
+        } else {
+            return userDefaults.bool(forKey: "sortAlphabetically")
+        }
     }
 }
 
@@ -33,10 +43,11 @@ final class SettingsViewController: UIViewController {
 extension SettingsViewController: SettingsViewDelegate {
     
     func switchStatusChanged(on: Bool) {
-        // TODO: Нужно сохранять в UserDefaults
+        let userDefaults = UserDefaults.standard
+        userDefaults.setValue(on, forKey: "sortAlphabetically")
     }
     
     func pressingButtonToOpenPasswordChangeWindow() {
-        // TODO: ННужно открыть окно с изменением пароля
+        // TODO: Нужно открыть окно с изменением пароля
     }
 }
