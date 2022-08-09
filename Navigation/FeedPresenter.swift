@@ -64,7 +64,9 @@ final class FeedPresenter: FeedPresenterInput {
     /// Сравнение переданного пароля (который планируется сохранить), с уже сохраненным в презентере.
     func comparisonOfVerificationPassword(text: String) -> Bool {
         guard text == self.passwordForCheckVerification else { return false }
-        self.model.password = text
+        
+        // Сохранение нового пароля.
+        KeychainManager.shared.addNewUserWith(password: text)
         return true
     }
     

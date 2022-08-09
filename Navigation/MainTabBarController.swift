@@ -1,5 +1,5 @@
 //
-//  ImagesUserTabBarController.swift
+//  MainTabBarController.swift
 //  Navigation
 //
 //  Created by Илья on 03.08.2022.
@@ -7,17 +7,17 @@
 
 import UIKit
 
-class ImagesUserTabBarController: UITabBarController {
+class MainTabBarController: UITabBarController {
     
     // MARK: Private properties
-    weak var coordinator: UserImagesCoordinator!
+    weak var coordinator: MainTabBarControllerCoordinator!
     private var someViewControllers: [UINavigationController]
     
     
     
     // MARK: Initial
     
-    init(coordinator: UserImagesCoordinator, viewControllers: [UINavigationController]) {
+    init(coordinator: MainTabBarControllerCoordinator, viewControllers: [UINavigationController]) {
         self.coordinator = coordinator
         self.someViewControllers = viewControllers
         super.init(nibName: nil, bundle: nil)

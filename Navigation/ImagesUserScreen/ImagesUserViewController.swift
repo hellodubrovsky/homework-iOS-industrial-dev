@@ -57,7 +57,10 @@ class ImagesUserViewController: UIViewController {
         appearance.backgroundColor = UIColor.init(named: "colorBaseVK")
         appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
-       
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
+        self.navigationItem.rightBarButtonItem?.tintColor = .white
+        
         view.addSubview(collectionView)
         view.addSubview(activityIndicator)
         collectionView.dataSource = self
@@ -65,6 +68,11 @@ class ImagesUserViewController: UIViewController {
         collectionView.register(ImagesUserCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(updateData), name: NSNotification.Name("addNewImageInFolderDocuments"), object: nil)
+    }
+    
+    @objc private func addTapped() {
+        let imagePicker = ImagePickerViewController()
+        self.present(imagePicker, animated: true, completion: nil)
     }
     
     private func installingConstraints() {

@@ -48,6 +48,8 @@ extension SettingsViewController: SettingsViewDelegate {
     }
     
     func pressingButtonToOpenPasswordChangeWindow() {
-        // TODO: Нужно открыть окно с изменением пароля
+        let presenter = UpdatePasswordPresenter()
+        let vc = UpdatePasswordViewController(presenter: presenter)
+        self.present(vc, animated: true)
     }
 }
