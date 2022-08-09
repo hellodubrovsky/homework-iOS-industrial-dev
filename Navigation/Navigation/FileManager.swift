@@ -12,7 +12,7 @@ import UIKit
 // MARK: - PhotoFileManagerProtocol
 
 protocol PhotoFileManagerProtocol: AnyObject {
-    func gettingImages() -> [UIImage]
+    func gettingImages(sortAlphabetically: Bool) -> [UIImage]
     func savingAn(image: UIImage)
     func remove(image: UIImage)
 }
@@ -36,22 +36,23 @@ final class PhotoFileManager: PhotoFileManagerProtocol {
     // MARK: Public methods
     
     /// Метод получения всех фотографии, в папке Documents.
-    func gettingImages() -> [UIImage] {
-        var images: [UIImage] = []
+    func gettingImages(sortAlphabetically: Bool) -> [UIImage] {
+        var imagesDictionary: [String: UIImage] = [:]
         do {
             let documentsURL = try self.manager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
             let contentsURL = try self.manager.contentsOfDirectory(at: documentsURL, includingPropertiesForKeys: nil)
             for fileURL in contentsURL {
                 guard let image = UIImage(contentsOfFile: fileURL.path) else { continue }
-                images.append(image)
+                let nameImage = fileURL.lastPathComponent
+                imagesDictionary[nameImage] = image
             }
-            return images
+            return sorted(dictionary: imagesDictionary, sortAlphabetically: sortAlphabetically)
         } catch let error {
             print("Ошибка в получении пути к папке documents: \(error)")
-            return images
+            return []
         }
     }
-   
+
     /// Метод сохранения фотографии в папку Documents.
     func savingAn(image: UIImage) {
         do {
@@ -80,5 +81,14 @@ final class PhotoFileManager: PhotoFileManagerProtocol {
         } catch let error {
             print("Ошибка в получении пути к папке documents: \(error)")
         }
+    }
+    
+    /// Метод, для сортировки значениий словаря, по ключам.
+    private func sorted(dictionary: [String: UIImage], sortAlphabetically: Bool) -> [UIImage] {
+        let sortedDic = dictionary.sorted { $0.key < $1.key }
+        var sortedArrayImage: [UIImage] = []
+        sortedDic.forEach { sortedArrayImage.append($0.value) }
+        guard sortAlphabetically else { return sortedArrayImage.reversed() }
+        return sortedArrayImage
     }
 }

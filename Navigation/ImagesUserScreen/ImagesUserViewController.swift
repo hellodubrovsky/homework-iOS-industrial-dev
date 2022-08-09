@@ -12,6 +12,7 @@ class ImagesUserViewController: UIViewController {
     
     // MARK: Private properties
     private var images: [UIImage] = []
+    private var sortAlphabetically: Bool = UserDefaults.standard.bool(forKey: "sortAlphabetically")
     
     private let collectionView: UICollectionView = {
         var viewLayout = UICollectionViewFlowLayout()
@@ -38,13 +39,28 @@ class ImagesUserViewController: UIViewController {
         getData()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let valueInUserDefaults: Bool = UserDefaults.standard.bool(forKey: "sortAlphabetically")
+        if valueInUserDefaults != self.sortAlphabetically {
+            self.sortAlphabetically = valueInUserDefaults
+            updateData()
+        }
+    }
+    
     
     // MARK: Private methods
     
     private func setView() {
-        title = "User images"
-        view.backgroundColor = .systemGray
-        navigationController?.navigationBar.tintColor = . white
+        title = "User Images"
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = UIColor.init(named: "colorBaseVK")
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
+        self.navigationItem.rightBarButtonItem?.tintColor = .white
+        
         view.addSubview(collectionView)
         view.addSubview(activityIndicator)
         collectionView.dataSource = self
@@ -54,9 +70,14 @@ class ImagesUserViewController: UIViewController {
         notificationCenter.addObserver(self, selector: #selector(updateData), name: NSNotification.Name("addNewImageInFolderDocuments"), object: nil)
     }
     
+    @objc private func addTapped() {
+        let imagePicker = ImagePickerViewController()
+        self.present(imagePicker, animated: true, completion: nil)
+    }
+    
     private func installingConstraints() {
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
@@ -68,8 +89,11 @@ class ImagesUserViewController: UIViewController {
     
     private func getData() {
         self.activityIndicator.startAnimating()
+        if UserDefaults.standard.object(forKey: "sortAlphabetically") == nil {
+            self.sortAlphabetically = true
+        }
         DispatchQueue.global().async {
-            self.images = PhotoFileManager.shared.gettingImages()
+            self.images = PhotoFileManager.shared.gettingImages(sortAlphabetically: self.sortAlphabetically)
             DispatchQueue.main.async {
                 self.activityIndicator.stopAnimating()
                 self.collectionView.reloadData()
@@ -139,5 +163,12 @@ extension ImagesUserViewController: UICollectionViewDataSource, UICollectionView
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 8
+    }
+}
+
+
+extension UserDefaults {
+    @objc dynamic var sortAlphabetically: Bool {
+        return bool(forKey: "sortAlphabetically")
     }
 }

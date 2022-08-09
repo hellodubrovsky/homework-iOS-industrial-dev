@@ -21,7 +21,8 @@ enum AuthorizationErrors: Error {
 // MARK: Authorization for Post
 
 enum CheckPasswordPostErrors: Error {
-    case emptyPassordField
-    case incorrectPassword
     case unowned
+    case incorrectSymbols
+    case invalidPassword
+    case invalidVerificationPassword
 }
