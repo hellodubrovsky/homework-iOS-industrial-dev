@@ -27,6 +27,8 @@
 		F4221E022851479F00376F07 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4221E012851479F00376F07 /* ProfileCoordinator.swift */; };
 		F43465A3287072C800EE8505 /* music6.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F43465A2287072C800EE8505 /* music6.mp3 */; };
 		F43465A5287072CF00EE8505 /* music7.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F43465A4287072CF00EE8505 /* music7.mp3 */; };
+		F43AB99728B51B1B0009596F /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = F43AB99628B51B1B0009596F /* Realm */; };
+		F43AB99928B51B1B0009596F /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F43AB99828B51B1B0009596F /* RealmSwift */; };
 		F43C9A5B27E9D55B000B8360 /* StorageService.h in Headers */ = {isa = PBXBuildFile; fileRef = F43C9A5A27E9D55B000B8360 /* StorageService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F43C9A5E27E9D55B000B8360 /* StorageService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F43C9A5827E9D55B000B8360 /* StorageService.framework */; };
 		F43C9A5F27E9D55B000B8360 /* StorageService.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F43C9A5827E9D55B000B8360 /* StorageService.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -177,6 +179,8 @@
 			files = (
 				F4F69126280C513C00059B4A /* iOSIntPackage in Frameworks */,
 				F43C9A5E27E9D55B000B8360 /* StorageService.framework in Frameworks */,
+				F43AB99728B51B1B0009596F /* Realm in Frameworks */,
+				F43AB99928B51B1B0009596F /* RealmSwift in Frameworks */,
 				9C09816622FD149815F4EBE3 /* Pods_Navigation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -486,6 +490,8 @@
 			name = Navigation;
 			packageProductDependencies = (
 				F4F69125280C513C00059B4A /* iOSIntPackage */,
+				F43AB99628B51B1B0009596F /* Realm */,
+				F43AB99828B51B1B0009596F /* RealmSwift */,
 			);
 			productName = Navigation;
 			productReference = F49DC37727515432004F9DCE /* Navigation.app */;
@@ -520,6 +526,7 @@
 			mainGroup = F49DC36E27515432004F9DCE;
 			packageReferences = (
 				F4F69124280C513C00059B4A /* XCRemoteSwiftPackageReference "iOSIntPackage" */,
+				F43AB99528B51B1B0009596F /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = F49DC37827515432004F9DCE /* Products */;
 			projectDirPath = "";
@@ -975,6 +982,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		F43AB99528B51B1B0009596F /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		F4F69124280C513C00059B4A /* XCRemoteSwiftPackageReference "iOSIntPackage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/TrueMax/iOSIntPackage";
@@ -986,6 +1001,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		F43AB99628B51B1B0009596F /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F43AB99528B51B1B0009596F /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
+		};
+		F43AB99828B51B1B0009596F /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F43AB99528B51B1B0009596F /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
 		F4F69125280C513C00059B4A /* iOSIntPackage */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = F4F69124280C513C00059B4A /* XCRemoteSwiftPackageReference "iOSIntPackage" */;
