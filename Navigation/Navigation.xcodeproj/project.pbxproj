@@ -29,6 +29,7 @@
 		F43465A5287072CF00EE8505 /* music7.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F43465A4287072CF00EE8505 /* music7.mp3 */; };
 		F43AB99728B51B1B0009596F /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = F43AB99628B51B1B0009596F /* Realm */; };
 		F43AB99928B51B1B0009596F /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F43AB99828B51B1B0009596F /* RealmSwift */; };
+		F43AB99B28B51BB30009596F /* AuhorizationModelRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43AB99A28B51BB30009596F /* AuhorizationModelRealm.swift */; };
 		F43C9A5B27E9D55B000B8360 /* StorageService.h in Headers */ = {isa = PBXBuildFile; fileRef = F43C9A5A27E9D55B000B8360 /* StorageService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F43C9A5E27E9D55B000B8360 /* StorageService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F43C9A5827E9D55B000B8360 /* StorageService.framework */; };
 		F43C9A5F27E9D55B000B8360 /* StorageService.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F43C9A5827E9D55B000B8360 /* StorageService.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -62,6 +63,10 @@
 		F49DC38427515434004F9DCE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F49DC38327515434004F9DCE /* Assets.xcassets */; };
 		F49DC38727515434004F9DCE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F49DC38527515434004F9DCE /* LaunchScreen.storyboard */; };
 		F4A1B259282E7C2100E413E9 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A1B258282E7C2100E413E9 /* CustomButton.swift */; };
+		F4B32CD628B5207F00F5B973 /* StorableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B32CD528B5207F00F5B973 /* StorableProtocol.swift */; };
+		F4B32CD828B520C900F5B973 /* DatabaseCoordinatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B32CD728B520C900F5B973 /* DatabaseCoordinatable.swift */; };
+		F4B32CDA28B5210800F5B973 /* DatabaseErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B32CD928B5210800F5B973 /* DatabaseErrors.swift */; };
+		F4B32CDC28B5252A00F5B973 /* RealmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B32CDB28B5252A00F5B973 /* RealmService.swift */; };
 		F4BFE1912851027000D3BCEE /* FeedPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BFE1902851027000D3BCEE /* FeedPresenter.swift */; };
 		F4BFE19328510A9C00D3BCEE /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BFE19228510A9C00D3BCEE /* Enums.swift */; };
 		F4C9BBFD287CC51600E925FB /* InfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C9BBFC287CC51600E925FB /* InfoModel.swift */; };
@@ -120,6 +125,7 @@
 		F4221E012851479F00376F07 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
 		F43465A2287072C800EE8505 /* music6.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = music6.mp3; sourceTree = "<group>"; };
 		F43465A4287072CF00EE8505 /* music7.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = music7.mp3; sourceTree = "<group>"; };
+		F43AB99A28B51BB30009596F /* AuhorizationModelRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuhorizationModelRealm.swift; sourceTree = "<group>"; };
 		F43C9A5827E9D55B000B8360 /* StorageService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StorageService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F43C9A5A27E9D55B000B8360 /* StorageService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StorageService.h; sourceTree = "<group>"; };
 		F43EC241278D482700B94BC1 /* PublicationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicationModel.swift; sourceTree = "<group>"; };
@@ -154,6 +160,10 @@
 		F49DC38627515434004F9DCE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F49DC38827515434004F9DCE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F4A1B258282E7C2100E413E9 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		F4B32CD528B5207F00F5B973 /* StorableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorableProtocol.swift; sourceTree = "<group>"; };
+		F4B32CD728B520C900F5B973 /* DatabaseCoordinatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseCoordinatable.swift; sourceTree = "<group>"; };
+		F4B32CD928B5210800F5B973 /* DatabaseErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseErrors.swift; sourceTree = "<group>"; };
+		F4B32CDB28B5252A00F5B973 /* RealmService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmService.swift; sourceTree = "<group>"; };
 		F4BFE1902851027000D3BCEE /* FeedPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPresenter.swift; sourceTree = "<group>"; };
 		F4BFE19228510A9C00D3BCEE /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		F4C9BBFC287CC51600E925FB /* InfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoModel.swift; sourceTree = "<group>"; };
@@ -352,6 +362,7 @@
 				F4C0136D280CC8F40003F2AA /* Resourses */,
 				F4221DFA28512A1200376F07 /* Coordinators  */,
 				F429B21F28745FA100364B7F /* NetworkService */,
+				F4B32CD328B5204800F5B973 /* DatabaseService */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -363,6 +374,34 @@
 				F48E4DAB28307EC500AA5FC0 /* CustomTextFiled.swift */,
 			);
 			name = CustomElements;
+			sourceTree = "<group>";
+		};
+		F4B32CD228B5202A00F5B973 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F41C99E32894116D007484E5 /* AuthorizationModel.swift */,
+				F43AB99A28B51BB30009596F /* AuhorizationModelRealm.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		F4B32CD328B5204800F5B973 /* DatabaseService */ = {
+			isa = PBXGroup;
+			children = (
+				F4B32CD528B5207F00F5B973 /* StorableProtocol.swift */,
+				F4B32CD928B5210800F5B973 /* DatabaseErrors.swift */,
+				F4B32CD728B520C900F5B973 /* DatabaseCoordinatable.swift */,
+				F4B32CD428B5206300F5B973 /* Realm */,
+			);
+			name = DatabaseService;
+			sourceTree = "<group>";
+		};
+		F4B32CD428B5206300F5B973 /* Realm */ = {
+			isa = PBXGroup;
+			children = (
+				F4B32CDB28B5252A00F5B973 /* RealmService.swift */,
+			);
+			path = Realm;
 			sourceTree = "<group>";
 		};
 		F4C0136A280CC7B50003F2AA /* PostScreen */ = {
@@ -383,7 +422,7 @@
 				F44708972885AC2500811BFD /* LogInInspector.swift */,
 				F408846027FF5CA7002D8812 /* CheckerAuthorizations.swift */,
 				F44708992885AC4A00811BFD /* BrutForcePasswordService .swift */,
-				F41C99E32894116D007484E5 /* AuthorizationModel.swift */,
+				F4B32CD228B5202A00F5B973 /* Models */,
 			);
 			name = Authorization;
 			sourceTree = "<group>";
@@ -649,6 +688,7 @@
 				F4A1B259282E7C2100E413E9 /* CustomButton.swift in Sources */,
 				F46BF1222868ED880070BD2B /* Errors.swift in Sources */,
 				F48F939127F59B530035F9F9 /* User.swift in Sources */,
+				F4B32CD628B5207F00F5B973 /* StorableProtocol.swift in Sources */,
 				F48E4DAC28307EC500AA5FC0 /* CustomTextFiled.swift in Sources */,
 				F4826DCA279EFC820040A364 /* PhotosTableViewCell.swift in Sources */,
 				F4826DCC279F35150040A364 /* PhotosViewController.swift in Sources */,
@@ -658,6 +698,7 @@
 				F4221E0028512AAB00376F07 /* CoordinatorProtocol.swift in Sources */,
 				F487B211286DB1FD007350CD /* MusicModel.swift in Sources */,
 				F48F371D27522200008C6565 /* ProfileTableViewController.swift in Sources */,
+				F4B32CDA28B5210800F5B973 /* DatabaseErrors.swift in Sources */,
 				F4BFE1912851027000D3BCEE /* FeedPresenter.swift in Sources */,
 				F48E4DAA28306B1700AA5FC0 /* FeedModel.swift in Sources */,
 				F44708982885AC2500811BFD /* LogInInspector.swift in Sources */,
@@ -672,16 +713,19 @@
 				F467234C278BF63800B78225 /* PostTableViewCell.swift in Sources */,
 				F408846127FF5CA7002D8812 /* CheckerAuthorizations.swift in Sources */,
 				F4160B8F2875D66E00F56803 /* NetworkService.swift in Sources */,
+				F4B32CD828B520C900F5B973 /* DatabaseCoordinatable.swift in Sources */,
 				F40B5350286CDECA002026A0 /* MusicViewController.swift in Sources */,
 				F408845D27FF253F002D8812 /* AppFactory.swift in Sources */,
 				F4221DF9285129B400376F07 /* MainTabBarController.swift in Sources */,
 				F49DC37B27515432004F9DCE /* AppDelegate.swift in Sources */,
+				F43AB99B28B51BB30009596F /* AuhorizationModelRealm.swift in Sources */,
 				F40B5355286CDEED002026A0 /* RecordAudioViewController.swift in Sources */,
 				F40B5353286CDEDE002026A0 /* VideoViewController.swift in Sources */,
 				F4221DFE28512A8900376F07 /* FeedCoordinator.swift in Sources */,
 				F4F0745627541A310034579A /* InfoViewController.swift in Sources */,
 				F447089A2885AC4A00811BFD /* BrutForcePasswordService .swift in Sources */,
 				F487B20F286DB1EF007350CD /* MusicPresenter.swift in Sources */,
+				F4B32CDC28B5252A00F5B973 /* RealmService.swift in Sources */,
 				F4221DFC28512A2A00376F07 /* MainCoordinator.swift in Sources */,
 				F4221E022851479F00376F07 /* ProfileCoordinator.swift in Sources */,
 				F4F074542753E0360034579A /* PostViewController.swift in Sources */,

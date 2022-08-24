@@ -14,6 +14,8 @@ enum AuthorizationErrors: Error {
     case emptyLoginField
     case emptyPassordField
     case incorrectPasswordOrLogin
+    case automaticAuthorizationStatusNotFound
+    case savedUserIsMissing
 }
 
 
