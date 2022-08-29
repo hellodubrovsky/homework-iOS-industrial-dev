@@ -25,6 +25,10 @@
 		F4221DFE28512A8900376F07 /* FeedCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4221DFD28512A8900376F07 /* FeedCoordinator.swift */; };
 		F4221E0028512AAB00376F07 /* CoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4221DFF28512AAB00376F07 /* CoordinatorProtocol.swift */; };
 		F4221E022851479F00376F07 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4221E012851479F00376F07 /* ProfileCoordinator.swift */; };
+		F4227ACF28BD5ABB0049B4CF /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4227ACE28BD5ABB0049B4CF /* CoreDataService.swift */; };
+		F4227AD228BD5ACE0049B4CF /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F4227AD028BD5ACE0049B4CF /* CoreDataModel.xcdatamodeld */; };
+		F4227AD528BD5B8B0049B4CF /* FavoritePostsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4227AD428BD5B8B0049B4CF /* FavoritePostsTableViewCell.swift */; };
+		F4227AD828BD5BA90049B4CF /* FavoritePostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4227AD728BD5BA90049B4CF /* FavoritePostsViewController.swift */; };
 		F43465A3287072C800EE8505 /* music6.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F43465A2287072C800EE8505 /* music6.mp3 */; };
 		F43465A5287072CF00EE8505 /* music7.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F43465A4287072CF00EE8505 /* music7.mp3 */; };
 		F43AB99728B51B1B0009596F /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = F43AB99628B51B1B0009596F /* Realm */; };
@@ -123,6 +127,10 @@
 		F4221DFD28512A8900376F07 /* FeedCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCoordinator.swift; sourceTree = "<group>"; };
 		F4221DFF28512AAB00376F07 /* CoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocol.swift; sourceTree = "<group>"; };
 		F4221E012851479F00376F07 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
+		F4227ACE28BD5ABB0049B4CF /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
+		F4227AD128BD5ACE0049B4CF /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
+		F4227AD428BD5B8B0049B4CF /* FavoritePostsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePostsTableViewCell.swift; sourceTree = "<group>"; };
+		F4227AD728BD5BA90049B4CF /* FavoritePostsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePostsViewController.swift; sourceTree = "<group>"; };
 		F43465A2287072C800EE8505 /* music6.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = music6.mp3; sourceTree = "<group>"; };
 		F43465A4287072CF00EE8505 /* music7.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = music7.mp3; sourceTree = "<group>"; };
 		F43AB99A28B51BB30009596F /* AuhorizationModelRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuhorizationModelRealm.swift; sourceTree = "<group>"; };
@@ -286,6 +294,32 @@
 			name = "Coordinators ";
 			sourceTree = "<group>";
 		};
+		F4227ACD28BD5A920049B4CF /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				F4227ACE28BD5ABB0049B4CF /* CoreDataService.swift */,
+				F4227AD028BD5ACE0049B4CF /* CoreDataModel.xcdatamodeld */,
+			);
+			name = CoreData;
+			sourceTree = "<group>";
+		};
+		F4227AD328BD5B3A0049B4CF /* FavoritePostsScreen */ = {
+			isa = PBXGroup;
+			children = (
+				F4227AD728BD5BA90049B4CF /* FavoritePostsViewController.swift */,
+				F4227AD928BD5BB30049B4CF /* Cell */,
+			);
+			name = FavoritePostsScreen;
+			sourceTree = "<group>";
+		};
+		F4227AD928BD5BB30049B4CF /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				F4227AD428BD5B8B0049B4CF /* FavoritePostsTableViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		F429B21F28745FA100364B7F /* NetworkService */ = {
 			isa = PBXGroup;
 			children = (
@@ -357,6 +391,7 @@
 				F4EC692F27F9A0A7007273D4 /* FeedScreen */,
 				F4219562276868A400487AE7 /* ProfileScreen */,
 				F40B5343286CDDCE002026A0 /* MultimediaScreen */,
+				F4227AD328BD5B3A0049B4CF /* FavoritePostsScreen */,
 				F48F938F27F59B290035F9F9 /* UserData */,
 				F4A1B257282E7BF700E413E9 /* CustomElements */,
 				F4C0136D280CC8F40003F2AA /* Resourses */,
@@ -392,6 +427,7 @@
 				F4B32CD928B5210800F5B973 /* DatabaseErrors.swift */,
 				F4B32CD728B520C900F5B973 /* DatabaseCoordinatable.swift */,
 				F4B32CD428B5206300F5B973 /* Realm */,
+				F4227ACD28BD5A920049B4CF /* CoreData */,
 			);
 			name = DatabaseService;
 			sourceTree = "<group>";
@@ -689,6 +725,7 @@
 				F46BF1222868ED880070BD2B /* Errors.swift in Sources */,
 				F48F939127F59B530035F9F9 /* User.swift in Sources */,
 				F4B32CD628B5207F00F5B973 /* StorableProtocol.swift in Sources */,
+				F4227AD228BD5ACE0049B4CF /* CoreDataModel.xcdatamodeld in Sources */,
 				F48E4DAC28307EC500AA5FC0 /* CustomTextFiled.swift in Sources */,
 				F4826DCA279EFC820040A364 /* PhotosTableViewCell.swift in Sources */,
 				F4826DCC279F35150040A364 /* PhotosViewController.swift in Sources */,
@@ -701,7 +738,9 @@
 				F4B32CDA28B5210800F5B973 /* DatabaseErrors.swift in Sources */,
 				F4BFE1912851027000D3BCEE /* FeedPresenter.swift in Sources */,
 				F48E4DAA28306B1700AA5FC0 /* FeedModel.swift in Sources */,
+				F4227AD828BD5BA90049B4CF /* FavoritePostsViewController.swift in Sources */,
 				F44708982885AC2500811BFD /* LogInInspector.swift in Sources */,
+				F4227AD528BD5B8B0049B4CF /* FavoritePostsTableViewCell.swift in Sources */,
 				F44708942885ABCE00811BFD /* AuthorizationViewController.swift in Sources */,
 				F4DDFA8F27A04C4300CFD226 /* PhotosCollectionViewCell.swift in Sources */,
 				F40B5349286CDE3A002026A0 /* MultimediaView.swift in Sources */,
@@ -723,6 +762,7 @@
 				F40B5353286CDEDE002026A0 /* VideoViewController.swift in Sources */,
 				F4221DFE28512A8900376F07 /* FeedCoordinator.swift in Sources */,
 				F4F0745627541A310034579A /* InfoViewController.swift in Sources */,
+				F4227ACF28BD5ABB0049B4CF /* CoreDataService.swift in Sources */,
 				F447089A2885AC4A00811BFD /* BrutForcePasswordService .swift in Sources */,
 				F487B20F286DB1EF007350CD /* MusicPresenter.swift in Sources */,
 				F4B32CDC28B5252A00F5B973 /* RealmService.swift in Sources */,
@@ -1061,6 +1101,19 @@
 			productName = iOSIntPackage;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		F4227AD028BD5ACE0049B4CF /* CoreDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				F4227AD128BD5ACE0049B4CF /* CoreDataModel.xcdatamodel */,
+			);
+			currentVersion = F4227AD128BD5ACE0049B4CF /* CoreDataModel.xcdatamodel */;
+			path = CoreDataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = F49DC36F27515432004F9DCE /* Project object */;
 }
