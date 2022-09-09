@@ -23,7 +23,8 @@ final class ProfileCoordinatorImplementation: ProfileCoordinator {
     }
     
     func openProfileScreen(service: UserService, userName: String) {
-        let viewController = ProfileViewController(userService: service, userName: userName)
+        let databaseService = CoreDataService()
+        let viewController = ProfileViewController(userService: service, userName: userName, databaseService: databaseService)
         navigationController?.pushViewController(viewController, animated: true)
     }
     

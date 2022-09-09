@@ -26,10 +26,11 @@ final class ProfileViewController: UIViewController {
     
     // MARK: - Public initializer
     
-    init(userService: UserService, userName: String) {
+    init(userService: UserService, userName: String, databaseService: DatabaseCoordinatable2) {
         super.init(nibName: nil, bundle: nil)
         self.userService = userService
         self.userName = userName
+        self.databaseService = databaseService
     }
     
     required init?(coder: NSCoder) {
@@ -43,6 +44,7 @@ final class ProfileViewController: UIViewController {
     private var userService: UserService!
     private var userName: String!
     private var coordinator: ProfileCoordinator = ProfileCoordinatorImplementation()
+    private var databaseService: DatabaseCoordinatable2!
     
     // Фильтр для постов
     private let imageProcessor = ImageProcessor()
@@ -126,7 +128,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     
     // Данный метод, должен понимать, сколько всего ячеек будет.
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard section == 0 else { return 4 }
+        guard section == 0 else { return posts.count }
         return 1
     }
     
@@ -157,11 +159,11 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                 filter = .sepia(intensity: 20)
             }
             
-            imageProcessor.processImage(sourceImage: data.image, filter: filter!) { editedImage in
+            imageProcessor.processImage(sourceImage: data.image!, filter: filter!) { editedImage in
                 image = editedImage
             }
             
-            cell.update(name: data.author, image: image!, description: data.description, countLikes: data.likes, countViews: data.views)
+            cell.update(name: data.title, image: image!, description: data.description, countLikes: data.likes, countViews: data.views)
             return cell
         }
     }
@@ -180,7 +182,17 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     
     // Действие по нажатию на ячейку.
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard indexPath.section == 0 && indexPath.row == 0 else { return }
-        coordinator.openPhotoUserScreen()
+        if indexPath.section == 0 && indexPath.row == 0 {
+            coordinator.openPhotoUserScreen()
+        } else {
+            let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(self.tapEdit(sender:)))
+            doubleTapGesture.numberOfTapsRequired = 2
+            self.tableView.addGestureRecognizer(doubleTapGesture)
+        }
+    }
+    
+    @objc private func tapEdit(sender: UITapGestureRecognizer) {
+        print("\nDouble tap.Double tap.")
+        self.databaseService.create(<#T##model: Storable.Protocol##Storable.Protocol#>, keyedValue: <#T##[String : Any]#>, completion: <#T##(Result<[Storable], DatabaseErrors>) -> Void#>)
     }
 }

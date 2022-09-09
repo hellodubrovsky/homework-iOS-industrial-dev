@@ -7,13 +7,24 @@
 
 import UIKit
 
+protocol PostTableViewCellDelegate: AnyObject {
+    func doubleClickOnCell()
+}
+
+
+
 final class PostTableViewCell: UITableViewCell {
+    
+    // MARK: - Public property
+    weak var delegate: PostTableViewCellDelegate?
+    
+    
     
     // MARK: - Public methods
     
-    public func update(name: String, image: UIImage, description: String, countLikes: Int, countViews: Int) {
+    public func update(name: String, image: UIImage?, description: String, countLikes: UInt, countViews: UInt) {
         authorPostLabel.text = name
-        postImageView.image = image
+        postImageView.image = image ?? nil
         postDescriptionLabel.text = description
         postCountLikes.text = "Likes: \(countLikes)"
         postCountViews.text = "Views: \(countViews)"
@@ -30,6 +41,11 @@ final class PostTableViewCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.setGestureCell()
     }
     
     
@@ -116,5 +132,19 @@ final class PostTableViewCell: UITableViewCell {
             postCountViews.topAnchor.constraint(equalTo: postDescriptionLabel.bottomAnchor, constant: 16.0),
             postCountViews.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16.0),
         ])
+    }
+    
+    
+    
+    // MARK: Gesture
+    
+    private func setGestureCell() {
+        let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(self.tapEdit(sender:)))
+        doubleTapGesture.numberOfTapsRequired = 2
+        addGestureRecognizer(doubleTapGesture)
+    }
+    
+    @objc private func tapEdit(sender: UITapGestureRecognizer) {
+        delegate?.doubleClickOnCell()
     }
 }
