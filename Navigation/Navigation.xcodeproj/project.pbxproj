@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		9C09816622FD149815F4EBE3 /* Pods_Navigation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD06F957EC9A28208EA2B6FD /* Pods_Navigation.framework */; };
 		C91E4D157D576FEC9C2517B9 /* Pods_StorageService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90A61D00B7944AB98D28F21D /* Pods_StorageService.framework */; };
+		D8035C4D28D0A83200B131B9 /* FavoritePostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8035C4C28D0A83200B131B9 /* FavoritePostsViewController.swift */; };
+		D8035C4F28D0A85F00B131B9 /* FavoritePostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8035C4E28D0A85F00B131B9 /* FavoritePostTableViewCell.swift */; };
+		D8D60C7128D1067B00A11ADD /* SetupableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D60C7028D1067B00A11ADD /* SetupableProtocol.swift */; };
 		F408845D27FF253F002D8812 /* AppFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F408845C27FF253F002D8812 /* AppFactory.swift */; };
 		F408845F27FF255A002D8812 /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F408845E27FF255A002D8812 /* AppManager.swift */; };
 		F408846127FF5CA7002D8812 /* CheckerAuthorizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = F408846027FF5CA7002D8812 /* CheckerAuthorizations.swift */; };
@@ -110,7 +113,10 @@
 		5CFBBA4C897FCEBD2F6F5B02 /* Pods-StorageService.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StorageService.debug.xcconfig"; path = "Target Support Files/Pods-StorageService/Pods-StorageService.debug.xcconfig"; sourceTree = "<group>"; };
 		65A4BD7D799EC3C672D3D38A /* Pods-Navigation.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation.debug.xcconfig"; path = "Target Support Files/Pods-Navigation/Pods-Navigation.debug.xcconfig"; sourceTree = "<group>"; };
 		90A61D00B7944AB98D28F21D /* Pods_StorageService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StorageService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D8035C4C28D0A83200B131B9 /* FavoritePostsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePostsViewController.swift; sourceTree = "<group>"; };
+		D8035C4E28D0A85F00B131B9 /* FavoritePostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePostTableViewCell.swift; sourceTree = "<group>"; };
 		D860E7ACB88176FA80896CCB /* Pods-Navigation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation.release.xcconfig"; path = "Target Support Files/Pods-Navigation/Pods-Navigation.release.xcconfig"; sourceTree = "<group>"; };
+		D8D60C7028D1067B00A11ADD /* SetupableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupableProtocol.swift; sourceTree = "<group>"; };
 		F408845C27FF253F002D8812 /* AppFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFactory.swift; sourceTree = "<group>"; };
 		F408845E27FF255A002D8812 /* AppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppManager.swift; sourceTree = "<group>"; };
 		F408846027FF5CA7002D8812 /* CheckerAuthorizations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckerAuthorizations.swift; sourceTree = "<group>"; };
@@ -224,6 +230,15 @@
 				04E975F4C7D016F059445459 /* Pods-StorageService.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		D8035C4B28D0A81000B131B9 /* FavoritePostScreen */ = {
+			isa = PBXGroup;
+			children = (
+				D8035C4C28D0A83200B131B9 /* FavoritePostsViewController.swift */,
+				D8035C4E28D0A85F00B131B9 /* FavoritePostTableViewCell.swift */,
+			);
+			path = FavoritePostScreen;
 			sourceTree = "<group>";
 		};
 		F40B5343286CDDCE002026A0 /* MultimediaScreen */ = {
@@ -389,8 +404,9 @@
 				F4221DF72851297900376F07 /* MainTabBarController */,
 				F4EC692F27F9A0A7007273D4 /* FeedScreen */,
 				F40B5343286CDDCE002026A0 /* MultimediaScreen */,
-				F4219562276868A400487AE7 /* ProfileScreen */,
 				F41C99E92895B0B5007484E5 /* AddingPhotosScreen */,
+				F4219562276868A400487AE7 /* ProfileScreen */,
+				D8035C4B28D0A81000B131B9 /* FavoritePostScreen */,
 				F48F938F27F59B290035F9F9 /* UserData */,
 				F4A1B257282E7BF700E413E9 /* CustomElements */,
 				F4C0136D280CC8F40003F2AA /* Resourses */,
@@ -424,6 +440,7 @@
 			isa = PBXGroup;
 			children = (
 				F4B32CD528B5207F00F5B973 /* StorableProtocol.swift */,
+				D8D60C7028D1067B00A11ADD /* SetupableProtocol.swift */,
 				F4B32CD928B5210800F5B973 /* DatabaseErrors.swift */,
 				F4B32CD728B520C900F5B973 /* DatabaseCoordinatable.swift */,
 				F4B32CD428B5206300F5B973 /* Realm */,
@@ -749,7 +766,9 @@
 				F41C99E42894116D007484E5 /* AuthorizationModel.swift in Sources */,
 				F48F37212752290E008C6565 /* FeedViewController.swift in Sources */,
 				F467234C278BF63800B78225 /* PostTableViewCell.swift in Sources */,
+				D8035C4D28D0A83200B131B9 /* FavoritePostsViewController.swift in Sources */,
 				F408846127FF5CA7002D8812 /* CheckerAuthorizations.swift in Sources */,
+				D8035C4F28D0A85F00B131B9 /* FavoritePostTableViewCell.swift in Sources */,
 				F4160B8F2875D66E00F56803 /* NetworkService.swift in Sources */,
 				F4B32CD828B520C900F5B973 /* DatabaseCoordinatable.swift in Sources */,
 				F40B5350286CDECA002026A0 /* MusicViewController.swift in Sources */,
@@ -764,6 +783,7 @@
 				F447089A2885AC4A00811BFD /* BrutForcePasswordService .swift in Sources */,
 				F41C99EE2896CA77007484E5 /* ImagesUserViewController.swift in Sources */,
 				F487B20F286DB1EF007350CD /* MusicPresenter.swift in Sources */,
+				D8D60C7128D1067B00A11ADD /* SetupableProtocol.swift in Sources */,
 				F4B32CDC28B5252A00F5B973 /* RealmService.swift in Sources */,
 				F4221DFC28512A2A00376F07 /* MainCoordinator.swift in Sources */,
 				F4221E022851479F00376F07 /* ProfileCoordinator.swift in Sources */,
