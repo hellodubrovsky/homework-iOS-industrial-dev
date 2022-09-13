@@ -60,7 +60,7 @@ final class AppManager {
         
         // Create main tab bar controller
         let rootCoordinator = MainCoordinatorImplementation()
-        let rootTabBarViewController = MainTabBarController(coordinator: rootCoordinator, viewControllers: [feedNavigationController, mediaNavigationController, profileNavigationController, imagePickerViewController])
+        let rootTabBarViewController = MainTabBarController(coordinator: rootCoordinator, viewControllers: [feedNavigationController, mediaNavigationController, imagePickerViewController, profileNavigationController])
         rootCoordinator.tabBarController = rootTabBarViewController
         rootViewController = rootTabBarViewController.coordinator?.startMainModule() ?? rootTabBarViewController
     }
