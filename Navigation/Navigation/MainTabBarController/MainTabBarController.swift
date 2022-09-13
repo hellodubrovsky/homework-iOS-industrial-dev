@@ -25,6 +25,7 @@ class MainTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setTabBarController()
+        self.delegate = self
     }
     
     private func setTabBarController() {
@@ -35,5 +36,15 @@ class MainTabBarController: UITabBarController {
         let backgroundColor = UIColor(red: CGFloat(238.0 / 255.0), green: CGFloat(238.0 / 255.0), blue: CGFloat(238.0 / 255.0), alpha: CGFloat(1.0))
         self.tabBar.backgroundColor = backgroundColor
         self.tabBar.isTranslucent = false
+    }
+}
+
+
+extension MainTabBarController: UITabBarControllerDelegate {
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        guard viewController is ImagePickerViewController else { return true }
+        let imagePicker = ImagePickerViewController()
+        tabBarController.present(imagePicker, animated: true, completion: nil)
+        return false
     }
 }
