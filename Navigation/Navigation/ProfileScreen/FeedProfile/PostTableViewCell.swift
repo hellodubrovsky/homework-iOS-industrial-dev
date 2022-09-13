@@ -11,7 +11,7 @@ final class PostTableViewCell: UITableViewCell {
     
     // MARK: - Public methods
     
-    public func update(name: String, image: UIImage, description: String, countLikes: Int, countViews: Int) {
+    public func update(name: String, image: UIImage, description: String, countLikes: UInt, countViews: UInt) {
         authorPostLabel.text = name
         postImageView.image = image
         postDescriptionLabel.text = description

@@ -157,11 +157,11 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                 filter = .sepia(intensity: 20)
             }
             
-            imageProcessor.processImage(sourceImage: data.image, filter: filter!) { editedImage in
+            imageProcessor.processImage(sourceImage: UIImage(named: data.imageName)!, filter: filter!) { editedImage in
                 image = editedImage
             }
             
-            cell.update(name: data.author, image: image!, description: data.description, countLikes: data.likes, countViews: data.views)
+            cell.update(name: data.title, image: image!, description: data.description, countLikes: data.countLikes, countViews: data.countViews)
             return cell
         }
     }
