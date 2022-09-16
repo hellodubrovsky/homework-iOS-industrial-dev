@@ -7,7 +7,19 @@
 
 import UIKit
 
+
+protocol PostTableViewCellDelegate: AnyObject {
+    func doubleClickOnCell()
+}
+
+
 final class PostTableViewCell: UITableViewCell {
+    
+    
+    // MARK: - Public property
+    weak var delegate: PostTableViewCellDelegate?
+    
+    
     
     // MARK: - Public methods
     
@@ -26,6 +38,7 @@ final class PostTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
         settingView()
+        setGestureCell()
     }
     
     required init?(coder: NSCoder) {
@@ -116,5 +129,19 @@ final class PostTableViewCell: UITableViewCell {
             postCountViews.topAnchor.constraint(equalTo: postDescriptionLabel.bottomAnchor, constant: 16.0),
             postCountViews.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16.0),
         ])
+    }
+    
+    
+    
+    // MARK: Gesture
+    
+    private func setGestureCell() {
+        let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(self.tapEdit(sender:)))
+        doubleTapGesture.numberOfTapsRequired = 2
+        addGestureRecognizer(doubleTapGesture)
+    }
+    
+    @objc private func tapEdit(sender: UITapGestureRecognizer) {
+        delegate?.doubleClickOnCell()
     }
 }

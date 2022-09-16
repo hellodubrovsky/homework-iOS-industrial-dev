@@ -86,6 +86,10 @@ final class ProfileViewController: UIViewController {
         ProfileHeaderView.ConstraintsForAvatarAndItsBackground.heightBackground = view.frame.size.height
     }
     
+    private func saveInDatabase(post: PostUsers) {
+        // Должно происходить сохранение в БД.
+    }
+    
     
     
     // MARK: - View configuration
@@ -126,7 +130,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     
     // Данный метод, должен понимать, сколько всего ячеек будет.
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard section == 0 else { return 4 }
+        guard section == 0 else { return posts.count }
         return 1
     }
     
@@ -161,6 +165,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                 image = editedImage
             }
             
+            cell.delegate = self
             cell.update(name: data.title, image: image!, description: data.description, countLikes: data.countLikes, countViews: data.countViews)
             return cell
         }
@@ -182,5 +187,18 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard indexPath.section == 0 && indexPath.row == 0 else { return }
         coordinator.openPhotoUserScreen()
+    }
+}
+
+
+
+
+// MARK: - PostTableViewCellDelegate
+ 
+extension ProfileViewController: PostTableViewCellDelegate {
+    func doubleClickOnCell() {
+        guard let index = self.tableView.indexPathForSelectedRow?.row else { return }
+        let post = posts[index]
+        self.saveInDatabase(post: post)
     }
 }
