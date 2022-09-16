@@ -26,10 +26,11 @@ final class ProfileViewController: UIViewController {
     
     // MARK: - Public initializer
     
-    init(userService: UserService, userName: String) {
+    init(userService: UserService, userName: String, databaseService: DatabaseCoordinatable) {
         super.init(nibName: nil, bundle: nil)
         self.userService = userService
         self.userName = userName
+        self.databaseService = databaseService
     }
     
     required init?(coder: NSCoder) {
@@ -43,6 +44,7 @@ final class ProfileViewController: UIViewController {
     private var userService: UserService!
     private var userName: String!
     private var coordinator: ProfileCoordinator = ProfileCoordinatorImplementation()
+    private var databaseService: DatabaseCoordinatable!
     
     // Фильтр для постов
     private let imageProcessor = ImageProcessor()
@@ -87,7 +89,15 @@ final class ProfileViewController: UIViewController {
     }
     
     private func saveInDatabase(post: PostUsers) {
-        // Должно происходить сохранение в БД.
+        self.databaseService.create(FavoritePostCoreDataModel.self, keyedValue: post.keyedValue) { [weak self] result in
+            guard let _ = self else { return }
+            switch result {
+            case .success(let model):
+                print("Model added in database. Model: \(model)")
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
     
     
