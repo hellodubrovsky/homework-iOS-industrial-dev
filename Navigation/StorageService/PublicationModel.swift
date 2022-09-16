@@ -8,16 +8,6 @@
 import Foundation
 import UIKit
 
-// MARK: - Создание уникального ID для публикации.
-
-fileprivate func generateUniqueID() -> String {
-    let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-    let length = 12
-    return String((0..<length).map { _ in letters.randomElement()! })
-}
-
-
-
 
 // MARK: - Модель публикации постов.
 
@@ -27,27 +17,46 @@ public struct PostUsers {
     public var imageName: String
     public var countLikes: UInt
     public var countViews: UInt
+    public var isFavorite: Bool
     public let uniqueID: String
     
     /// Создание новой статьи, в которой автоматически генерируется её 'уникальный' ID.
-    init(title: String, description: String, imageName: String, countLikes: UInt, countViews: UInt) {
+    public init(title: String, description: String, imageName: String, countLikes: UInt, countViews: UInt) {
         self.title = title
         self.description = description
         self.imageName = imageName
         self.countLikes = countLikes
         self.countViews = countViews
-        self.uniqueID = generateUniqueID()
+        self.isFavorite = false
+        self.uniqueID = UUID().uuidString
+        
+        print("Unique ID: ->", self.uniqueID)
     }
     
     /// Создание конкретной статьи, у которой уже имеется ID. Использовать только при передачи через другие модели (например при работе с БД).
-    init(title: String, description: String, imageName: String, countLikes: UInt, countViews: UInt, uniqueID: String) {
+    public init(title: String, description: String, imageName: String, countLikes: UInt, countViews: UInt, isFavorite: Bool, uniqueID: String) {
         self.title = title
         self.description = description
         self.imageName = imageName
         self.countLikes = countLikes
         self.countViews = countViews
+        self.isFavorite = isFavorite
         self.uniqueID = uniqueID
     }
+    
+    /// Словарь, со значениями постов. Нужен для использования с CoreData.
+    public var keyedValue: [String: Any] {
+        return [
+            "title": self.title,
+            "descriptionPost": self.description,
+            "imageName": self.imageName,
+            "countLikes": self.countLikes,
+            "countViews": self.countViews,
+            "isFavorite": self.isFavorite,
+            "uniqueID": self.uniqueID
+        ]
+    }
+    
 }
 
 
