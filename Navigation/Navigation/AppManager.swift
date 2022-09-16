@@ -47,7 +47,8 @@ final class AppManager {
         let imagePickerViewController = ImagePickerViewController()
         
         // Favorite posts
-        let favoritePostsViewController = FavoritePostsViewController()
+        let databaseService = CoreDataService(url: Bundle.main.url(forResource: "CoreDataModel", withExtension: "momd")!)
+        let favoritePostsViewController = FavoritePostsViewController(databaseService: databaseService)
         
         // Create tab bar items
         let feedItemTabBar = factory.makeTabBarItem(title: "Feed", image: UIImage(systemName: "house.fill")!)

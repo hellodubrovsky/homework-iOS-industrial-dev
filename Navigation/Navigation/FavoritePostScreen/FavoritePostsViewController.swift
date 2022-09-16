@@ -17,6 +17,7 @@ final class FavoritePostsViewController: UIViewController {
         case hasData(model: [PostUsers])
     }
     
+    private let databaseService: DatabaseCoordinatable
     private var state: State = .empty
     
     private lazy var tableView: UITableView = {
@@ -33,6 +34,19 @@ final class FavoritePostsViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
+    
+    
+    
+    // MARK: Initial
+    
+    init(databaseService: DatabaseCoordinatable) {
+        self.databaseService = databaseService
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     
     
@@ -59,7 +73,21 @@ final class FavoritePostsViewController: UIViewController {
     }
     
     private func fetchPostsFromDatabase() {
-        // Реализация получения данных из coreData.
+        self.databaseService.fetchAll(FavoritePostCoreDataModel.self) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let favoritePostsCoreDataModel):
+                let posts = favoritePostsCoreDataModel.map { PostUsers(title: $0.title!,
+                                                                       description: $0.descriptionPost!,
+                                                                       imageName: $0.imageName!,
+                                                                       countLikes: UInt($0.countLikes),
+                                                                       countViews: UInt($0.countViews)) }
+                self.state = posts.isEmpty ? .empty : .hasData(model: posts)
+                self.tableView.reloadData()
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 }
 
