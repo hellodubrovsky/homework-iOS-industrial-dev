@@ -29,8 +29,6 @@ public struct PostUsers {
         self.countViews = countViews
         self.isFavorite = false
         self.uniqueID = UUID().uuidString
-        
-        print("Unique ID: ->", self.uniqueID)
     }
     
     /// Создание конкретной статьи, у которой уже имеется ID. Использовать только при передачи через другие модели (например при работе с БД).
@@ -63,7 +61,7 @@ public struct PostUsers {
 
 
 /// Массив с постами. В данное случае, можно сказать, что это мок-данные.
-public let posts: [PostUsers] = [
+public var posts: [PostUsers] = [
     PostUsers(title: "Hiscory cinema",
               description: "The adventures of Shurik, this is a great movie that can be constantly reviewed. And that's great.",
               imageName: "iconPost-1",

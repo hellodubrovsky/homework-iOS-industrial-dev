@@ -208,6 +208,8 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
 extension ProfileViewController: PostTableViewCellDelegate {
     func doubleClickOnCell() {
         guard let index = self.tableView.indexPathForSelectedRow?.row else { return }
+        guard posts[index].isFavorite != true else { return }
+        posts[index].isFavorite = true
         let post = posts[index]
         self.saveInDatabase(post: post)
     }
