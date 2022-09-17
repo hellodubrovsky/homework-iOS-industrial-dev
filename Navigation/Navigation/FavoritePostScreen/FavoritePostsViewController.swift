@@ -57,6 +57,10 @@ final class FavoritePostsViewController: UIViewController {
         self.setView()
         self.fetchPostsFromDatabase()
         NotificationCenter.default.addObserver(self, selector: #selector(wasLikedPost(_:)), name: Notification.Name("wasLikedPost"), object: nil)
+        
+        #if DEBUG
+        self.configuringFunctionalityForDeveloper()
+        #endif
     }
     
     
@@ -71,6 +75,13 @@ final class FavoritePostsViewController: UIViewController {
         let topContraint = self.tableView.topAnchor.constraint(equalTo: self.view.topAnchor)
         let bottomConstraint = self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         NSLayoutConstraint.activate([rightContraint, leftConstraint, topContraint, bottomConstraint])
+    }
+    
+    // Use only for debug-build.
+    private func configuringFunctionalityForDeveloper() {
+        let tabBarButton = UIBarButtonItem(title: "Delete all", style: .plain, target: self, action: #selector(deleteAllPostsInDataBase))
+        tabBarButton.tintColor = .red
+        self.navigationItem.rightBarButtonItem = tabBarButton
     }
     
     private func fetchPostsFromDatabase() {
@@ -122,6 +133,11 @@ final class FavoritePostsViewController: UIViewController {
                 }
             }
         }
+    }
+    
+    // Methods only for debug-build.
+    @objc private func deleteAllPostsInDataBase() {
+        self.databaseService.deleteAll(FavoritePostCoreDataModel.self) { _ in }
     }
 }
 
