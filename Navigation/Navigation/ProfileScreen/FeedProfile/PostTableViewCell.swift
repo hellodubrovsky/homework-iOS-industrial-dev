@@ -92,6 +92,17 @@ final class PostTableViewCell: UITableViewCell {
         return label
     }()
     
+    private lazy var likeImageView: UIImageView = {
+        let image = UIImageView(frame: .zero)
+        image.image = UIImage(systemName: "suit.heart.fill")
+        image.tintColor = .red
+        image.backgroundColor = .darkGray
+        image.layer.cornerRadius = 15.0
+        image.isHidden = true
+        image.translatesAutoresizingMaskIntoConstraints = false
+        return image
+    }()
+    
     
     
     // MARK: - View configuration
@@ -102,6 +113,7 @@ final class PostTableViewCell: UITableViewCell {
         contentView.addSubview(postDescriptionLabel)
         contentView.addSubview(postCountLikes)
         contentView.addSubview(postCountViews)
+        contentView.addSubview(likeImageView)
         contentView.backgroundColor = .white
         installingConstraints()
     }
@@ -128,6 +140,11 @@ final class PostTableViewCell: UITableViewCell {
             
             postCountViews.topAnchor.constraint(equalTo: postDescriptionLabel.bottomAnchor, constant: 16.0),
             postCountViews.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16.0),
+            
+            likeImageView.centerXAnchor.constraint(equalTo: self.postImageView.centerXAnchor),
+            likeImageView.centerYAnchor.constraint(equalTo: self.postImageView.centerYAnchor),
+            likeImageView.heightAnchor.constraint(equalToConstant: 70),
+            likeImageView.widthAnchor.constraint(equalToConstant: 80)
         ])
     }
     
@@ -142,6 +159,16 @@ final class PostTableViewCell: UITableViewCell {
     }
     
     @objc private func tapEdit(sender: UITapGestureRecognizer) {
-        delegate?.doubleClickOnCell()
+        UIView.animate(withDuration: 0.3) {
+            self.likeImageView.isHidden = false
+            self.likeImageView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
+        } completion: { _ in
+            UIView.animate(withDuration: 0.2) {
+                self.likeImageView.transform = .identity
+                self.likeImageView.isHidden = true
+            } completion: { _ in
+                self.delegate?.doubleClickOnCell()
+            }
+        }
     }
 }
