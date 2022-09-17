@@ -11,7 +11,7 @@ import UIKit
 
 // MARK: - Модель публикации постов.
 
-public struct PostUsers {
+public struct PostUsers: Equatable {
     public var title: String
     public var description: String
     public var imageName: String
@@ -55,6 +55,9 @@ public struct PostUsers {
         ]
     }
     
+    public static func ==(lhs: PostUsers, rhs: PostUsers) -> Bool {
+        return lhs.uniqueID == rhs.uniqueID
+    }
 }
 
 

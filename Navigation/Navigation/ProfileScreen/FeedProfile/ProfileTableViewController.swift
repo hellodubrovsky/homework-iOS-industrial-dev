@@ -89,11 +89,11 @@ final class ProfileViewController: UIViewController {
     }
     
     private func saveInDatabase(post: PostUsers) {
-        self.databaseService.create(FavoritePostCoreDataModel.self, keyedValue: post.keyedValue) { [weak self] result in
-            guard let _ = self else { return }
+        self.databaseService.create(FavoritePostCoreDataModel.self, keyedValue: post.keyedValue) { result in
             switch result {
-            case .success(let model):
-                print("Model added in database. Model: \(model)")
+            case .success(_):
+                let userInfo = ["post": post]
+                NotificationCenter.default.post(name: NSNotification.Name("wasLikedPost"), object: nil, userInfo: userInfo)
             case .failure(let error):
                 print(error)
             }

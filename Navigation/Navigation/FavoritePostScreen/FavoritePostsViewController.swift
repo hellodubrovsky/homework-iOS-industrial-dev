@@ -56,6 +56,7 @@ final class FavoritePostsViewController: UIViewController {
         super.viewDidLoad()
         self.setView()
         self.fetchPostsFromDatabase()
+        NotificationCenter.default.addObserver(self, selector: #selector(wasLikedPost(_:)), name: Notification.Name("wasLikedPost"), object: nil)
     }
     
     
@@ -86,6 +87,39 @@ final class FavoritePostsViewController: UIViewController {
                 self.tableView.reloadData()
             case .failure(let error):
                 print(error)
+            }
+        }
+    }
+    
+    @objc private func wasLikedPost(_ notification: NSNotification) {
+        guard self.isViewLoaded else { return }
+        if let post = notification.userInfo?["post"] as? PostUsers {
+            switch self.state {
+            case .empty:
+                if post.isFavorite {
+                    let model = [post]
+                    self.state = .hasData(model: model)
+                    self.tableView.beginUpdates()
+                    self.tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .fade)
+                    self.tableView.endUpdates()
+                }
+            case .hasData(let model):
+                var newModel = model
+                if post.isFavorite {
+                    newModel.append(post)
+                    self.state = .hasData(model: newModel)
+                    let lastIndex = newModel.count - 1
+                    self.tableView.beginUpdates()
+                    self.tableView.insertRows(at: [IndexPath(row: lastIndex, section: 0)], with: .fade)
+                    self.tableView.endUpdates()
+                } else {
+                    guard let index = model.firstIndex(where: { $0 == post }) else { return }
+                    newModel.remove(at: index)
+                    self.state = .hasData(model: newModel)
+                    self.tableView.beginUpdates()
+                    self.tableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .fade)
+                    self.tableView.endUpdates()
+                }
             }
         }
     }
