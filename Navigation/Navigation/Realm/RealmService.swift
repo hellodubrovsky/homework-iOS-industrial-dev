@@ -46,7 +46,7 @@ extension RealmService: DatabaseCoordinatable {
         }
     }
     
-    func fetch<T>(_ model: T.Type, predicate: NSPredicate?, completion: @escaping (Result<T, DatabaseErrors>) -> Void) where T : Storable {
+    func fetch<T>(_ model: T.Type, predicate: NSPredicate?, completion: @escaping (Result<[T], DatabaseErrors>) -> Void) where T : Storable {
         do {
             let realm = try Realm()
             
@@ -66,8 +66,7 @@ extension RealmService: DatabaseCoordinatable {
                     completion(.failure(.wrongModel))
                     return
                 }
-                
-                completion(.success(results.first!))
+                completion(.success(results))
             }
         } catch {
             completion(.failure(.customError(description: "Fail to fetch objects")))
@@ -79,7 +78,7 @@ extension RealmService: DatabaseCoordinatable {
             let realm = try Realm()
             
             if let model = model as? Object.Type {
-                var objects = realm.objects(model)
+                let objects = realm.objects(model)
                 
                 guard let results = Array(objects) as? [T] else {
                     completion(.failure(.wrongModel))
@@ -91,4 +90,7 @@ extension RealmService: DatabaseCoordinatable {
             completion(.failure(.customError(description: "Fail to fetch objects")))
         }
     }
+    
+    func delete<T>(_ model: T.Type, predicate: NSPredicate?, completion: @escaping (Result<[T], DatabaseErrors>) -> Void) where T : Storable {}
+    func deleteAll<T>(_ model: T.Type, completion: @escaping (Result<[T], DatabaseErrors>) -> Void) where T : Storable {}
 }

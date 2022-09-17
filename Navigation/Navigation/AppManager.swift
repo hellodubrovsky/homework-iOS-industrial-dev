@@ -46,21 +46,27 @@ final class AppManager {
         // Adding photos
         let imagePickerViewController = ImagePickerViewController()
         
+        // Favorite posts
+        let databaseService = CoreDataService(url: Bundle.main.url(forResource: "CoreDataModel", withExtension: "momd")!)
+        let favoritePostsViewController = FavoritePostsViewController(databaseService: databaseService)
+        
         // Create tab bar items
         let feedItemTabBar = factory.makeTabBarItem(title: "Feed", image: UIImage(systemName: "house.fill")!)
         let multimediaItemTabBar = factory.makeTabBarItem(title: "Media", image: UIImage(systemName: "music.note.house.fill")!)
         let profileItemTabBar = factory.makeTabBarItem(title: "Profile", image: UIImage(systemName: "person.crop.circle.fill")!)
         let imagePickerTabBar = factory.makeTabBarItem(title: "Add photo", image: UIImage(systemName: "plus.circle.fill")!)
+        let favoritePostsTabBar = factory.makeTabBarItem(title: "Favorite posts", image: UIImage(systemName: "star.circle.fill")!)
         
         // Create navigation controllers
         let feedNavigationController = factory.makeNavigatioController(viewController: feedViewController, taBarItem: feedItemTabBar)
         let mediaNavigationController = factory.makeNavigatioController(viewController: multimediaViewController, taBarItem: multimediaItemTabBar)
         let profileNavigationController = factory.makeNavigatioController(viewController: authorizationViewController, taBarItem: profileItemTabBar)
+        let favoritePostsNavigationController = factory.makeNavigatioController(viewController: favoritePostsViewController, taBarItem: favoritePostsTabBar)
         imagePickerViewController.tabBarItem = imagePickerTabBar
         
         // Create main tab bar controller
         let rootCoordinator = MainCoordinatorImplementation()
-        let rootTabBarViewController = MainTabBarController(coordinator: rootCoordinator, viewControllers: [feedNavigationController, mediaNavigationController, profileNavigationController, imagePickerViewController])
+        let rootTabBarViewController = MainTabBarController(coordinator: rootCoordinator, viewControllers: [feedNavigationController, mediaNavigationController, imagePickerViewController, favoritePostsNavigationController ,profileNavigationController])
         rootCoordinator.tabBarController = rootTabBarViewController
         rootViewController = rootTabBarViewController.coordinator?.startMainModule() ?? rootTabBarViewController
     }

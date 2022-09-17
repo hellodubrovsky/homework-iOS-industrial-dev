@@ -64,8 +64,8 @@ final class LogInInspector: AuthorizationCheckerDelegate {
         self.databaseService.fetch(AuthorizationModelRealm.self, predicate: predicate) { result in
             switch result {
             case .success(let user):
-                print("\n🤖 The user was found in the database:\n\(user)")
-                completion(.success(user))
+                print("\n🤖 The user was found in the database:\n\(user.first!)")
+                completion(.success(user.first!))
             case .failure(let error):
                 print(error.localizedDescription)
                 print("\n🤖 The user was not found in the database.")

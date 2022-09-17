@@ -26,10 +26,11 @@ final class ProfileViewController: UIViewController {
     
     // MARK: - Public initializer
     
-    init(userService: UserService, userName: String) {
+    init(userService: UserService, userName: String, databaseService: DatabaseCoordinatable) {
         super.init(nibName: nil, bundle: nil)
         self.userService = userService
         self.userName = userName
+        self.databaseService = databaseService
     }
     
     required init?(coder: NSCoder) {
@@ -43,6 +44,7 @@ final class ProfileViewController: UIViewController {
     private var userService: UserService!
     private var userName: String!
     private var coordinator: ProfileCoordinator = ProfileCoordinatorImplementation()
+    private var databaseService: DatabaseCoordinatable!
     
     // Фильтр для постов
     private let imageProcessor = ImageProcessor()
@@ -86,6 +88,18 @@ final class ProfileViewController: UIViewController {
         ProfileHeaderView.ConstraintsForAvatarAndItsBackground.heightBackground = view.frame.size.height
     }
     
+    private func saveInDatabase(post: PostUsers) {
+        self.databaseService.create(FavoritePostCoreDataModel.self, keyedValue: post.keyedValue) { result in
+            switch result {
+            case .success(_):
+                let userInfo = ["post": post]
+                NotificationCenter.default.post(name: NSNotification.Name("wasLikedPost"), object: nil, userInfo: userInfo)
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
     
     
     // MARK: - View configuration
@@ -126,7 +140,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     
     // Данный метод, должен понимать, сколько всего ячеек будет.
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard section == 0 else { return 4 }
+        guard section == 0 else { return posts.count }
         return 1
     }
     
@@ -157,11 +171,12 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                 filter = .sepia(intensity: 20)
             }
             
-            imageProcessor.processImage(sourceImage: data.image, filter: filter!) { editedImage in
+            imageProcessor.processImage(sourceImage: UIImage(named: data.imageName)!, filter: filter!) { editedImage in
                 image = editedImage
             }
             
-            cell.update(name: data.author, image: image!, description: data.description, countLikes: data.likes, countViews: data.views)
+            cell.delegate = self
+            cell.update(name: data.title, image: image!, description: data.description, countLikes: data.countLikes, countViews: data.countViews)
             return cell
         }
     }
@@ -182,5 +197,20 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard indexPath.section == 0 && indexPath.row == 0 else { return }
         coordinator.openPhotoUserScreen()
+    }
+}
+
+
+
+
+// MARK: - PostTableViewCellDelegate
+ 
+extension ProfileViewController: PostTableViewCellDelegate {
+    func doubleClickOnCell() {
+        guard let index = self.tableView.indexPathForSelectedRow?.row else { return }
+        guard posts[index].isFavorite != true else { return }
+        posts[index].isFavorite = true
+        let post = posts[index]
+        self.saveInDatabase(post: post)
     }
 }
