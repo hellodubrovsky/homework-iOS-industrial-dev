@@ -211,6 +211,17 @@ extension ProfileViewController: PostTableViewCellDelegate {
         guard posts[index].isFavorite != true else { return }
         posts[index].isFavorite = true
         let post = posts[index]
-        self.saveInDatabase(post: post)
+        let filter = post.uniqueID
+        let predicate = NSPredicate(format: "uniqueID == %@", filter)
+        self.databaseService.fetch(FavoritePostCoreDataModel.self, predicate: predicate) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let model):
+                guard model.isEmpty else { return }
+                self.saveInDatabase(post: post)
+            case .failure(let error):
+                print("[file: PostTableViewCellDelegate] Error: \(error)")
+            }
+        }
     }
 }
