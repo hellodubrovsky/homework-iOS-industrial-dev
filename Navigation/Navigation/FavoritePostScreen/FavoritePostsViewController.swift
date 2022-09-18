@@ -205,6 +205,7 @@ extension FavoritePostsViewController: UITableViewDataSource, UITableViewDelegat
                 var newModel = model
                 let deletePost = model[indexPath.row]
                 newModel.remove(at: indexPath.row)
+                posts[indexPath.row].isFavorite = false
                 self.state = .hasData(model: newModel)
                 
                 self.tableView.beginUpdates()

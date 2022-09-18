@@ -119,9 +119,7 @@ extension CoreDataService: DatabaseCoordinatable {
                 let fetchRequestResult = try? self.backgroundContext.fetch(request),
                 let fetchObjects = fetchRequestResult as? [T]
             else {
-                self.mainContext.perform {
-                    completion(.failure(.wrongModel))
-                }
+                completion(.failure(.wrongModel))
                 return
             }
             self.mainContext.perform {
@@ -147,25 +145,26 @@ extension CoreDataService: DatabaseCoordinatable {
                     completion(.failure(.wrongModel))
                     return
                 }
-                fetchedObjects.forEach { self.backgroundContext.delete($0) }
-                let deleteObjects = fetchedObjects as? [T] ?? []
-                guard self.backgroundContext.hasChanges else {
-                    completion(.failure(.customError(description: "There are unfixed changes in the context.")))
-                    return
-                }
-                do {
-                    try self.backgroundContext.save()
-                    self.mainContext.perform {
-                        completion(.success(deleteObjects))
+                self.backgroundContext.perform {
+                    fetchedObjects.forEach { self.backgroundContext.delete($0) }
+                    let deleteObjects = fetchedObjects as? [T] ?? []
+                    guard self.backgroundContext.hasChanges else {
+                        completion(.failure(.customError(description: "There are unfixed changes in the context.")))
+                        return
                     }
-                } catch let error {
-                    completion(.failure(.customError(description: "Unable to save changes of main context.\nError - \(error.localizedDescription)")))
+                    do {
+                        try self.backgroundContext.save()
+                        self.mainContext.perform {
+                            completion(.success(deleteObjects))
+                        }
+                    } catch let error {
+                        completion(.failure(.customError(description: "Unable to save changes of main context.\nError - \(error.localizedDescription)")))
+                    }
                 }
             case .failure(let error):
                 completion(.failure(error))
             }
         }
-        
     }
     
     
