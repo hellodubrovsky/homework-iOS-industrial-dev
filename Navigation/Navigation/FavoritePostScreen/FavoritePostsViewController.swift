@@ -93,11 +93,27 @@ final class FavoritePostsViewController: UIViewController {
                                                                        description: $0.descriptionPost!,
                                                                        imageName: $0.imageName!,
                                                                        countLikes: UInt($0.countLikes),
-                                                                       countViews: UInt($0.countViews)) }
+                                                                       countViews: UInt($0.countViews),
+                                                                       isFavorite: $0.isFavorite,
+                                                                       uniqueID: $0.uniqueID!) }
                 self.state = posts.isEmpty ? .empty : .hasData(model: posts)
                 self.tableView.reloadData()
             case .failure(let error):
                 print(error)
+                self.state = .empty
+            }
+        }
+    }
+    
+    private func removePostsFromDatabase(post: PostUsers, completion: @escaping (Bool) -> Void) {
+        let predicate = NSPredicate(format: "uniqueID == %@", post.uniqueID)
+        self.databaseService.delete(FavoritePostCoreDataModel.self, predicate: predicate) { result in
+            switch result {
+            case .success(_):
+                completion(true)
+            case .failure(let error):
+                print("[file: FavoritePostsViewController, method: removePostsFromDatabase] Error: \(error)")
+                completion(false)
             }
         }
     }
@@ -172,6 +188,33 @@ extension FavoritePostsViewController: UITableViewDataSource, UITableViewDelegat
             let favoriteModel = FavoritePostTableViewCell.ViewModel(title: post.title, image: UIImage(named: post.imageName)!, description: post.description, countLikes: post.countLikes, countViews: post.countViews)
             cell.setup(with: favoriteModel)
             return cell
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        switch self.state {
+        case .empty:
+            return nil
+        case .hasData(let model):
+            let deleteAction = UIContextualAction(style: .destructive, title: nil) { [weak self] (_, _, completion) in
+                guard let self = self else { return }
+                var newModel = model
+                let deletePost = model[indexPath.row]
+                newModel.remove(at: indexPath.row)
+                self.state = .hasData(model: newModel)
+                
+                self.tableView.beginUpdates()
+                self.tableView.deleteRows(at: [indexPath], with: .fade)
+                self.tableView.endUpdates()
+                
+                self.removePostsFromDatabase(post: deletePost, completion: completion)
+            }
+            deleteAction.image = UIImage(systemName: "trash.square")
+            return UISwipeActionsConfiguration(actions: [deleteAction])
         }
     }
 }
