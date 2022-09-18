@@ -71,6 +71,15 @@ final class FavoritePostsViewController: UIViewController {
         let topContraint = self.tableView.topAnchor.constraint(equalTo: self.view.topAnchor)
         let bottomConstraint = self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         NSLayoutConstraint.activate([rightContraint, leftConstraint, topContraint, bottomConstraint])
+        self.setTabBarButtons()
+    }
+    
+    private func setTabBarButtons() {
+        let filterButton = UIBarButtonItem(image: UIImage(systemName: "line.3.horizontal.decrease.circle"), style: .plain, target: self, action: nil)
+        let clearFilterButton = UIBarButtonItem(image: UIImage(systemName: "xmark.circle.fill"), style: .plain, target: self, action: nil)
+        filterButton.tintColor = .white
+        clearFilterButton.tintColor = .white
+        self.navigationItem.rightBarButtonItems = [clearFilterButton, filterButton]
     }
     
     private func fetchPostsFromDatabase() {
