@@ -35,6 +35,16 @@ final class FavoritePostsViewController: UIViewController {
         return tableView
     }()
     
+    private lazy var searchController: UISearchController = {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Searh posts..."
+        searchController.searchBar.sizeToFit()
+        searchController.searchBar.searchBarStyle = .prominent
+        searchController.searchBar.delegate = self
+        return searchController
+    }()
+    
     
     
     // MARK: Initial
@@ -75,8 +85,8 @@ final class FavoritePostsViewController: UIViewController {
     }
     
     private func setTabBarButtons() {
-        let filterButton = UIBarButtonItem(image: UIImage(systemName: "line.3.horizontal.decrease.circle"), style: .plain, target: self, action: nil)
-        let clearFilterButton = UIBarButtonItem(image: UIImage(systemName: "xmark.circle.fill"), style: .plain, target: self, action: nil)
+        let filterButton = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass.circle"), style: .plain, target: self, action: #selector(presentSearchController))
+        let clearFilterButton = UIBarButtonItem(image: UIImage(systemName: "xmark.circle"), style: .plain, target: self, action: #selector(resetFilter))
         filterButton.tintColor = .white
         clearFilterButton.tintColor = .white
         self.navigationItem.rightBarButtonItems = [clearFilterButton, filterButton]
@@ -148,6 +158,16 @@ final class FavoritePostsViewController: UIViewController {
             }
         }
     }
+    
+    /// Обработка нажатия на кнопку фильтра.
+    @objc private func presentSearchController() {
+        self.present(searchController, animated: true)
+    }
+    
+    /// Обработка нажатия на кнопку сброса фильтра.
+    @objc private func resetFilter() {
+        
+    }
 }
 
 
@@ -210,5 +230,21 @@ extension FavoritePostsViewController: UITableViewDataSource, UITableViewDelegat
             deleteAction.image = UIImage(systemName: "trash.square")
             return UISwipeActionsConfiguration(actions: [deleteAction])
         }
+    }
+}
+
+
+
+
+
+// MARK: - UISearchBarDelegate
+
+extension FavoritePostsViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let enteredText = searchBar.text else { return }
+        print("Поиск по строке: \(enteredText).")
+        // Тут должен быть метод, который будет фильтровать статьи по введенному значению. Или показывать заглушку, если ничего не найдено.
+        self.searchController.isActive = false
     }
 }
