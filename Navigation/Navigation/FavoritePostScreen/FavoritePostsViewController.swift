@@ -64,8 +64,9 @@ final class FavoritePostsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setView()
         self.fetchPostsFromDatabase()
+        self.setView()
+        self.setTabBarButtons()
         NotificationCenter.default.addObserver(self, selector: #selector(wasLikedPost(_:)), name: Notification.Name("wasLikedPost"), object: nil)
     }
     
@@ -81,15 +82,19 @@ final class FavoritePostsViewController: UIViewController {
         let topContraint = self.tableView.topAnchor.constraint(equalTo: self.view.topAnchor)
         let bottomConstraint = self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         NSLayoutConstraint.activate([rightContraint, leftConstraint, topContraint, bottomConstraint])
-        self.setTabBarButtons()
     }
     
     private func setTabBarButtons() {
-        let filterButton = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass.circle"), style: .plain, target: self, action: #selector(presentSearchController))
-        let clearFilterButton = UIBarButtonItem(image: UIImage(systemName: "xmark.circle"), style: .plain, target: self, action: #selector(resetFilter))
-        filterButton.tintColor = .white
-        clearFilterButton.tintColor = .white
-        self.navigationItem.rightBarButtonItems = [clearFilterButton, filterButton]
+        switch self.state {
+        case .empty:
+            self.navigationItem.rightBarButtonItems = nil
+        case .hasData(_):
+            let filterButton = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass.circle"), style: .plain, target: self, action: #selector(presentSearchController))
+            let clearFilterButton = UIBarButtonItem(image: UIImage(systemName: "xmark.circle"), style: .plain, target: self, action: #selector(resetFilter))
+            filterButton.tintColor = .white
+            clearFilterButton.tintColor = .white
+            self.navigationItem.rightBarButtonItems = [clearFilterButton, filterButton]
+        }
     }
     
     private func fetchPostsFromDatabase() {
@@ -200,6 +205,7 @@ extension FavoritePostsViewController: UITableViewDataSource, UITableViewDelegat
             let post = model[indexPath.row]
             let favoriteModel = FavoritePostTableViewCell.ViewModel(title: post.title, image: UIImage(named: post.imageName)!, description: post.description, countLikes: post.countLikes, countViews: post.countViews)
             cell.setup(with: favoriteModel)
+            self.setTabBarButtons()
             return cell
         }
     }
@@ -219,7 +225,8 @@ extension FavoritePostsViewController: UITableViewDataSource, UITableViewDelegat
                 let deletePost = model[indexPath.row]
                 newModel.remove(at: indexPath.row)
                 posts[indexPath.row].isFavorite = false
-                self.state = .hasData(model: newModel)
+                self.state = newModel.isEmpty ? .empty : .hasData(model: newModel)
+                self.setTabBarButtons()
                 
                 self.tableView.beginUpdates()
                 self.tableView.deleteRows(at: [indexPath], with: .fade)
