@@ -19,6 +19,7 @@ final class FavoritePostsViewController: UIViewController {
     
     private let databaseService: DatabaseCoordinatable
     private var state: State = .empty
+    private var searchIsActive: Bool = false
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -33,6 +34,24 @@ final class FavoritePostsViewController: UIViewController {
         tableView.register(FavoritePostTableViewCell.self, forCellReuseIdentifier: "FavoritePostsCell")
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
+    }()
+    
+    private lazy var searchController: UISearchController = {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Searh posts..."
+        searchController.searchBar.sizeToFit()
+        searchController.searchBar.searchBarStyle = .prominent
+        searchController.searchBar.delegate = self
+        return searchController
+    }()
+    
+    private lazy var blankTableStubImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "icon-not-found")!
+        imageView.isHidden = true
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
     }()
     
     
@@ -54,8 +73,9 @@ final class FavoritePostsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setView()
         self.fetchPostsFromDatabase()
+        self.setView()
+        self.setTabBarButtons()
         NotificationCenter.default.addObserver(self, selector: #selector(wasLikedPost(_:)), name: Notification.Name("wasLikedPost"), object: nil)
     }
     
@@ -71,6 +91,28 @@ final class FavoritePostsViewController: UIViewController {
         let topContraint = self.tableView.topAnchor.constraint(equalTo: self.view.topAnchor)
         let bottomConstraint = self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         NSLayoutConstraint.activate([rightContraint, leftConstraint, topContraint, bottomConstraint])
+        self.view.addSubview(blankTableStubImageView)
+        let widthImageConstraint = self.blankTableStubImageView.widthAnchor.constraint(equalToConstant: 100)
+        let heightImageConstraint = self.blankTableStubImageView.heightAnchor.constraint(equalToConstant: 100)
+        let centerYImageConstraint = self.blankTableStubImageView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
+        let centerXImageConstraint = self.blankTableStubImageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
+        NSLayoutConstraint.activate([widthImageConstraint, heightImageConstraint, centerYImageConstraint, centerXImageConstraint])
+    }
+    
+    private func setTabBarButtons() {
+        switch self.state {
+        case .empty:
+            guard searchIsActive == false else { return }
+            self.blankTableStubImageView.isHidden = false
+            self.navigationItem.rightBarButtonItems = nil
+        case .hasData(_):
+            self.blankTableStubImageView.isHidden = true
+            let filterButton = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass.circle"), style: .plain, target: self, action: #selector(presentSearchController))
+            let clearFilterButton = UIBarButtonItem(image: UIImage(systemName: "xmark.circle"), style: .plain, target: self, action: #selector(resetFilter))
+            filterButton.tintColor = .white
+            clearFilterButton.tintColor = .white
+            self.navigationItem.rightBarButtonItems = [clearFilterButton, filterButton]
+        }
     }
     
     private func fetchPostsFromDatabase() {
@@ -82,11 +124,51 @@ final class FavoritePostsViewController: UIViewController {
                                                                        description: $0.descriptionPost!,
                                                                        imageName: $0.imageName!,
                                                                        countLikes: UInt($0.countLikes),
-                                                                       countViews: UInt($0.countViews)) }
+                                                                       countViews: UInt($0.countViews),
+                                                                       isFavorite: $0.isFavorite,
+                                                                       uniqueID: $0.uniqueID!) }
                 self.state = posts.isEmpty ? .empty : .hasData(model: posts)
                 self.tableView.reloadData()
             case .failure(let error):
                 print(error)
+                self.state = .empty
+            }
+        }
+        self.setTabBarButtons()
+    }
+    
+    private func fetchSpecificPostsFromDataBase(by text: String) {
+        let predicate = NSPredicate(format: "title contains[c] %@", text)
+        self.databaseService.fetch(FavoritePostCoreDataModel.self, predicate: predicate) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let searchPosts):
+                let posts = searchPosts.map { PostUsers(title: $0.title!,
+                                                                       description: $0.descriptionPost!,
+                                                                       imageName: $0.imageName!,
+                                                                       countLikes: UInt($0.countLikes),
+                                                                       countViews: UInt($0.countViews),
+                                                                       isFavorite: $0.isFavorite,
+                                                                       uniqueID: $0.uniqueID!) }
+                self.state = posts.isEmpty ? .empty : .hasData(model: posts)
+                self.tableView.reloadData()
+            case .failure(let error):
+                print(error)
+                self.state = .empty
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
+    private func removePostsFromDatabase(post: PostUsers, completion: @escaping (Bool) -> Void) {
+        let predicate = NSPredicate(format: "uniqueID == %@", post.uniqueID)
+        self.databaseService.delete(FavoritePostCoreDataModel.self, predicate: predicate) { result in
+            switch result {
+            case .success(_):
+                completion(true)
+            case .failure(let error):
+                print("[file: FavoritePostsViewController, method: removePostsFromDatabase] Error: \(error)")
+                completion(false)
             }
         }
     }
@@ -123,6 +205,18 @@ final class FavoritePostsViewController: UIViewController {
             }
         }
     }
+    
+    /// Обработка нажатия на кнопку фильтра.
+    @objc private func presentSearchController() {
+        self.searchIsActive = true
+        self.present(searchController, animated: true)
+    }
+    
+    /// Обработка нажатия на кнопку сброса фильтра.
+    @objc private func resetFilter() {
+        self.searchIsActive = false
+        self.fetchPostsFromDatabase()
+    }
 }
 
 
@@ -155,7 +249,56 @@ extension FavoritePostsViewController: UITableViewDataSource, UITableViewDelegat
             let post = model[indexPath.row]
             let favoriteModel = FavoritePostTableViewCell.ViewModel(title: post.title, image: UIImage(named: post.imageName)!, description: post.description, countLikes: post.countLikes, countViews: post.countViews)
             cell.setup(with: favoriteModel)
+            self.setTabBarButtons()
             return cell
         }
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        switch self.state {
+        case .empty:
+            return nil
+        case .hasData(let model):
+            let deleteAction = UIContextualAction(style: .destructive, title: nil) { [weak self] (_, _, completion) in
+                guard let self = self else { return }
+                var newModel = model
+                let deletePost = model[indexPath.row]
+                newModel.remove(at: indexPath.row)
+                posts[indexPath.row].isFavorite = false
+                self.state = newModel.isEmpty ? .empty : .hasData(model: newModel)
+                self.setTabBarButtons()
+                
+                self.tableView.beginUpdates()
+                self.tableView.deleteRows(at: [indexPath], with: .fade)
+                self.tableView.endUpdates()
+                
+                self.removePostsFromDatabase(post: deletePost, completion: completion)
+            }
+            deleteAction.image = UIImage(systemName: "trash.square")
+            return UISwipeActionsConfiguration(actions: [deleteAction])
+        }
+    }
+}
+
+
+
+
+
+// MARK: - UISearchBarDelegate
+
+extension FavoritePostsViewController: UISearchBarDelegate {
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self.searchController.isActive = false
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let enteredText = searchBar.text else { return }
+        self.fetchSpecificPostsFromDataBase(by: enteredText)
+        self.searchController.isActive = false
     }
 }

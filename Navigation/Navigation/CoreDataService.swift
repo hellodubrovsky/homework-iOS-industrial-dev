@@ -20,6 +20,13 @@ final class CoreDataService {
         return mainContext
     }()
     
+    private lazy var backgroundContext: NSManagedObjectContext = {
+        let backgroundContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        backgroundContext.mergePolicy = NSOverwriteMergePolicy
+        backgroundContext.persistentStoreCoordinator = self.persistentStoreCoordinator
+        return backgroundContext
+    }()
+    
     /// Инициализация CoreDataService, где в свойство url передается путь до файла .xcdatamodeld.
     init(url: URL) {
         guard let model = NSManagedObjectModel(contentsOf: url) else { fatalError("[class: CoreDataService] --> Error: I can't create a model database.") }
@@ -59,28 +66,30 @@ extension CoreDataService: DatabaseCoordinatable {
      6. Сохранение контекста. */
 
     func create<T>(_ model: T.Type, keyedValue: [String: Any], completion: @escaping (Result<T, DatabaseErrors>) -> Void) where T : Storable {
-        self.mainContext.perform { [weak self] in
+        self.backgroundContext.perform { [weak self] in
             guard let self = self else {
                 completion(.failure(.unknown))
                 return
             }
-            guard let entityDescription = NSEntityDescription.entity(forEntityName: String(describing: model.self), in: self.mainContext) else {
+            guard let entityDescription = NSEntityDescription.entity(forEntityName: String(describing: model.self), in: self.backgroundContext) else {
                 completion(.failure(.customError(description: "EntityDescription was not possible to create it.")))
                 return
             }
-            let managedObject = NSManagedObject(entity: entityDescription, insertInto: self.mainContext)
+            let managedObject = NSManagedObject(entity: entityDescription, insertInto: self.backgroundContext)
             managedObject.setValuesForKeys(keyedValue)
             guard let object = managedObject as? T else {
                 completion(.failure(.customError(description: "The object does not match the type T.")))
                 return
             }
-            guard self.mainContext.hasChanges else {
+            guard self.backgroundContext.hasChanges else {
                 completion(.failure(.customError(description: "There are unfixed changes in the context.")))
                 return
             }
             do {
-                try self.mainContext.save()
-                completion(.success(object))
+                try self.backgroundContext.save()
+                self.mainContext.perform {
+                    completion(.success(object))
+                }
             } catch let error {
                 completion(.failure(.customError(description: "Unable to save changes of main context.\nError - \(error.localizedDescription)")))
             }
@@ -102,18 +111,20 @@ extension CoreDataService: DatabaseCoordinatable {
             completion(.failure(.wrongModel))
             return
         }
-        self.mainContext.perform { [weak self] in
+        self.backgroundContext.perform { [weak self] in
             guard let self = self else { completion(.failure(.unknown)); return }
             let request = model.fetchRequest()
             request.predicate = predicate
             guard
-                let fetchRequestResult = try? self.mainContext.fetch(request),
+                let fetchRequestResult = try? self.backgroundContext.fetch(request),
                 let fetchObjects = fetchRequestResult as? [T]
             else {
                 completion(.failure(.wrongModel))
                 return
             }
-            completion(.success(fetchObjects))
+            self.mainContext.perform {
+                completion(.success(fetchObjects))
+            }
         }
     }
     
@@ -134,23 +145,26 @@ extension CoreDataService: DatabaseCoordinatable {
                     completion(.failure(.wrongModel))
                     return
                 }
-                fetchedObjects.forEach { self.mainContext.delete($0) }
-                let deleteObjects = fetchedObjects as? [T] ?? []
-                guard self.mainContext.hasChanges else {
-                    completion(.failure(.customError(description: "There are unfixed changes in the context.")))
-                    return
-                }
-                do {
-                    try self.mainContext.save()
-                    completion(.success(deleteObjects))
-                } catch let error {
-                    completion(.failure(.customError(description: "Unable to save changes of main context.\nError - \(error.localizedDescription)")))
+                self.backgroundContext.perform {
+                    fetchedObjects.forEach { self.backgroundContext.delete($0) }
+                    let deleteObjects = fetchedObjects as? [T] ?? []
+                    guard self.backgroundContext.hasChanges else {
+                        completion(.failure(.customError(description: "There are unfixed changes in the context.")))
+                        return
+                    }
+                    do {
+                        try self.backgroundContext.save()
+                        self.mainContext.perform {
+                            completion(.success(deleteObjects))
+                        }
+                    } catch let error {
+                        completion(.failure(.customError(description: "Unable to save changes of main context.\nError - \(error.localizedDescription)")))
+                    }
                 }
             case .failure(let error):
                 completion(.failure(error))
             }
         }
-        
     }
     
     
