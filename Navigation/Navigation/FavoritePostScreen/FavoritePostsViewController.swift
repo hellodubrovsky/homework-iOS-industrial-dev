@@ -118,6 +118,29 @@ final class FavoritePostsViewController: UIViewController {
         }
     }
     
+    private func fetchSpecificPostsFromDataBase(by text: String) {
+        let predicate = NSPredicate(format: "title contains[c] %@", text)
+        self.databaseService.fetch(FavoritePostCoreDataModel.self, predicate: predicate) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let searchPosts):
+                let posts = searchPosts.map { PostUsers(title: $0.title!,
+                                                                       description: $0.descriptionPost!,
+                                                                       imageName: $0.imageName!,
+                                                                       countLikes: UInt($0.countLikes),
+                                                                       countViews: UInt($0.countViews),
+                                                                       isFavorite: $0.isFavorite,
+                                                                       uniqueID: $0.uniqueID!) }
+                self.state = posts.isEmpty ? .empty : .hasData(model: posts)
+                self.tableView.reloadData()
+            case .failure(let error):
+                print(error)
+                self.state = .empty
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
     private func removePostsFromDatabase(post: PostUsers, completion: @escaping (Bool) -> Void) {
         let predicate = NSPredicate(format: "uniqueID == %@", post.uniqueID)
         self.databaseService.delete(FavoritePostCoreDataModel.self, predicate: predicate) { result in
@@ -171,7 +194,7 @@ final class FavoritePostsViewController: UIViewController {
     
     /// Обработка нажатия на кнопку сброса фильтра.
     @objc private func resetFilter() {
-        
+        self.fetchPostsFromDatabase()
     }
 }
 
@@ -250,8 +273,7 @@ extension FavoritePostsViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let enteredText = searchBar.text else { return }
-        print("Поиск по строке: \(enteredText).")
-        // Тут должен быть метод, который будет фильтровать статьи по введенному значению. Или показывать заглушку, если ничего не найдено.
+        self.fetchSpecificPostsFromDataBase(by: enteredText)
         self.searchController.isActive = false
     }
 }
