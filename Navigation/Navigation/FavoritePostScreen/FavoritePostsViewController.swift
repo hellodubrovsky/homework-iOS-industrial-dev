@@ -19,6 +19,7 @@ final class FavoritePostsViewController: UIViewController {
     
     private let databaseService: DatabaseCoordinatable
     private var state: State = .empty
+    private var searchIsActive: Bool = false
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -87,6 +88,7 @@ final class FavoritePostsViewController: UIViewController {
     private func setTabBarButtons() {
         switch self.state {
         case .empty:
+            guard searchIsActive == false else { return }
             self.navigationItem.rightBarButtonItems = nil
         case .hasData(_):
             let filterButton = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass.circle"), style: .plain, target: self, action: #selector(presentSearchController))
@@ -116,6 +118,7 @@ final class FavoritePostsViewController: UIViewController {
                 self.state = .empty
             }
         }
+        self.setTabBarButtons()
     }
     
     private func fetchSpecificPostsFromDataBase(by text: String) {
@@ -189,11 +192,13 @@ final class FavoritePostsViewController: UIViewController {
     
     /// Обработка нажатия на кнопку фильтра.
     @objc private func presentSearchController() {
+        self.searchIsActive = true
         self.present(searchController, animated: true)
     }
     
     /// Обработка нажатия на кнопку сброса фильтра.
     @objc private func resetFilter() {
+        self.searchIsActive = false
         self.fetchPostsFromDatabase()
     }
 }
@@ -270,6 +275,10 @@ extension FavoritePostsViewController: UITableViewDataSource, UITableViewDelegat
 // MARK: - UISearchBarDelegate
 
 extension FavoritePostsViewController: UISearchBarDelegate {
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self.searchController.isActive = false
+    }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let enteredText = searchBar.text else { return }
