@@ -46,6 +46,14 @@ final class FavoritePostsViewController: UIViewController {
         return searchController
     }()
     
+    private lazy var blankTableStubImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "icon-not-found")!
+        imageView.isHidden = true
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
     
     
     // MARK: Initial
@@ -83,14 +91,22 @@ final class FavoritePostsViewController: UIViewController {
         let topContraint = self.tableView.topAnchor.constraint(equalTo: self.view.topAnchor)
         let bottomConstraint = self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         NSLayoutConstraint.activate([rightContraint, leftConstraint, topContraint, bottomConstraint])
+        self.view.addSubview(blankTableStubImageView)
+        let widthImageConstraint = self.blankTableStubImageView.widthAnchor.constraint(equalToConstant: 100)
+        let heightImageConstraint = self.blankTableStubImageView.heightAnchor.constraint(equalToConstant: 100)
+        let centerYImageConstraint = self.blankTableStubImageView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
+        let centerXImageConstraint = self.blankTableStubImageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
+        NSLayoutConstraint.activate([widthImageConstraint, heightImageConstraint, centerYImageConstraint, centerXImageConstraint])
     }
     
     private func setTabBarButtons() {
         switch self.state {
         case .empty:
             guard searchIsActive == false else { return }
+            self.blankTableStubImageView.isHidden = false
             self.navigationItem.rightBarButtonItems = nil
         case .hasData(_):
+            self.blankTableStubImageView.isHidden = true
             let filterButton = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass.circle"), style: .plain, target: self, action: #selector(presentSearchController))
             let clearFilterButton = UIBarButtonItem(image: UIImage(systemName: "xmark.circle"), style: .plain, target: self, action: #selector(resetFilter))
             filterButton.tintColor = .white
