@@ -16,6 +16,14 @@
 		D85936DD28FC433B0015A116 /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85936DC28FC433B0015A116 /* AppManager.swift */; };
 		D85936E228FC44EF0015A116 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = D85936E128FC44EF0015A116 /* Alamofire */; };
 		D85936E428FC45040015A116 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85936E328FC45040015A116 /* NetworkService.swift */; };
+		D85936F828FC4E570015A116 /* AccessToLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85936F728FC4E570015A116 /* AccessToLocationViewController.swift */; };
+		D85936FA28FC4E690015A116 /* AccessToLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85936F928FC4E690015A116 /* AccessToLocationView.swift */; };
+		D85936FD28FC674C0015A116 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = D85936FC28FC674C0015A116 /* SnapKit */; };
+		D859371028FC6F930015A116 /* Extension+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D859370F28FC6F930015A116 /* Extension+UIView.swift */; };
+		D883E4DE28FD222800F02D26 /* Rubic-Neue.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D883E4DD28FD222800F02D26 /* Rubic-Neue.ttf */; };
+		D883E4E028FD238900F02D26 /* Rubik-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D883E4DF28FD238900F02D26 /* Rubik-Regular.ttf */; };
+		D883E4E328FD2DF400F02D26 /* Extension+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D883E4E228FD2DF400F02D26 /* Extension+UIColor.swift */; };
+		D883E4E528FD32D800F02D26 /* Rubik-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D883E4E428FD32D800F02D26 /* Rubik-Medium.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +56,13 @@
 		D80868A828F894D500787790 /* WeatherUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		D85936DC28FC433B0015A116 /* AppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppManager.swift; sourceTree = "<group>"; };
 		D85936E328FC45040015A116 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		D85936F728FC4E570015A116 /* AccessToLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessToLocationViewController.swift; sourceTree = "<group>"; };
+		D85936F928FC4E690015A116 /* AccessToLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessToLocationView.swift; sourceTree = "<group>"; };
+		D859370F28FC6F930015A116 /* Extension+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIView.swift"; sourceTree = "<group>"; };
+		D883E4DD28FD222800F02D26 /* Rubic-Neue.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubic-Neue.ttf"; sourceTree = "<group>"; };
+		D883E4DF28FD238900F02D26 /* Rubik-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubik-Regular.ttf"; sourceTree = "<group>"; };
+		D883E4E228FD2DF400F02D26 /* Extension+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIColor.swift"; sourceTree = "<group>"; };
+		D883E4E428FD32D800F02D26 /* Rubik-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubik-Medium.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +71,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D85936E228FC44EF0015A116 /* Alamofire in Frameworks */,
+				D85936FD28FC674C0015A116 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -106,6 +122,7 @@
 				D85936DA28FC42EE0015A116 /* Models */,
 				D85936DB28FC42FB0015A116 /* Workers */,
 				D85936DE28FC43480015A116 /* Services */,
+				D859370E28FC6F680015A116 /* Extensions */,
 				D85936D928FC42C60015A116 /* Resources */,
 			);
 			path = Weather;
@@ -131,6 +148,7 @@
 		D85936D828FC42600015A116 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				D85936EA28FC4C2C0015A116 /* AccessToLocation */,
 			);
 			name = Scenes;
 			sourceTree = "<group>";
@@ -138,8 +156,9 @@
 		D85936D928FC42C60015A116 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				D808689328F894D500787790 /* Info.plist */,
+				D85936FE28FC68080015A116 /* Fonts */,
 				D808688E28F894D500787790 /* Assets.xcassets */,
+				D808689328F894D500787790 /* Info.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -190,6 +209,34 @@
 			name = UserDefaults;
 			sourceTree = "<group>";
 		};
+		D85936EA28FC4C2C0015A116 /* AccessToLocation */ = {
+			isa = PBXGroup;
+			children = (
+				D85936F928FC4E690015A116 /* AccessToLocationView.swift */,
+				D85936F728FC4E570015A116 /* AccessToLocationViewController.swift */,
+			);
+			path = AccessToLocation;
+			sourceTree = "<group>";
+		};
+		D85936FE28FC68080015A116 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				D883E4DD28FD222800F02D26 /* Rubic-Neue.ttf */,
+				D883E4DF28FD238900F02D26 /* Rubik-Regular.ttf */,
+				D883E4E428FD32D800F02D26 /* Rubik-Medium.ttf */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
+		D859370E28FC6F680015A116 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D859370F28FC6F930015A116 /* Extension+UIView.swift */,
+				D883E4E228FD2DF400F02D26 /* Extension+UIColor.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -208,6 +255,7 @@
 			name = Weather;
 			packageProductDependencies = (
 				D85936E128FC44EF0015A116 /* Alamofire */,
+				D85936FC28FC674C0015A116 /* SnapKit */,
 			);
 			productName = Weather;
 			productReference = D808688228F894D500787790 /* Weather.app */;
@@ -283,6 +331,7 @@
 			mainGroup = D808687928F894D400787790;
 			packageReferences = (
 				D85936E028FC44EF0015A116 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				D85936FB28FC674C0015A116 /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = D808688328F894D500787790 /* Products */;
 			projectDirPath = "";
@@ -302,6 +351,9 @@
 			files = (
 				D808689228F894D500787790 /* LaunchScreen.storyboard in Resources */,
 				D808688F28F894D500787790 /* Assets.xcassets in Resources */,
+				D883E4E028FD238900F02D26 /* Rubik-Regular.ttf in Resources */,
+				D883E4DE28FD222800F02D26 /* Rubic-Neue.ttf in Resources */,
+				D883E4E528FD32D800F02D26 /* Rubik-Medium.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -326,9 +378,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D85936FA28FC4E690015A116 /* AccessToLocationView.swift in Sources */,
+				D85936F828FC4E570015A116 /* AccessToLocationViewController.swift in Sources */,
+				D859371028FC6F930015A116 /* Extension+UIView.swift in Sources */,
 				D808688628F894D500787790 /* AppDelegate.swift in Sources */,
 				D85936E428FC45040015A116 /* NetworkService.swift in Sources */,
 				D85936DD28FC433B0015A116 /* AppManager.swift in Sources */,
+				D883E4E328FD2DF400F02D26 /* Extension+UIColor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -674,6 +730,14 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		D85936FB28FC674C0015A116 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -681,6 +745,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D85936E028FC44EF0015A116 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		D85936FC28FC674C0015A116 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D85936FB28FC674C0015A116 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
