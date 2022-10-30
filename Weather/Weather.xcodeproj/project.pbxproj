@@ -31,7 +31,9 @@
 		D8E4A121290B157500B41167 /* EnumKeysForUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E4A120290B157500B41167 /* EnumKeysForUserDefaults.swift */; };
 		D8E7B4D0290E5B7800E76EED /* AccessToLocationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E7B4CF290E5B7800E76EED /* AccessToLocationRouter.swift */; };
 		D8E7B4D2290E633800E76EED /* Extension+NSNotification.Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E7B4D1290E633800E76EED /* Extension+NSNotification.Name.swift */; };
-		D8EABC132909B63C00C2C843 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EABC122909B63C00C2C843 /* ViewController.swift */; };
+		D8E7B4D9290E8A6300E76EED /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E7B4D8290E8A6300E76EED /* SettingsView.swift */; };
+		D8E7B4DB290E8A7300E76EED /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E7B4DA290E8A7300E76EED /* SettingsViewController.swift */; };
+		D8E7B4DE290ECDC500E76EED /* BetterSegmentedControl in Frameworks */ = {isa = PBXBuildFile; productRef = D8E7B4DD290ECDC500E76EED /* BetterSegmentedControl */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,7 +95,8 @@
 		D8E4A120290B157500B41167 /* EnumKeysForUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnumKeysForUserDefaults.swift; sourceTree = "<group>"; };
 		D8E7B4CF290E5B7800E76EED /* AccessToLocationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessToLocationRouter.swift; sourceTree = "<group>"; };
 		D8E7B4D1290E633800E76EED /* Extension+NSNotification.Name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+NSNotification.Name.swift"; sourceTree = "<group>"; };
-		D8EABC122909B63C00C2C843 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D8E7B4D8290E8A6300E76EED /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		D8E7B4DA290E8A7300E76EED /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +106,7 @@
 			files = (
 				D85936E228FC44EF0015A116 /* Alamofire in Frameworks */,
 				D85936FD28FC674C0015A116 /* SnapKit in Frameworks */,
+				D8E7B4DE290ECDC500E76EED /* BetterSegmentedControl in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -180,7 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				D85936EA28FC4C2C0015A116 /* AccessToLocation */,
-				D8EABC112909B1C100C2C843 /* MainWeatherScreen */,
+				D8E7B4D7290E8A0500E76EED /* SettingsScreen */,
 			);
 			name = Scenes;
 			sourceTree = "<group>";
@@ -307,12 +311,13 @@
 			path = Location;
 			sourceTree = "<group>";
 		};
-		D8EABC112909B1C100C2C843 /* MainWeatherScreen */ = {
+		D8E7B4D7290E8A0500E76EED /* SettingsScreen */ = {
 			isa = PBXGroup;
 			children = (
-				D8EABC122909B63C00C2C843 /* ViewController.swift */,
+				D8E7B4D8290E8A6300E76EED /* SettingsView.swift */,
+				D8E7B4DA290E8A7300E76EED /* SettingsViewController.swift */,
 			);
-			name = MainWeatherScreen;
+			name = SettingsScreen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -334,6 +339,7 @@
 			packageProductDependencies = (
 				D85936E128FC44EF0015A116 /* Alamofire */,
 				D85936FC28FC674C0015A116 /* SnapKit */,
+				D8E7B4DD290ECDC500E76EED /* BetterSegmentedControl */,
 			);
 			productName = Weather;
 			productReference = D808688228F894D500787790 /* Weather.app */;
@@ -410,6 +416,7 @@
 			packageReferences = (
 				D85936E028FC44EF0015A116 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				D85936FB28FC674C0015A116 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				D8E7B4DC290ECDC500E76EED /* XCRemoteSwiftPackageReference "BetterSegmentedControl" */,
 			);
 			productRefGroup = D808688328F894D500787790 /* Products */;
 			projectDirPath = "";
@@ -463,14 +470,15 @@
 				D8E7B4D0290E5B7800E76EED /* AccessToLocationRouter.swift in Sources */,
 				D85936FA28FC4E690015A116 /* AccessToLocationView.swift in Sources */,
 				D85936F828FC4E570015A116 /* AccessToLocationViewController.swift in Sources */,
-				D8EABC132909B63C00C2C843 /* ViewController.swift in Sources */,
 				D859371028FC6F930015A116 /* Extension+UIView.swift in Sources */,
 				D808688628F894D500787790 /* AppDelegate.swift in Sources */,
 				D8E4A11F290B093C00B41167 /* UserDefaultsManager.swift in Sources */,
 				D85936E428FC45040015A116 /* NetworkService.swift in Sources */,
+				D8E7B4DB290E8A7300E76EED /* SettingsViewController.swift in Sources */,
 				D85936DD28FC433B0015A116 /* AppManager.swift in Sources */,
 				D8E7B4D2290E633800E76EED /* Extension+NSNotification.Name.swift in Sources */,
 				D883E4E328FD2DF400F02D26 /* Extension+UIColor.swift in Sources */,
+				D8E7B4D9290E8A6300E76EED /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -832,6 +840,14 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		D8E7B4DC290ECDC500E76EED /* XCRemoteSwiftPackageReference "BetterSegmentedControl" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gmarm/BetterSegmentedControl";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -844,6 +860,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D85936FB28FC674C0015A116 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		D8E7B4DD290ECDC500E76EED /* BetterSegmentedControl */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D8E7B4DC290ECDC500E76EED /* XCRemoteSwiftPackageReference "BetterSegmentedControl" */;
+			productName = BetterSegmentedControl;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

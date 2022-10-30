@@ -14,4 +14,7 @@ extension UIColor {
     static let customWhiteButtom = UIColor(red: 0.992, green: 0.986, blue: 0.963, alpha: 1)
     static let customGray = UIColor(red: 0.604, green: 0.587, blue: 0.587, alpha: 1)
     static let customAccentBlueColor = UIColor(red: 0.125, green: 0.306, blue: 0.78, alpha: 1)
+    static let customTextGray = UIColor(red: 0.538, green: 0.513, blue: 0.513, alpha: 1)
+    static let customSwitchBlueColor = UIColor(red: 0.122, green: 0.302, blue: 0.773, alpha: 1)
+    static let customSwitchWhiteColor = UIColor(red: 0.996, green: 0.929, blue: 0.914, alpha: 1)
 }

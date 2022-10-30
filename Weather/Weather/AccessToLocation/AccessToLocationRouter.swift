@@ -20,8 +20,8 @@ final class AccessToLocationRouter: AccessToLocationRoutingLogic {
     }
     
     func routeToViewWeather() {
-        let weatherViewController = VVVViewController()
-        weatherViewController.modalTransitionStyle = .crossDissolve
+        let weatherViewController = SettingsViewController()
+        weatherViewController.modalTransitionStyle = .partialCurl
         weatherViewController.modalPresentationStyle = .fullScreen
         viewController?.present(weatherViewController, animated: true)
     }
