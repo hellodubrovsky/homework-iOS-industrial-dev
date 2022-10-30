@@ -7,30 +7,48 @@
 
 import UIKit
 
-class AccessToLocationViewController: UINavigationController {
+final class AccessToLocationViewController: UINavigationController {
     
-    private weak var locationManager = AppLocationManager.shared
-    private weak var userDefaultsManager = UserDefaultsManager.shared
-
+    // MARK: Private properties
+    
+    private var locationManager: AppLocationManager?
+    private var userDefaultsManager: UserDefaultsManager?
+    private var router: AccessToLocationRoutingLogic?
+    
+    
+    // MARK: View lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setup()
+        self.addingAnObserverForLocationAccessResponse()
+    }
+    
+    
+    // MARK: Private methods
+    
+    private func setup() {
         self.view = AccessToLocationView(delegate: self)
-        edit()
+        self.locationManager = AppLocationManager.shared
+        self.userDefaultsManager = UserDefaultsManager.shared
+        self.router = AccessToLocationRouter(viewController: self)
     }
     
-    private func edit() {
-        let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(good), name: Notification.Name("G"), object: nil)
+    private func addingAnObserverForLocationAccessResponse() {
+        let center = NotificationCenter.default
+        center.addObserver(self, selector: #selector(switchingToWeatherScreen), name: .gettingResponseAccessToLocation, object: nil)
     }
     
-    @objc func good() {
-        print("Пользователь дал какой-то ответ в системной форме - тут нужно закрыть окно.")
+    @objc
+    private func switchingToWeatherScreen() {
+        self.router?.routeToViewWeather()
     }
 }
 
 
 
-// MARK: ViewDelegateProtocol
+
+// MARK: - ViewDelegateProtocol
 
 extension AccessToLocationViewController: AccessToLocationViewDelegate {
     
@@ -40,6 +58,6 @@ extension AccessToLocationViewController: AccessToLocationViewDelegate {
     
     func cancelButtonIsPressed() {
         self.userDefaultsManager?.setValue(false, forKey: .accessToLocation)
-        self.good()
+        self.router?.routeToViewWeather()
     }
 }

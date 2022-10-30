@@ -29,6 +29,8 @@
 		D883E4ED28FD7F6600F02D26 /* AppLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D883E4EC28FD7F6600F02D26 /* AppLocationManager.swift */; };
 		D8E4A11F290B093C00B41167 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E4A11E290B093C00B41167 /* UserDefaultsManager.swift */; };
 		D8E4A121290B157500B41167 /* EnumKeysForUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E4A120290B157500B41167 /* EnumKeysForUserDefaults.swift */; };
+		D8E7B4D0290E5B7800E76EED /* AccessToLocationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E7B4CF290E5B7800E76EED /* AccessToLocationRouter.swift */; };
+		D8E7B4D2290E633800E76EED /* Extension+NSNotification.Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E7B4D1290E633800E76EED /* Extension+NSNotification.Name.swift */; };
 		D8EABC132909B63C00C2C843 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EABC122909B63C00C2C843 /* ViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -89,6 +91,8 @@
 		D883E4EC28FD7F6600F02D26 /* AppLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLocationManager.swift; sourceTree = "<group>"; };
 		D8E4A11E290B093C00B41167 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		D8E4A120290B157500B41167 /* EnumKeysForUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnumKeysForUserDefaults.swift; sourceTree = "<group>"; };
+		D8E7B4CF290E5B7800E76EED /* AccessToLocationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessToLocationRouter.swift; sourceTree = "<group>"; };
+		D8E7B4D1290E633800E76EED /* Extension+NSNotification.Name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+NSNotification.Name.swift"; sourceTree = "<group>"; };
 		D8EABC122909B63C00C2C843 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -245,6 +249,7 @@
 			children = (
 				D85936F928FC4E690015A116 /* AccessToLocationView.swift */,
 				D85936F728FC4E570015A116 /* AccessToLocationViewController.swift */,
+				D8E7B4CF290E5B7800E76EED /* AccessToLocationRouter.swift */,
 			);
 			path = AccessToLocation;
 			sourceTree = "<group>";
@@ -264,6 +269,7 @@
 			children = (
 				D859370F28FC6F930015A116 /* Extension+UIView.swift */,
 				D883E4E228FD2DF400F02D26 /* Extension+UIColor.swift */,
+				D8E7B4D1290E633800E76EED /* Extension+NSNotification.Name.swift */,
 				D8E4A120290B157500B41167 /* EnumKeysForUserDefaults.swift */,
 			);
 			path = "Extensions&Enums";
@@ -454,6 +460,7 @@
 			files = (
 				D883E4ED28FD7F6600F02D26 /* AppLocationManager.swift in Sources */,
 				D8E4A121290B157500B41167 /* EnumKeysForUserDefaults.swift in Sources */,
+				D8E7B4D0290E5B7800E76EED /* AccessToLocationRouter.swift in Sources */,
 				D85936FA28FC4E690015A116 /* AccessToLocationView.swift in Sources */,
 				D85936F828FC4E570015A116 /* AccessToLocationViewController.swift in Sources */,
 				D8EABC132909B63C00C2C843 /* ViewController.swift in Sources */,
@@ -462,6 +469,7 @@
 				D8E4A11F290B093C00B41167 /* UserDefaultsManager.swift in Sources */,
 				D85936E428FC45040015A116 /* NetworkService.swift in Sources */,
 				D85936DD28FC433B0015A116 /* AppManager.swift in Sources */,
+				D8E7B4D2290E633800E76EED /* Extension+NSNotification.Name.swift in Sources */,
 				D883E4E328FD2DF400F02D26 /* Extension+UIColor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

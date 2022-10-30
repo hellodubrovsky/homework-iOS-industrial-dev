@@ -22,6 +22,7 @@ protocol AccessToLocationViewDelegate: AnyObject {
 final class AccessToLocationView: UIView {
     
     // MARK: Private properties.
+    
     private var delegate: AccessToLocationViewDelegate!
     
     private var iconImageView: UIImageView = {
@@ -95,7 +96,6 @@ final class AccessToLocationView: UIView {
     }()
    
     
-    
     // MARK: Initialization
 
     init(delegate: AccessToLocationViewDelegate) {
@@ -107,7 +107,6 @@ final class AccessToLocationView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     
     
     // MARK: Setting UP View
@@ -155,7 +154,6 @@ final class AccessToLocationView: UIView {
             button.height.equalTo(40)
         }
     }
-    
     
     
     // MARK: Private methods

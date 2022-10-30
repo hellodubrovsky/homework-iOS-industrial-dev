@@ -14,7 +14,7 @@ extension UIView {
         views.forEach { self.addSubview($0) }
     }
     
-    /// Отключение системных констрейнтов у всех элементов сразу.
+    /// Отключение автоматический расстановки констрейнтов у всех элементов сразу.
     func turningOffTheAutomaticMask(_ views: [UIView]) {
         views.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
     }

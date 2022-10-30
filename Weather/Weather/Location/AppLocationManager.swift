@@ -10,26 +10,22 @@ import CoreLocation
 
 final class AppLocationManager: NSObject {
     
-    // MARK: - Static propery
+    // MARK: Static propery
     static var shared = AppLocationManager()
     
     
-    
-    // MARK: - Private propery
+    // MARK: Private propery
     private var locationManager = CLLocationManager()
     
     
-    
-    // MARK: - Private init
-    
+    // MARK: Private init
     private override init() {
         super.init()
         self.locationManager.delegate = self
     }
     
     
-    
-    // MARK: - Public methods
+    // MARK: Public methods
     
     /// Отображение окна, с запросом на разрешение использования локации.
     func showRequestForAccessLocation() {
@@ -68,7 +64,6 @@ final class AppLocationManager: NSObject {
 
 
 
-
 // MARK: - CLLocationManagerDelegate
 
 extension AppLocationManager: CLLocationManagerDelegate {
@@ -77,7 +72,7 @@ extension AppLocationManager: CLLocationManagerDelegate {
         switch response {
         case .authorizedWhenInUse, .authorizedAlways, .denied, .restricted:
             let notificationCenter = NotificationCenter.default
-            notificationCenter.post(name: NSNotification.Name("G"), object: nil)
+            notificationCenter.post(name: .gettingResponseAccessToLocation, object: nil)
         default:
             break
         }

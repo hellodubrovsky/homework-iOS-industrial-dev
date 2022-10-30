@@ -11,4 +11,3 @@ public enum KeysForUserDefaults: String {
     case unitOfdistance = "unitOfdistance"
     case timeFormat = "timeFormat"
 }
-
