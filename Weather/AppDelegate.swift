@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         self.window = UIWindow()
         guard let window = window else { return true }
-        window.rootViewController = AccessToLocationViewController()
+        window.rootViewController = AppManager.shared.presentedViewController
         window.makeKeyAndVisible()
         return true
     }

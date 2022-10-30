@@ -8,7 +8,7 @@
 import UIKit
 import CoreLocation
 
-final class AppLocationManager: NSObject, CLLocationManagerDelegate {
+final class AppLocationManager: NSObject {
     
     // MARK: - Static propery
     static var shared = AppLocationManager()
@@ -43,7 +43,7 @@ final class AppLocationManager: NSObject, CLLocationManagerDelegate {
         return false
     }
     
-    /// Проверка наличия у приложения, доступа к локации. Метод может вернуть: true - доступ к локации есть, false - приложению в доступе отказано.
+    /// Проверка наличия у приложения, доступа к локации. Метод может вернуть: true - доступ к локации есть, false - приложению в доступе отказано, или пользователь не делал выбор.
     func checkingForAccess() -> Bool {
         let response = self.locationManager.authorizationStatus
         switch response {
@@ -62,5 +62,24 @@ final class AppLocationManager: NSObject, CLLocationManagerDelegate {
         guard self.checkingForAccess() else { return nil }
         guard let coordinate = self.locationManager.location?.coordinate else { return nil }
         return (coordinate.latitude, coordinate.longitude)
+    }
+}
+
+
+
+
+
+// MARK: - CLLocationManagerDelegate
+
+extension AppLocationManager: CLLocationManagerDelegate {
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        let response = manager.authorizationStatus
+        switch response {
+        case .authorizedWhenInUse, .authorizedAlways, .denied, .restricted:
+            let notificationCenter = NotificationCenter.default
+            notificationCenter.post(name: NSNotification.Name("G"), object: nil)
+        default:
+            break
+        }
     }
 }
