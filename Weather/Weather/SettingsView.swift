@@ -201,8 +201,13 @@ class SettingsView: UIView {
             view.center.equalTo(self)
             view.height.equalTo(330)
             if UIDevice.current.userInterfaceIdiom == .phone {
+                view.width.equalTo(UIScreen.main.bounds.width - 56)
+                /*
+                Пока не ясно, но при использовании левого и правого констрейнта, падает куча ошибок.
+                В данный момент победить удалось только с помощью принудительно заданного размера по ширине для overlayView.
+                В дальнейшем можно покапать и возможно решить проблему более элегантно.
                 view.leading.equalTo(self).offset(28)
-                view.trailing.equalTo(self).offset(-28)
+                view.trailing.equalTo(self).offset(-28) */
             } else {
                 view.width.equalTo(500)
             }
