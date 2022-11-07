@@ -10,4 +10,6 @@ public enum KeysForUserDefaults: String {
     case unitOfTemperature = "unitOfTemperature"
     case unitOfdistance = "unitOfdistance"
     case timeFormat = "timeFormat"
+    case accessToNotification = "accessToNotification"
+    case initialSetup = "initialSetup"
 }

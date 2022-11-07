@@ -9,9 +9,6 @@ import UIKit
 import SnapKit
 
 
-
-// MARK: - ViewDelegate
-
 protocol AccessToLocationViewDelegate: AnyObject {
     func permissionButtonIsPressed()
     func cancelButtonIsPressed()

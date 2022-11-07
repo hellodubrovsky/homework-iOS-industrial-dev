@@ -8,5 +8,5 @@
 import Foundation
 
 extension NSNotification.Name {
-    static let gettingResponseAccessToLocation = NSNotification.Name("test")
+    static let gettingResponseAccessToLocation = NSNotification.Name("gettingResponseAccessToLocation")
 }

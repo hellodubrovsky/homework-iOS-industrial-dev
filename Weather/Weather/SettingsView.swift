@@ -9,7 +9,18 @@ import UIKit
 import SnapKit
 import BetterSegmentedControl
 
+
+protocol SettingsViewDelegate: AnyObject {
+    func pressedButtonSave(viewModel: SettingsModel)
+}
+
+
+
 class SettingsView: UIView {
+    
+    
+    // MARK: Delegate
+    private var delegate: SettingsViewDelegate!
     
     
     // MARK: Private UI properties
@@ -103,6 +114,7 @@ class SettingsView: UIView {
         button.setTitle("Установить", for: .normal)
         button.titleLabel?.font = UIFont(name: "Rubik-Regular", size: 16)
         button.titleLabel?.textColor = .customWhite
+        button.addTarget(self, action: #selector(pressedButtonSave), for: .touchUpInside)
         return button
     }()
     
@@ -146,9 +158,10 @@ class SettingsView: UIView {
     
     // MARK: Initialization
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupView()
+    init(delegate: SettingsViewDelegate) {
+        super.init(frame: .zero)
+        self.delegate = delegate
+        self.settingUpView()
     }
     
     required init?(coder: NSCoder) {
@@ -157,9 +170,19 @@ class SettingsView: UIView {
     
     
     
-    // MARK: Setup View
+    // MARK: Private method
     
-    private func setupView() {
+    @objc
+    private func pressedButtonSave() {
+        let viewModel = SettingsModel(temperatureIndex: temperatureSwitch.index, windIndex: windSwitch.index, timeIndex: timeSwitch.index, notificationIndex: notificationSwitch.index)
+        self.delegate.pressedButtonSave(viewModel: viewModel)
+    }
+    
+    
+    
+    // MARK: Setting Up View
+    
+    private func settingUpView() {
         self.backgroundColor = .customAccentBlueColor
         let views = [overlayView, firstCloudImage, secondCloudImage, thirdCloudImage]
         let subviews = [titleLabel, subtitleTemperatureLabel, subtitleWindLabel, subtitleTimeLabel, subtitleNotificationLabel, setupButton, temperatureSwitch, windSwitch, timeSwitch, notificationSwitch]
@@ -171,7 +194,7 @@ class SettingsView: UIView {
     
     
     
-    // MARK: Layout
+    // MARK: Setting Up Constraints
     
     private func settingUpConstraints() {
         self.overlayView.snp.makeConstraints { view in
@@ -184,81 +207,82 @@ class SettingsView: UIView {
                 view.width.equalTo(500)
             }
         }
-        
         self.firstCloudImage.snp.makeConstraints { image in
             image.bottom.equalTo(overlayView.snp.top).offset(-145)
             image.leading.equalTo(self)
         }
-        
         self.secondCloudImage.snp.makeConstraints { image in
             image.bottom.equalTo(overlayView.snp.top).offset(-25)
             image.trailing.equalTo(self)
         }
-        
         self.thirdCloudImage.snp.makeConstraints { image in
             image.top.equalTo(overlayView.snp.bottom).offset(60)
             image.centerX.equalTo(self)
         }
-        
         self.titleLabel.snp.makeConstraints { label in
             label.top.equalTo(self.overlayView).offset(26)
             label.leading.equalTo(self.overlayView).offset(20)
             label.height.equalTo(20)
         }
-        
         self.subtitleTemperatureLabel.snp.makeConstraints { label in
             label.top.equalTo(self.titleLabel.snp.bottom).offset(20)
             label.leading.equalTo(self.overlayView).offset(20)
         }
-        
         self.subtitleWindLabel.snp.makeConstraints { label in
             label.top.equalTo(self.subtitleTemperatureLabel.snp.bottom).offset(20)
             label.leading.equalTo(self.overlayView).offset(20)
         }
-        
         self.subtitleTimeLabel.snp.makeConstraints { label in
             label.top.equalTo(self.subtitleWindLabel.snp.bottom).offset(20)
             label.leading.equalTo(self.overlayView).offset(20)
         }
-        
         self.subtitleNotificationLabel.snp.makeConstraints { label in
             label.top.equalTo(self.subtitleTimeLabel.snp.bottom).offset(20)
             label.leading.equalTo(self.overlayView).offset(20)
         }
-        
         self.setupButton.snp.makeConstraints { button in
             button.bottom.equalTo(self.overlayView).offset(-16)
             button.leading.equalTo(self.overlayView).offset(35)
             button.trailing.equalTo(self.overlayView).offset(-35)
             button.height.equalTo(40)
         }
-        
         self.temperatureSwitch.snp.makeConstraints { customSwitch in
             customSwitch.trailing.equalTo(self.overlayView).offset(-30)
             customSwitch.centerY.equalTo(self.subtitleTemperatureLabel)
             customSwitch.height.equalTo(30)
             customSwitch.width.equalTo(80)
         }
-        
         self.windSwitch.snp.makeConstraints { customSwitch in
             customSwitch.trailing.equalTo(self.overlayView).offset(-30)
             customSwitch.centerY.equalTo(self.subtitleWindLabel)
             customSwitch.height.equalTo(30)
             customSwitch.width.equalTo(80)
         }
-        
         self.timeSwitch.snp.makeConstraints { customSwitch in
             customSwitch.trailing.equalTo(self.overlayView).offset(-30)
             customSwitch.centerY.equalTo(self.subtitleTimeLabel)
             customSwitch.height.equalTo(30)
             customSwitch.width.equalTo(80)
         }
-        
         self.notificationSwitch.snp.makeConstraints { customSwitch in
             customSwitch.trailing.equalTo(self.overlayView).offset(-30)
             customSwitch.centerY.equalTo(self.subtitleNotificationLabel)
             customSwitch.height.equalTo(30)
             customSwitch.width.equalTo(80)
         }
+    }
+}
+
+
+
+// MARK: - SettingsView: Setupable
+
+extension SettingsView: Setupable {
+    func setup(with viewModel: ViewModelProtocol) {
+        guard let settingsModel = viewModel as? SettingsModel else { return }
+        self.temperatureSwitch.setIndex(settingsModel.temperatureIndex)
+        self.windSwitch.setIndex(settingsModel.windIndex)
+        self.timeSwitch.setIndex(settingsModel.timeIndex)
+        self.notificationSwitch.setIndex(settingsModel.notificationIndex)
     }
 }

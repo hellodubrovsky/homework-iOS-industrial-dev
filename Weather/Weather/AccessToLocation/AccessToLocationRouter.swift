@@ -21,7 +21,7 @@ final class AccessToLocationRouter: AccessToLocationRoutingLogic {
     
     func routeToViewWeather() {
         let weatherViewController = SettingsViewController()
-        weatherViewController.modalTransitionStyle = .partialCurl
+        weatherViewController.modalTransitionStyle = .flipHorizontal
         weatherViewController.modalPresentationStyle = .fullScreen
         viewController?.present(weatherViewController, animated: true)
     }
