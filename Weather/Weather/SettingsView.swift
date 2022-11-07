@@ -111,8 +111,7 @@ class SettingsView: UIView {
         customSwitch.backgroundColor = .customSwitchWhiteColor
         customSwitch.indicatorViewBackgroundColor = .customSwitchBlueColor
         customSwitch.cornerRadius = 5
-        customSwitch.segments = [LabelSegment(text: "C", normalFont: UIFont(name: "Rubik-Regular", size: 16), selectedFont: UIFont(name: "Rubik-Regular", size: 16), selectedTextColor: .customWhite),
-                                 LabelSegment(text: "F", normalFont: UIFont(name: "Rubik-Regular", size: 16), selectedFont: UIFont(name: "Rubik-Regular", size: 16), selectedTextColor: .customWhite)]
+        customSwitch.segments = [LabelSegment.temperatureInC, LabelSegment.temperatureInF]
         return customSwitch
     }()
     
@@ -121,8 +120,7 @@ class SettingsView: UIView {
         customSwitch.backgroundColor = .customSwitchWhiteColor
         customSwitch.indicatorViewBackgroundColor = .customSwitchBlueColor
         customSwitch.cornerRadius = 5
-        customSwitch.segments = [LabelSegment(text: "Km", normalFont: UIFont(name: "Rubik-Regular", size: 16), selectedFont: UIFont(name: "Rubik-Regular", size: 16), selectedTextColor: .customWhite),
-                                 LabelSegment(text: "Mi", normalFont: UIFont(name: "Rubik-Regular", size: 16), selectedFont: UIFont(name: "Rubik-Regular", size: 16), selectedTextColor: .customWhite)]
+        customSwitch.segments = [LabelSegment.windInKm, LabelSegment.windInMi]
         return customSwitch
     }()
     
@@ -131,8 +129,7 @@ class SettingsView: UIView {
         customSwitch.backgroundColor = .customSwitchWhiteColor
         customSwitch.indicatorViewBackgroundColor = .customSwitchBlueColor
         customSwitch.cornerRadius = 5
-        customSwitch.segments = [LabelSegment(text: "12", normalFont: UIFont(name: "Rubik-Regular", size: 16), selectedFont: UIFont(name: "Rubik-Regular", size: 16), selectedTextColor: .customWhite),
-                                 LabelSegment(text: "24", normalFont: UIFont(name: "Rubik-Regular", size: 16), selectedFont: UIFont(name: "Rubik-Regular", size: 16), selectedTextColor: .customWhite)]
+        customSwitch.segments = [LabelSegment.time12, LabelSegment.time24]
         return customSwitch
     }()
     
@@ -141,8 +138,7 @@ class SettingsView: UIView {
         customSwitch.backgroundColor = .customSwitchWhiteColor
         customSwitch.indicatorViewBackgroundColor = .customSwitchBlueColor
         customSwitch.cornerRadius = 5
-        customSwitch.segments = [LabelSegment(text: "On", normalFont: UIFont(name: "Rubik-Regular", size: 16), selectedFont: UIFont(name: "Rubik-Regular", size: 16), selectedTextColor: .customWhite),
-                                 LabelSegment(text: "Off", normalFont: UIFont(name: "Rubik-Regular", size: 16), selectedFont: UIFont(name: "Rubik-Regular", size: 16), selectedTextColor: .customWhite)]
+        customSwitch.segments = [LabelSegment.notificationOn, LabelSegment.notificationOff]
         return customSwitch
     }()
     
@@ -176,14 +172,17 @@ class SettingsView: UIView {
     
     
     // MARK: Layout
-    // TODO: Нужен кастомный размер для iPad
     
     private func settingUpConstraints() {
         self.overlayView.snp.makeConstraints { view in
             view.center.equalTo(self)
-            view.leading.equalTo(self).offset(28)
-            view.trailing.equalTo(self).offset(-28)
             view.height.equalTo(330)
+            if UIDevice.current.userInterfaceIdiom == .phone {
+                view.leading.equalTo(self).offset(28)
+                view.trailing.equalTo(self).offset(-28)
+            } else {
+                view.width.equalTo(500)
+            }
         }
         
         self.firstCloudImage.snp.makeConstraints { image in

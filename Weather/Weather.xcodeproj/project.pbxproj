@@ -14,6 +14,7 @@
 		D808689D28F894D500787790 /* WeatherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D808689C28F894D500787790 /* WeatherTests.swift */; };
 		D80868A728F894D500787790 /* WeatherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80868A628F894D500787790 /* WeatherUITests.swift */; };
 		D80868A928F894D500787790 /* WeatherUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80868A828F894D500787790 /* WeatherUITestsLaunchTests.swift */; };
+		D81688BD2918F72A00068302 /* Extension+LabelSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81688BC2918F72A00068302 /* Extension+LabelSegment.swift */; };
 		D85936DD28FC433B0015A116 /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85936DC28FC433B0015A116 /* AppManager.swift */; };
 		D85936E228FC44EF0015A116 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = D85936E128FC44EF0015A116 /* Alamofire */; };
 		D85936E428FC45040015A116 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85936E328FC45040015A116 /* NetworkService.swift */; };
@@ -34,6 +35,9 @@
 		D8E7B4D9290E8A6300E76EED /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E7B4D8290E8A6300E76EED /* SettingsView.swift */; };
 		D8E7B4DB290E8A7300E76EED /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E7B4DA290E8A7300E76EED /* SettingsViewController.swift */; };
 		D8E7B4DE290ECDC500E76EED /* BetterSegmentedControl in Frameworks */ = {isa = PBXBuildFile; productRef = D8E7B4DD290ECDC500E76EED /* BetterSegmentedControl */; };
+		D8E7B4E0290EEB7800E76EED /* SettingsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E7B4DF290EEB7800E76EED /* SettingsInteractor.swift */; };
+		D8E7B4E2290EEB8400E76EED /* SettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E7B4E1290EEB8400E76EED /* SettingsPresenter.swift */; };
+		D8E7B4E4290EEBAA00E76EED /* SettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E7B4E3290EEBAA00E76EED /* SettingsRouter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +68,7 @@
 		D80868A228F894D500787790 /* WeatherUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeatherUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D80868A628F894D500787790 /* WeatherUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherUITests.swift; sourceTree = "<group>"; };
 		D80868A828F894D500787790 /* WeatherUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		D81688BC2918F72A00068302 /* Extension+LabelSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+LabelSegment.swift"; sourceTree = "<group>"; };
 		D85936DC28FC433B0015A116 /* AppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppManager.swift; sourceTree = "<group>"; };
 		D85936E328FC45040015A116 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		D85936F728FC4E570015A116 /* AccessToLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessToLocationViewController.swift; sourceTree = "<group>"; };
@@ -97,6 +102,9 @@
 		D8E7B4D1290E633800E76EED /* Extension+NSNotification.Name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+NSNotification.Name.swift"; sourceTree = "<group>"; };
 		D8E7B4D8290E8A6300E76EED /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		D8E7B4DA290E8A7300E76EED /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		D8E7B4DF290EEB7800E76EED /* SettingsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsInteractor.swift; sourceTree = "<group>"; };
+		D8E7B4E1290EEB8400E76EED /* SettingsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPresenter.swift; sourceTree = "<group>"; };
+		D8E7B4E3290EEBAA00E76EED /* SettingsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRouter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -273,6 +281,7 @@
 			children = (
 				D859370F28FC6F930015A116 /* Extension+UIView.swift */,
 				D883E4E228FD2DF400F02D26 /* Extension+UIColor.swift */,
+				D81688BC2918F72A00068302 /* Extension+LabelSegment.swift */,
 				D8E7B4D1290E633800E76EED /* Extension+NSNotification.Name.swift */,
 				D8E4A120290B157500B41167 /* EnumKeysForUserDefaults.swift */,
 			);
@@ -316,6 +325,9 @@
 			children = (
 				D8E7B4D8290E8A6300E76EED /* SettingsView.swift */,
 				D8E7B4DA290E8A7300E76EED /* SettingsViewController.swift */,
+				D8E7B4DF290EEB7800E76EED /* SettingsInteractor.swift */,
+				D8E7B4E1290EEB8400E76EED /* SettingsPresenter.swift */,
+				D8E7B4E3290EEBAA00E76EED /* SettingsRouter.swift */,
 			);
 			name = SettingsScreen;
 			sourceTree = "<group>";
@@ -467,14 +479,18 @@
 			files = (
 				D883E4ED28FD7F6600F02D26 /* AppLocationManager.swift in Sources */,
 				D8E4A121290B157500B41167 /* EnumKeysForUserDefaults.swift in Sources */,
+				D81688BD2918F72A00068302 /* Extension+LabelSegment.swift in Sources */,
 				D8E7B4D0290E5B7800E76EED /* AccessToLocationRouter.swift in Sources */,
 				D85936FA28FC4E690015A116 /* AccessToLocationView.swift in Sources */,
+				D8E7B4E4290EEBAA00E76EED /* SettingsRouter.swift in Sources */,
 				D85936F828FC4E570015A116 /* AccessToLocationViewController.swift in Sources */,
 				D859371028FC6F930015A116 /* Extension+UIView.swift in Sources */,
 				D808688628F894D500787790 /* AppDelegate.swift in Sources */,
 				D8E4A11F290B093C00B41167 /* UserDefaultsManager.swift in Sources */,
+				D8E7B4E0290EEB7800E76EED /* SettingsInteractor.swift in Sources */,
 				D85936E428FC45040015A116 /* NetworkService.swift in Sources */,
 				D8E7B4DB290E8A7300E76EED /* SettingsViewController.swift in Sources */,
+				D8E7B4E2290EEB8400E76EED /* SettingsPresenter.swift in Sources */,
 				D85936DD28FC433B0015A116 /* AppManager.swift in Sources */,
 				D8E7B4D2290E633800E76EED /* Extension+NSNotification.Name.swift in Sources */,
 				D883E4E328FD2DF400F02D26 /* Extension+UIColor.swift in Sources */,
