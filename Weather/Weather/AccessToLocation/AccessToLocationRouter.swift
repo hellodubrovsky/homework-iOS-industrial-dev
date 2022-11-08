@@ -8,21 +8,22 @@
 import Foundation
 
 protocol AccessToLocationRoutingLogic {
-    func routeToViewWeather()
+    func routeToViewSettings()
 }
 
 final class AccessToLocationRouter: AccessToLocationRoutingLogic {
     
     private weak var viewController: AccessToLocationViewController?
+    private var appFactory = AppFactory.shared
     
     init(viewController: AccessToLocationViewController) {
         self.viewController = viewController
     }
     
-    func routeToViewWeather() {
-        let weatherViewController = SettingsViewController()
-        weatherViewController.modalTransitionStyle = .flipHorizontal
-        weatherViewController.modalPresentationStyle = .fullScreen
-        viewController?.present(weatherViewController, animated: true)
+    func routeToViewSettings() {
+        let settingsViewController = appFactory.createSettingsController()
+        settingsViewController.modalTransitionStyle = .flipHorizontal
+        settingsViewController.modalPresentationStyle = .fullScreen
+        viewController?.present(settingsViewController, animated: true)
     }
 }

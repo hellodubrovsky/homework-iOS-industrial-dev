@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class AccessToLocationViewController: UINavigationController {
+final class AccessToLocationViewController: UIViewController {
     
     // MARK: Private properties
     
@@ -41,7 +41,7 @@ final class AccessToLocationViewController: UINavigationController {
     
     @objc
     private func switchingToWeatherScreen() {
-        self.router?.routeToViewWeather()
+        self.router?.routeToViewSettings()
     }
 }
 
@@ -58,6 +58,6 @@ extension AccessToLocationViewController: AccessToLocationViewDelegate {
     
     func cancelButtonIsPressed() {
         self.userDefaultsManager?.setValue(false, forKey: .accessToLocation)
-        self.router?.routeToViewWeather()
+        self.router?.routeToViewSettings()
     }
 }

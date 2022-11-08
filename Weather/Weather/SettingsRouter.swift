@@ -5,6 +5,7 @@
 //  Created by Илья Дубровский on 30.10.2022.
 //
 
+import UIKit
 import Foundation
 
 protocol SettingsRoutingLogic {
@@ -14,17 +15,16 @@ protocol SettingsRoutingLogic {
 final class SettingsRouter: SettingsRoutingLogic {
     
     private weak var viewController: SettingsViewController?
+    private var appFactory = AppFactory.shared
     
     init(viewController: SettingsViewController) {
         self.viewController = viewController
     }
     
     func routeToViewWeather() {
-        /*let weatherViewController = WEATHER SCREEN
-        weatherViewController.modalTransitionStyle = .flipHorizontal
-        weatherViewController.modalPresentationStyle = .fullScreen
-        viewController?.present(weatherViewController, animated: true)*/
-        print("Необходимо в роутере открывать главный экран погоды7")
+        let weatherNavigationController = appFactory.createWeatherController()
+        weatherNavigationController.modalTransitionStyle = .flipHorizontal
+        weatherNavigationController.modalPresentationStyle = .fullScreen
+        viewController?.present(weatherNavigationController, animated: true)
     }
-    
 }

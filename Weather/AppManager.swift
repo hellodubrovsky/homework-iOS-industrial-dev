@@ -23,6 +23,7 @@ final class AppManager {
     
     private var locationManager = AppLocationManager.shared
     private var userDefaultsManager = UserDefaultsManager.shared
+    private var appFactory = AppFactory.shared
     
     
     
@@ -39,6 +40,6 @@ final class AppManager {
         let locationManagerResponse: Bool = self.locationManager.checkReceiptOfResponse()
         let userDefaultsManagerResponse: Bool = self.userDefaultsManager.checkingExistenceOfAnObject(forKey: .accessToLocation)
         let responseLocationAccess: Bool = locationManagerResponse || userDefaultsManagerResponse
-        self.presentedViewController = responseLocationAccess ? SettingsViewController() : AccessToLocationViewController()
+        self.presentedViewController = responseLocationAccess ? appFactory.createWeatherController() : appFactory.createLocationController()
     }
 }
