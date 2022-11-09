@@ -17,7 +17,7 @@
 		D81688BD2918F72A00068302 /* Extension+LabelSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81688BC2918F72A00068302 /* Extension+LabelSegment.swift */; };
 		D81688C42919772700068302 /* SetupableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81688C32919772700068302 /* SetupableProtocol.swift */; };
 		D81688C629197A8F00068302 /* SettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81688C529197A8F00068302 /* SettingsModel.swift */; };
-		D8241E0F291AC5EF0073492A /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8241E0E291AC5EF0073492A /* WeatherViewController.swift */; };
+		D8241E0F291AC5EF0073492A /* WeatherPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8241E0E291AC5EF0073492A /* WeatherPageViewController.swift */; };
 		D8241E12291AE0F80073492A /* AppFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8241E11291AE0F80073492A /* AppFactory.swift */; };
 		D85936DD28FC433B0015A116 /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85936DC28FC433B0015A116 /* AppManager.swift */; };
 		D85936E228FC44EF0015A116 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = D85936E128FC44EF0015A116 /* Alamofire */; };
@@ -30,6 +30,7 @@
 		D874380C28FF3071003F91A6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D808689028F894D500787790 /* LaunchScreen.storyboard */; };
 		D874380D28FF3071003F91A6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D808689028F894D500787790 /* LaunchScreen.storyboard */; };
 		D874381228FF3187003F91A6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D808688E28F894D500787790 /* Assets.xcassets */; };
+		D8754B05291B895200954D2B /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8754B04291B895200954D2B /* WeatherViewController.swift */; };
 		D883E4E328FD2DF400F02D26 /* Extension+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D883E4E228FD2DF400F02D26 /* Extension+UIColor.swift */; };
 		D883E4ED28FD7F6600F02D26 /* AppLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D883E4EC28FD7F6600F02D26 /* AppLocationManager.swift */; };
 		D8E4A11F290B093C00B41167 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E4A11E290B093C00B41167 /* UserDefaultsManager.swift */; };
@@ -73,7 +74,7 @@
 		D81688BC2918F72A00068302 /* Extension+LabelSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+LabelSegment.swift"; sourceTree = "<group>"; };
 		D81688C32919772700068302 /* SetupableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupableProtocol.swift; sourceTree = "<group>"; };
 		D81688C529197A8F00068302 /* SettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModel.swift; sourceTree = "<group>"; };
-		D8241E0E291AC5EF0073492A /* WeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewController.swift; sourceTree = "<group>"; };
+		D8241E0E291AC5EF0073492A /* WeatherPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherPageViewController.swift; sourceTree = "<group>"; };
 		D8241E11291AE0F80073492A /* AppFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFactory.swift; sourceTree = "<group>"; };
 		D85936DC28FC433B0015A116 /* AppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppManager.swift; sourceTree = "<group>"; };
 		D85936E328FC45040015A116 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
@@ -97,6 +98,7 @@
 		D87437F228FEFDCF003F91A6 /* iOS App Icon Template.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iOS App Icon Template.png"; sourceTree = "<group>"; };
 		D87437F328FEFDCF003F91A6 /* icon_40pt@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_40pt@3x.png"; sourceTree = "<group>"; };
 		D87437F428FEFDD0003F91A6 /* icon_20pt@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_20pt@2x.png"; sourceTree = "<group>"; };
+		D8754B04291B895200954D2B /* WeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewController.swift; sourceTree = "<group>"; };
 		D883E4DD28FD222800F02D26 /* Rubic-Neue.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubic-Neue.ttf"; sourceTree = "<group>"; };
 		D883E4DF28FD238900F02D26 /* Rubik-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubik-Regular.ttf"; sourceTree = "<group>"; };
 		D883E4E228FD2DF400F02D26 /* Extension+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIColor.swift"; sourceTree = "<group>"; };
@@ -194,7 +196,8 @@
 		D8241E0D291AC5BB0073492A /* WeatherScreen */ = {
 			isa = PBXGroup;
 			children = (
-				D8241E0E291AC5EF0073492A /* WeatherViewController.swift */,
+				D8241E0E291AC5EF0073492A /* WeatherPageViewController.swift */,
+				D8754B04291B895200954D2B /* WeatherViewController.swift */,
 			);
 			name = WeatherScreen;
 			sourceTree = "<group>";
@@ -479,6 +482,7 @@
 				D883E4ED28FD7F6600F02D26 /* AppLocationManager.swift in Sources */,
 				D8E4A121290B157500B41167 /* EnumKeysForUserDefaults.swift in Sources */,
 				D81688BD2918F72A00068302 /* Extension+LabelSegment.swift in Sources */,
+				D8754B05291B895200954D2B /* WeatherViewController.swift in Sources */,
 				D8241E12291AE0F80073492A /* AppFactory.swift in Sources */,
 				D8E7B4D0290E5B7800E76EED /* AccessToLocationRouter.swift in Sources */,
 				D85936FA28FC4E690015A116 /* AccessToLocationView.swift in Sources */,
@@ -490,7 +494,7 @@
 				D81688C42919772700068302 /* SetupableProtocol.swift in Sources */,
 				D85936E428FC45040015A116 /* NetworkService.swift in Sources */,
 				D8E7B4DB290E8A7300E76EED /* SettingsViewController.swift in Sources */,
-				D8241E0F291AC5EF0073492A /* WeatherViewController.swift in Sources */,
+				D8241E0F291AC5EF0073492A /* WeatherPageViewController.swift in Sources */,
 				D85936DD28FC433B0015A116 /* AppManager.swift in Sources */,
 				D8E7B4D2290E633800E76EED /* Extension+NSNotification.Name.swift in Sources */,
 				D883E4E328FD2DF400F02D26 /* Extension+UIColor.swift in Sources */,

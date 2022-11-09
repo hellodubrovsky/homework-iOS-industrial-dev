@@ -2,25 +2,37 @@
 //  WeatherViewController.swift
 //  Weather
 //
-//  Created by Илья Дубровский on 08.11.2022.
+//  Created by Илья Дубровский on 09.11.2022.
 //
 
 import UIKit
 
 class WeatherViewController: UIViewController {
+    
+    private var testLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .customWhite
-        title = "Москва, Россия"
+        self.view.addSubview(testLabel)
         
-        let settingsItem = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .plain, target: self, action: nil)
-        settingsItem.tintColor = .customBlack
+        NSLayoutConstraint.activate([
         
-        let locationItem = UIBarButtonItem(image: UIImage(systemName: "mappin.circle"), style: .plain, target: self, action: nil)
-        locationItem.tintColor = .customBlack
+            testLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            testLabel.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
         
-        self.navigationItem.rightBarButtonItem = locationItem
-        self.navigationItem.leftBarButtonItem = settingsItem
+        ])
+    }
+    
+    init(text: String) {
+        super.init(nibName: nil, bundle: nil)
+        self.testLabel.text = text
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

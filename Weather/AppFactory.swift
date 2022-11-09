@@ -27,7 +27,7 @@ final class AppFactory {
     }
     
     func createWeatherController() -> UINavigationController {
-        let weatherViewController = WeatherViewController()
+        let weatherViewController = WeatherPageViewController()
         let navigationController = UINavigationController(rootViewController: weatherViewController)
         let appearance = UINavigationBarAppearance()
         appearance.backgroundColor = .customWhite
